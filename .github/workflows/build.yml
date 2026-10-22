@@ -1,0 +1,44 @@
+name: Build and deploy
+
+on:
+  schedule:
+    - cron: "17 10 * * *"   # every day at 10:17 UTC (about 6 a.m. in New York)
+  workflow_dispatch:         # "Run workflow" button for publishing at once
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Build the site from the published sheet
+        run: node build/build.mjs
+        env:
+          SHEET_CSV_URL: ${{ vars.SHEET_CSV_URL }}
+          BASE_URL: ${{ vars.BASE_URL }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

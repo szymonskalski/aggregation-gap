@@ -1,0 +1,16 @@
+{
+  "title": "Aggregation Gap Atlas",
+  "subtitle": "Disruptions of civilian services since 1945 in which several institutions each held part of the record",
+  "base_url": "https://szymonskalski.github.io/aggregation-gap/",
+  "sheet_csv_url": "https://docs.google.com/spreadsheets/d/1V_uO-JI08z9mkjF5SoC5-WjLN3Oq3pr--o0bJH-I_NA/gviz/tq?tqx=out:csv&sheet=Events",
+  "subscribe": {
+    "form_action": "",
+    "email_field": "email",
+    "page_url": "",
+    "provider_name": ""
+  },
+  "suggest_url": "",
+  "contact_email": "",
+  "credit": "Working Group on Environmental Security and Technological Risk in Conflict, Ostrom Workshop, Indiana University",
+  "volume": "Commons under Fire: Governing the Nexus under Strategic Disturbance"
+}
