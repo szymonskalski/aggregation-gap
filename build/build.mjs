@@ -20,11 +20,16 @@ const TYPE_TEXT = {
   control: 'A suspected attack that institutions joined and settled as non-hostile, or left open.',
   misattribution: 'Records joined into an attack claim that later failed or remains disputed.',
 };
-const PUBLIC_COLS = ['id', 'title', 'label', 'dates', 'year', 'place', 'lat', 'lon', 'more_sites', 'precision', 'case_type', 'scope', 'context', 'services', 'strength', 'summary', 'records', 'gap', 'joining', 'harm_found_later', 'use_in_volume', 'sources', 'verification', 'added'];
+const PUBLIC_COLS = ['id', 'title', 'label', 'dates', 'year', 'place', 'lat', 'lon', 'more_sites', 'precision', 'case_type', 'scope', 'context', 'services', 'strength', 'summary', 'records', 'gap', 'joining', 'harm_found_later', 'sources', 'verification', 'added'];
 
 const warnings = [];
 const warn = m => { warnings.push(m); console.warn('WARN', m); };
 const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+// typographer's quotes for display; the CSV download keeps the sheet's own characters
+const smart = s => String(s ?? '')
+  .replace(/(^|[\s(\[{\u2013\u2014\/])"/g, '$1\u201C').replace(/"/g, '\u201D')
+  .replace(/(^|[\s(\[{\u2013\u2014\/\u201C])'(?=\d\ds\b)/g, '$1\u2019')
+  .replace(/(^|[\s(\[{\u2013\u2014\/\u201C])'/g, '$1\u2018').replace(/'/g, '\u2019');
 const slug = id => id.toLowerCase();
 const decadeOf = y => (y < 1960 ? 1945 : Math.floor(y / 10) * 10);
 
@@ -90,7 +95,6 @@ const DECADES = [1945, 1960, 1970, 1980, 1990, 2000, 2010, 2020];
 const decName = d => (d === 1945 ? '1945 to 1959' : d === 2020 ? '2020 to 2026' : `${d} to ${d + 9}`);
 // first and last year named in the dates; the second is shortened only within the same century (1948–49, 1980–2022)
 const yrs = e => { const m = String(e.dates).match(/(19|20)\d\d/g) || [String(e.year)]; const a = m[0], b = m[m.length - 1]; return a === b ? a : `${a}–${a.slice(0, 2) === b.slice(0, 2) ? b.slice(2) : b}`; };
-const built = new Date().toISOString().slice(0, 10);
 
 function subscribeBlock(rel) {
   const s = cfg.subscribe || {};
@@ -110,11 +114,20 @@ function suggestBlock() {
   if (cfg.contact_email) return `<p>To suggest an event, write to <span class="sel">${esc(cfg.contact_email)}</span>.</p>`;
   return '';
 }
-function colophon(rel) {
-  return `<footer class="colophon">
-  <p>Equal Earth projection. Coastlines from Natural Earth, in the public domain. Boundaries from CShapes 2.0 (Schvitz, Rüegger, Girardin, Cederman, Weidmann and Gleditsch 2022), licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license noopener">CC BY-NC-SA 4.0</a>; the boundary file served with this site carries the same licence.</p>
-  <p>Compiled by the ${esc(cfg.credit)} from published sources. Each entry was checked against its sources by a second, independent reading, and its record states what remains open.</p>
-  <p>Prepared for <i>${esc(cfg.volume)}</i>. Data as <a href="${rel}data/events.csv">CSV</a> and <a href="${rel}data/events.json">JSON</a>; new entries in the <a href="${rel}feed.xml">RSS feed</a>. Updated ${built}. Set in Libre Caslon Text and Libre Franklin.</p>
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const edition = (d => `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`)(new Date());
+let ENTRY_COUNT = 0;
+// the bottom margin of the sheet: production notes at left, edition and data at right, as on a survey sheet
+function imprint(rel) {
+  return `<footer class="imprint">
+  <div class="imp-l">
+    <p>Compiled from published sources by the ${esc(cfg.credit)}. Each entry checked against its sources by a second reader.</p>
+    <p>Equal Earth projection centred on 10° E. Coastlines from Natural Earth. Boundaries from CShapes 2.0 (Schvitz et al. 2022), licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license noopener">CC BY-NC-SA 4.0</a>. Set in Libre Caslon Text and Libre Franklin.</p>
+  </div>
+  <div class="imp-r">
+    <p>Edition of ${edition}, ${ENTRY_COUNT} entries</p>
+    <p><a href="${rel}data/events.csv">CSV</a> <a href="${rel}data/events.json">JSON</a> <a href="${rel}feed.xml">RSS</a></p>
+  </div>
 </footer>`;
 }
 function page({ title, rel, body, desc, current = '' }) {
@@ -140,10 +153,16 @@ function page({ title, rel, body, desc, current = '' }) {
   <nav aria-label="Sections">${nav}</nav>
 </div>
 ${body}
-${colophon(rel)}
+${imprint(rel)}
 </div>
 </body>
 </html>`;
+}
+function holdersHTML(s) {
+  const lines = String(s || '').split(/\n+/).map(l => l.trim()).filter(Boolean);
+  const isList = lines.length > 1 || (lines.length === 1 && /^[^:;,]{2,60}:\s/.test(lines[0]) && !lines[0].includes(';'));
+  if (!isList) return s ? `<p>${esc(s)}</p>` : '';
+  return `<ul class="holders">${lines.map(l => { const k = l.indexOf(':'); return k > 0 && k < 90 ? `<li><i>${esc(l.slice(0, k))}:</i> ${esc(l.slice(k + 1).trim())}</li>` : `<li>${esc(l)}</li>`; }).join('')}</ul>`;
 }
 const runhead = rel => `<p class="runhead"><a href="${rel}index.html">The Aggregation Gap</a></p>`;
 
@@ -252,8 +271,8 @@ function eventPage(e, prev, next) {
   <dl class="fields">
     ${row('Date', p(e.dates))}${row('Place', p(e.place))}${row('Service', p(e.services.join(', ')))}${row('Context', p(e.context))}
     ${row('Classification', `<p>${shapeSVG(e)} ${TYPE_LABEL[e.case_type]}${e.scope === 'adjacent' ? ', adjacent case' : ''}. ${TDEF[e.case_type][0].toUpperCase() + TDEF[e.case_type].slice(1)}.</p>`)}
-    ${row('Summary', p(e.summary))}${row('Holders of the record', p(e.records))}${row('Why the records stayed apart', p(e.gap))}${row('Joined by', p(e.joining))}
-    ${row('Harm found later', p(e.harm))}${row('Bearing on the volume', p(e.use))}${row('Sources', src)}
+    ${row('Summary', p(e.summary))}${row('Holders of the record', holdersHTML(e.records))}${row('Why the records stayed apart', p(e.gap))}${row('Joined by', p(e.joining))}
+    ${row('Harm found later', p(e.harm))}${row('Sources', src)}
     ${row('Verification', e.verification ? `<p class="muted">${esc(e.verification)}</p>` : '')}
     ${row('To cite', `<div class="cite"><p>${esc(cfg.title)}, entry ${e.id}, “${esc(e.title)}.” ${esc(cfg.credit)}. ${esc(url)}</p></div>`)}
   </dl>
@@ -276,13 +295,13 @@ function aboutPage(events) {
   <h2>The aggregation gap</h2>
   <p>All of these records may be accurate and still leave unclear what happened, because joining them, and deciding that an event was an attack, lies outside the purpose for which each was kept. An aggregation gap opens where institutions hold observations that could support a more extensive interpretation but lack the means or the authority to take them together. It widens as recorders become more numerous and smaller, as each applies its own threshold, and as no institution with authority to join the records receives them. It narrows when the attacker makes the act public or strikes a single target.</p>
   <h2>Classification of entries</h2>
-  <dl class="types">${CASE_TYPES.map(t => `<dt>${shapeSVG({ case_type: t })}${TYPE_LABEL[t]}</dt><dd>${TYPE_TEXT[t]}</dd>`).join('')}<dt>${shapeSVG({ scope: 'adjacent' })}Adjacent</dt><dd>The target was a commercial or defense site rather than a civilian service, but the records behaved the same way. The square takes the ink of its class.</dd></dl>
+  <dl class="types">${CASE_TYPES.map(t => `<dt>${shapeSVG({ case_type: t })}${TYPE_LABEL[t]}</dt><dd>${TYPE_TEXT[t]}</dd>`).join('')}<dt>${shapeSVG({ scope: 'adjacent' })}Adjacent</dt><dd>The target was a commercial or defense site whose records stayed apart in the same way as those of a civilian service. The square takes the ink of its class.</dd></dl>
   <p>The register now holds ${events.length} entries (${counts}).</p>
   <h2>How the entries are made</h2>
-  <p>Each entry was drafted from published sources and then checked against those sources by a second, independent pass, which corrected or removed claims the sources did not support. The verification line on each entry states the result, and partly verified entries name what remains open.</p>
+  <p>Each entry was drafted from published sources. A second, independent pass then checked it against those sources and corrected or removed any claim they did not support. The verification line on each entry gives the result. Where an entry is only partly verified, the line names what remains open.</p>
   <p><i>Nota.</i> ${esc(NOTA)}</p>
   <h2>How the plate is drawn</h2>
-  <p>The plate follows the conventions of nineteenth- and twentieth-century atlas sheets in the public domain. The water lining around the coasts follows S. Augustus Mitchell's <i>Europe</i> (1849); the graduated border with its degree figures follows the plates of Keith Johnston's <i>General Atlas</i> (1861) and Stieler's <i>Hand-Atlas</i> (1891); the red overprint on the selected entry follows the 1961 Algeria–Libya boundary map prepared for the State Department's Office of the Geographer, which prints the present boundary in red over black line work. The scale of years stacks one bar for each entry, as John Snow stacked one bar for each death on his cholera map of 1855. Boundaries change with the period shown, each set as it stood on the date named in the reference box.</p>
+  <p>The plate borrows its drawing from atlas sheets now in the public domain. The water lining along the coasts comes from S. Augustus Mitchell’s <i>Europe</i> (1849), and the graduated border with its degree figures from Keith Johnston’s <i>General Atlas</i> (1861) and Stieler’s <i>Hand-Atlas</i> (1891). Red marks the selected entry, as red marks the present boundary on the 1961 Algeria–Libya map prepared for the State Department’s Office of the Geographer. Under the plate, the scale of years stacks one bar for each entry, much as John Snow stacked one bar for each death on his cholera map of 1855. The boundaries are those of the period selected, as they stood on the date given in the reference box.</p>
   <h2 id="suggest">Suggest an event</h2>
   <p>Suggestions are reviewed by the editors before anything is published.</p>
   ${suggestBlock()}
@@ -331,27 +350,30 @@ for (const r of raw) {
 }
 if (!events.length) throw new Error('No published events found. Nothing was deployed.');
 events.sort((a, b) => a.n - b.n);
+ENTRY_COUNT = events.length;
+const TEXT_FIELDS = ['title', 'label', 'dates', 'place', 'summary', 'records', 'gap', 'joining', 'harm', 'verification'];
+const shown = events.map(e => ({ ...e, ...Object.fromEntries(TEXT_FIELDS.map(f => [f, smart(e[f])])), sources: e.sources.map(x => ({ ...x, cite: smart(x.cite) })) }));
 
 fs.rmSync(OUT, { recursive: true, force: true });
 const write = (p, s) => { const f = path.join(OUT, p); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, s); };
 const copyDir = (src, dst) => fs.cpSync(path.join(ROOT, src), path.join(OUT, dst), { recursive: true });
 
 copyDir('assets', 'assets');
-write('index.html', indexPage(events));
-write('about.html', aboutPage(events));
-write('events/index.html', eventsIndexPage(events));
-events.forEach((e, i) => write(`events/${slug(e.id)}/index.html`, eventPage(e, events[i - 1], events[i + 1])));
-write('feed.xml', feed(events));
+write('index.html', indexPage(shown));
+write('about.html', aboutPage(shown));
+write('events/index.html', eventsIndexPage(shown));
+shown.forEach((e, i) => write(`events/${slug(e.id)}/index.html`, eventPage(e, shown[i - 1], shown[i + 1])));
+write('feed.xml', feed(shown));
 // what the plate and its record need
-write('data/events.json', JSON.stringify(events.map(e => ({
+write('data/events.json', JSON.stringify(shown.map(e => ({
   id: e.id, n: e.n, label: e.label, title: e.title, dates: e.dates, year: e.year, decade: e.decade, place: e.place,
   lat: e.lat, lon: e.lon, more: e.more, precision: e.precision, case_type: e.case_type, scope: e.scope, context: e.context, services: e.services,
-  strength: e.strength, summary: e.summary, records: e.records, gap: e.gap, joining: e.joining, harm: e.harm, use: e.use,
+  strength: e.strength, summary: e.summary, records: e.records, gap: e.gap, joining: e.joining, harm: e.harm,
   sources: e.sources, verification: e.verification, verified: /^verified/i.test(e.verification), url: `events/${slug(e.id)}/index.html`,
 }))));
 write('data/events.csv', toCSV(events.map(e => ({
   ...e, more_sites: e.more.map(p => p.join(', ')).join('; '), services: e.services.join(', '),
-  harm_found_later: e.harm, use_in_volume: e.use, sources: e.sources.map(s => `${s.cite} | ${s.url}`).join('\n'),
+  harm_found_later: e.harm, sources: e.sources.map(s => `${s.cite} | ${s.url}`).join('\n'),
 })), PUBLIC_COLS));
 const root = BASE.replace(/^https?:\/\/[^/]+/, '');
 write('404.html', page({ title: `Not found · ${cfg.title}`, rel: root, body: `${runhead(root)}<main id="main" class="text"><h1>Not found</h1><p>The page may have moved. Start from the <a href="${root}index.html">plate</a> or the <a href="${root}events/index.html">register</a>.</p></main>` }));

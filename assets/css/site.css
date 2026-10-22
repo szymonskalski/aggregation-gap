@@ -115,6 +115,9 @@ button { font: inherit; color: inherit; }
 .fields ol { margin: 0; padding-left: 1.3em; font-size: 15px; }
 .fields ol li { margin-bottom: 5px; overflow-wrap: anywhere; }
 .fields dd svg { vertical-align: -1px; }
+.holders { list-style: none; margin: 0; padding: 0; }
+.holders li { padding-left: 1.2em; text-indent: -1.2em; margin-bottom: 3px; }
+.holders li:last-child { margin-bottom: 0; }
 .fields .muted, .muted { color: var(--ink-2); font-size: 15px; }
 .rec-side { display: grid; gap: 14px; align-content: start; }
 .locator { margin: 0; }
@@ -173,9 +176,12 @@ button { font: inherit; color: inherit; }
 .fine { font-family: var(--letter); font-size: 12px; color: var(--ink-2); }
 .sel { user-select: all; }
 
-.colophon { margin-top: 48px; padding-top: 12px; border-top: 0.5px solid var(--ink); display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px 32px; font-family: var(--letter); font-size: 12px; line-height: 1.45; color: var(--ink-2); }
-.colophon p { margin: 0; }
-.colophon a { color: var(--ink-2); }
+.imprint { margin-top: 48px; padding-top: 7px; border-top: 0.5px solid var(--ink); display: flex; justify-content: space-between; align-items: flex-start; gap: 6px 40px; flex-wrap: wrap; font-family: var(--letter); font-size: 11px; line-height: 1.5; color: var(--ink-2); }
+.imprint p { margin: 0; }
+.imp-l { flex: 1 1 520px; max-width: 760px; }
+.imp-r { flex: 0 1 auto; text-align: right; }
+.imp-r a { margin-left: 10px; }
+.imprint a { color: var(--ink-2); }
 
 @media (max-width: 780px) {
   .reference { position: static; max-width: none; margin-top: 10px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 12px; }
@@ -187,6 +193,8 @@ button { font: inherit; color: inherit; }
   .zoom { display: none; }
   .titleblock h1 { letter-spacing: .08em; }
   .find .count { margin-left: 0; width: 100%; }
+  .imp-r { text-align: left; }
+  .imp-r a { margin: 0 10px 0 0; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
 @media print {

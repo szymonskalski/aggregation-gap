@@ -1,62 +1,59 @@
-# Aggregation Gap Atlas: website
+# The Aggregation Gap: website
 
-A public website that maps the events of the Aggregation Gap Casebook, rebuilt every day from a Google Sheet.
+This repository builds the public site of the Aggregation Gap register, a world map and catalogue of disruptions of civilian services since 1945. The editors keep the register in a Google Sheet. Every morning a GitHub Actions job downloads the sheet's Events tab as CSV, checks each row, builds the pages and publishes them on GitHub Pages. The same job writes `feed.xml`, which a newsletter service can turn into notices by email.
 
-**How it fits together.** Editors work in the Google Sheet. Its Events tab is published to the web as CSV. Every morning a GitHub Actions job downloads that CSV, checks every row, builds the site and deploys it to GitHub Pages. The build also writes `feed.xml`, a feed of the newest entries, which a newsletter service turns into an email digest for subscribers.
+A build that cannot reach the sheet, or finds no valid row, publishes nothing, and the site stays as it was. GitHub then emails the owner of the repository, and the build log names the rows at fault.
 
-If a build fails (the sheet cannot be reached, or no row is valid), nothing is deployed and the site stays as it was. GitHub emails the repository owner, and the build log lists the reasons.
+## Setting it up
 
-## One-time setup
+The Google Sheet
 
-### 1. The Google Sheet
-1. Upload `sheet/Aggregation_Gap_Casebook_master.xlsx` to Google Drive, open it with Google Sheets, and choose **File → Save as Google Sheets**.
+1. Upload `sheet/Aggregation_Gap_Casebook_master.xlsx` to Google Drive, open it in Google Sheets and save it as a Google Sheet.
 2. Share it with edit access for the editors only.
-3. **File → Share → Publish to web.** Under *Link*, choose the **Events** tab (not *Entire document*) and **Comma-separated values (.csv)**, then **Publish**. Copy the link.
-4. Under *Published content and settings*, keep **Automatically republish when changes are made** ticked.
+3. Under File, Share, Publish to web, choose the Events tab and "Comma-separated values (.csv)", publish, and copy the link. Leave "Automatically republish when changes are made" ticked.
 
-Everything in the Events tab is public, drafts included. Private remarks belong in the *Editor notes* tab, and suggestions from the public stay in the form's own responses tab. Never publish those tabs.
+Everything in the Events tab becomes public, drafts included. Private remarks go in the Editor notes tab, and suggestions from the public stay in the form's own responses tab. Neither is ever published.
 
-### 2. GitHub
-1. Create a repository (for example `aggregation-gap`) and push this folder to its `main` branch.
-2. **Settings → Pages → Build and deployment → Source: GitHub Actions.**
-3. **Settings → Secrets and variables → Actions → Variables**, add:
-   - `SHEET_CSV_URL`: the link from step 1.3
-   - `BASE_URL`: the site's address, e.g. `https://<account>.github.io/aggregation-gap/` (or the custom domain)
-4. **Actions → Build and deploy → Run workflow.** The site appears at the Pages address within a few minutes.
+GitHub
 
-### 3. Suggestions from the public
-Create a Google Form with these questions: your name; email; affiliation; the event (short name); dates; place; what happened; which institutions recorded it; sources (citations or links). In **Responses**, link the form to the master spreadsheet: Google adds a responses tab, which is never published. Put the form's public link in `site.config.json` under `suggest_url`.
+1. Under Settings, Pages, set the source to GitHub Actions.
+2. Under Settings, Secrets and variables, Actions, Variables, add `SHEET_CSV_URL` (the link from the sheet) and `BASE_URL` (the site's address, for example `https://<account>.github.io/aggregation-gap/`).
+3. Under Actions, Build and deploy, choose Run workflow. The site appears within a few minutes.
 
-### 4. Email updates
-Open an account with a newsletter service that sends RSS-to-email digests (check that the plan you choose includes this feature). Point its RSS automation at `<site address>/feed.xml` and choose a weekly or monthly digest. Then fill in `site.config.json`:
-- `subscribe.form_action`: the URL the provider's embedded signup form posts to, and `subscribe.email_field` if its email field is not called `email`; or
-- `subscribe.page_url`: the provider's hosted signup page, if you prefer a button.
-- `subscribe.provider_name`: the service's name, shown under the form.
+Suggestions from the public. Make a Google Form asking for name, email, affiliation, the event, its dates and place, what happened, which institutions recorded it, and sources. Link its responses to the master spreadsheet, which adds a responses tab that is never published, and put the form's public link in `site.config.json` under `suggest_url`.
 
-Until this is set, the site offers the RSS feed alone.
+Notices by email. Open an account with a newsletter service that sends digests from an RSS feed, and point it at `<site address>/feed.xml`. Then fill in `subscribe` in `site.config.json`: either `form_action` (the address the provider's signup form posts to, with `email_field` if the field is not called `email`) or `page_url` (the provider's own signup page), and `provider_name`. Until then the site offers the RSS feed alone.
 
-### 5. Optional: a custom domain
-Add the domain under **Settings → Pages → Custom domain** and set `BASE_URL` to it.
+A custom domain can be added under Settings, Pages, with `BASE_URL` changed to match.
 
-## Day to day
-- Edit the sheet. Changes go live the next morning, or at once with **Actions → Build and deploy → Run workflow**.
-- **New entry:** give it the next free AG number, fill the columns (hover over a header for its meaning), set `status` to `published` and `added` to today's date.
-- **Remove an entry:** set `status` to `withdrawn`. Do not delete rows or reuse numbers.
-- The build skips rows with an invalid id, year or case type and names them in the log; the rest of the site still deploys.
-- GitHub pauses scheduled runs in a public repository after 60 days without commits. If daily updates stop, open the Actions tab and re-enable the workflow.
+## Keeping the register
 
-## Local preview
+Changes to the sheet go live the next morning, or at once from Actions, Build and deploy, Run workflow.
+
+A new entry takes the next free AG number. Fill the columns (each header carries a note on its meaning), set `status` to `published` and `added` to the day's date. In `records`, write one holder per line, as `Holder: what it held.` The `use_in_volume` column stays in the sheet and is not shown on the site.
+
+To withdraw an entry, set `status` to `withdrawn`. Rows are never deleted and numbers never reused.
+
+The build skips a row with an invalid id, year or case type and names it in the log. The rest of the site still goes out.
+
+GitHub pauses scheduled runs in a public repository after 60 days without a commit. If the daily update stops, re-enable the workflow in the Actions tab.
+
+## Building it locally
+
 ```
-node build/build.mjs               # builds _site/ from data/events.seed.csv, or from SHEET_CSV_URL if set
+node build/build.mjs               # builds _site/ from the sheet, or from data/events.seed.csv if no sheet is set
 python3 -m http.server -d _site 8000
 ```
 
-## Files
-- `build/build.mjs`: the site generator (no dependencies beyond Node 20)
-- `assets/`: styles, the plate script (`js/plate.js`), fonts (Libre Caslon Text and Libre Franklin, SIL Open Font License), d3 and topojson, and the map data:
-  - `data/land-50m.json`, `data/land-110m.json`: coastlines (Natural Earth via world-atlas, public domain)
-  - `data/borders-cshapes.json`: boundaries and country names for each period, derived from CShapes 2.0 (Schvitz et al. 2022) and licensed CC BY-NC-SA 4.0 like its source; non-commercial use only
-  - `img/locator.svg`: the small world map on each entry page
-- `data/events.seed.csv`: the casebook as of October 2026, used before the sheet is connected
+## What is where
+
+- `build/build.mjs`: the site generator, which needs nothing beyond Node 22
+- `assets/js/plate.js`: the map, the scale of years, the register and the record
+- `assets/css/site.css`, `assets/fonts/`: styles and type (Libre Caslon Text and Libre Franklin, SIL Open Font License)
+- `assets/vendor/`: d3 and topojson
+- `assets/data/land-50m.json`, `land-110m.json`: coastlines from Natural Earth (public domain), via world-atlas
+- `assets/data/borders-cshapes.json`: boundaries and country names for each period, derived from CShapes 2.0 (Schvitz et al. 2022) and licensed, like its source, CC BY-NC-SA 4.0, for non-commercial use only
+- `assets/img/locator.svg`: the small world map on each entry page
+- `data/events.seed.csv`: a copy of the register, used when no sheet is set
 - `sheet/`: the master spreadsheet and the script that made it
-- `site.config.json`: title, address, subscription and suggestion settings
+- `site.config.json`: title, address, and the subscription and suggestion settings

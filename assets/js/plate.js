@@ -288,6 +288,13 @@
         '<path d="' + pa({ type: 'Sphere' }) + '" fill="none" stroke="#121212" stroke-width="0.5"/>' +
         '<g stroke="' + RED + '" stroke-width="0.9" fill="none"><circle cx="' + pt[0] + '" cy="' + pt[1] + '" r="5"/><path d="M' + (pt[0] - 11) + ',' + pt[1] + 'h7M' + (pt[0] + 4) + ',' + pt[1] + 'h7M' + pt[0] + ',' + (pt[1] - 11) + 'v7M' + pt[0] + ',' + (pt[1] + 4) + 'v7"/></g></svg>';
     }
+    // the sheet gives one holder per line ("Holder: what it held."); older rows are a single paragraph
+    function holders(s) {
+      var lines = String(s || '').split(/\n+/).map(function (l) { return l.trim(); }).filter(Boolean);
+      var isList = lines.length > 1 || (lines.length === 1 && /^[^:;,]{2,60}:\s/.test(lines[0]) && lines[0].indexOf(';') < 0);
+      if (!isList) return s ? '<p>' + esc(s) + '</p>' : '';
+      return '<ul class="holders">' + lines.map(function (l) { var k = l.indexOf(':'); return k > 0 && k < 90 ? '<li><i>' + esc(l.slice(0, k)) + ':</i> ' + esc(l.slice(k + 1).trim()) + '</li>' : '<li>' + esc(l) + '</li>'; }).join('') + '</ul>';
+    }
     function record(e) {
       var r = $('record');
       var row = function (dt, dd) { return dd ? '<dt>' + dt + '</dt><dd>' + dd + '</dd>' : ''; };
@@ -297,8 +304,8 @@
         '<dl class="fields">' +
           row('Date', p(e.dates)) + row('Place', p(e.place)) + row('Service', p(e.services.join(', '))) + row('Context', p(e.context)) +
           row('Classification', '<p>' + icon(e, 13) + ' ' + TNAME[e.case_type] + (e.scope === 'adjacent' ? ', adjacent case' : '') + '. ' + TDEF[e.case_type].charAt(0).toUpperCase() + TDEF[e.case_type].slice(1) + '.</p>') +
-          row('Summary', p(e.summary)) + row('Holders of the record', p(e.records)) + row('Why the records stayed apart', p(e.gap)) + row('Joined by', p(e.joining)) +
-          row('Harm found later', p(e.harm)) + row('Bearing on the volume', p(e.use)) + row('Sources', (e.sources || []).length ? src : '') +
+          row('Summary', p(e.summary)) + row('Holders of the record', holders(e.records)) + row('Why the records stayed apart', p(e.gap)) + row('Joined by', p(e.joining)) +
+          row('Harm found later', p(e.harm)) + row('Sources', (e.sources || []).length ? src : '') +
           row('Verification', e.verification ? '<p class="muted">' + esc(e.verification) + '</p>' : '') +
         '</dl>' +
         '<div class="rec-side">' +
