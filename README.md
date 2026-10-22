@@ -53,7 +53,10 @@ python3 -m http.server -d _site 8000
 
 ## Files
 - `build/build.mjs`: the site generator (no dependencies beyond Node 20)
-- `assets/`: styles, the map script, fonts (EB Garamond), d3 and topojson, the base map (Natural Earth via world-atlas)
+- `assets/`: styles, the plate script (`js/plate.js`), fonts (Libre Caslon Text and Libre Franklin, SIL Open Font License), d3 and topojson, and the map data:
+  - `data/land-50m.json`, `data/land-110m.json`: coastlines (Natural Earth via world-atlas, public domain)
+  - `data/borders-cshapes.json`: boundaries and country names for each period, derived from CShapes 2.0 (Schvitz et al. 2022) and licensed CC BY-NC-SA 4.0 like its source; non-commercial use only
+  - `img/locator.svg`: the small world map on each entry page
 - `data/events.seed.csv`: the casebook as of October 2026, used before the sheet is connected
 - `sheet/`: the master spreadsheet and the script that made it
 - `site.config.json`: title, address, subscription and suggestion settings
