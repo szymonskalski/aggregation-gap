@@ -1,0 +1,5 @@
+m_04 AG-072: GAO-14-422 chart removed; the entry does not name the GAO report or the ONI count, so the chart is not a document of this record.
+m_01 AG-008: author shortened from the National Archives creator record ("Department of State. Office of the Undersecretary for Management. Bureau of Overseas Buildings Operations. (2001 - ) (Most Recent)").
+m_08 AG-158: PetyaA.jpg kept; licence confirmed by a Wikimedia permission ticket (2017062810019958), author credited as Jbuket; no sign the photograph is agency work.
+m_07 AG-126: removal of the US government map of Ghouta upheld; a map presenting an assessment is a document of that assessment, and the entry does not name the US assessment (contrast AG-064, a CIA map of the physical drainage works, kept).
+m_07 AG-130: 9M-MRD photograph removed; the registration-to-flight link rests only on a Commons category page, as at AG-265 (removed in batch 14). Rule: the link between a picture and an entry must rest on the file record itself (title, description, date, categories) or on the entry text.
