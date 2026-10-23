@@ -59,6 +59,7 @@ python3 -m http.server -d _site 8000
 - `assets/maps/`: the detail map of each placed entry, as SVG, with `manifest.json` for the captions; boundaries from CShapes 2.0 (CC BY-NC-SA 4.0), everything else from Natural Earth 1:10m (public domain)
 - `tools/`: the generator of the detail maps (`node tools/detail_maps.mjs data/events.seed.csv <natural-earth-geojson-dir> <CShapes-2.0.geojson> assets/maps [AG-001,AG-002]`, after `npm install` in `tools/`) and a script that lists openly licensed pictures for each entry; neither runs in the daily build
 - `data/chronology.seed.csv`: a copy of the Chronology tab, used when the sheet has none
+- `research/media_candidates.json`: the first shortlist of openly licensed pictures for each entry (1,800 candidates for 303 entries, from Wikimedia Commons and NASA, with licence data), from which the pictures were chosen; most candidates are off-topic and none is shown on the site unless chosen
 - `data/events.seed.csv`: a copy of the register, used when no sheet is set
 - `sheet/`: the master spreadsheet and the script that made it
 - `site.config.json`: title, address, and the subscription and suggestion settings
