@@ -29,7 +29,9 @@ def thumb(file_url, width, w):
 
 
 def ok(lic):
-    return bool(lic) and not BAD_LICENCE.search(lic) and bool(OK_LICENCE.search(lic))
+    # a file offered under several licences may be reused under any one of them: GFDL alongside CC BY-SA is fine
+    parts = [p.strip() for p in re.split(r';|\bor\b', lic or '') if p.strip()]
+    return any(not BAD_LICENCE.search(p) and OK_LICENCE.search(p) for p in parts)
 
 
 def save(url, folder, name):
