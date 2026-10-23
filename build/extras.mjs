@@ -210,3 +210,40 @@ export function detailMapHTML(e, maps, rel) {
   <figcaption>The red ring marks ${where}${more}. Boundaries as they stood on ${esc(m.borders || '')}, from CShapes 2.0. ${list[0].toUpperCase() + list.slice(1)} as they are today, from Natural Earth. Azimuthal equal-area projection centered on the site. <a href="${rel}assets/maps/${e.id.toLowerCase()}.svg" download>SVG</a></figcaption>
 </figure>`;
 }
+
+// ---------- pictures ----------
+export const MEDIA_COLS = ['id', 'seq', 'kind', 'site_url', 'source_page', 'source', 'title', 'caption', 'alt', 'author', 'licence', 'licence_url', 'date', 'width', 'height', 'status'];
+const HOSTS = /^https:\/\/(upload\.wikimedia\.org|images-assets\.nasa\.gov)\//;
+// rows of the Media tab marked published, by entry, at most two each; a picture whose address is not on the
+// Commons or NASA servers, or whose licence is not an open one, is left out
+export function groupMedia(rows, ids, warn) {
+  const by = {};
+  rows.forEach((r, i) => {
+    const id = String(r.id || '').trim().toUpperCase();
+    if (!id || String(r.status || '').trim().toLowerCase() !== 'published') return;
+    if (!ids.has(id)) { warn(`Media row for ${id}, which is not a published entry; left out`); return; }
+    if (!HOSTS.test(r.site_url || '')) { warn(`${id}: picture address "${r.site_url}" is not on Wikimedia Commons or NASA; left out`); return; }
+    if (!/(public domain|cc0|cc by)/i.test(r.licence || '') || /\b(nc|nd)\b/i.test(r.licence || '')) { warn(`${id}: picture licence "${r.licence}" is not an open licence; left out`); return; }
+    if (!String(r.caption || '').trim() || !String(r.author || '').trim()) { warn(`${id}: picture without caption or author; left out`); return; }
+    (by[id] = by[id] || []).push({ ...r, seq: parseFloat(r.seq) || i, width: parseInt(r.width, 10) || 0, height: parseInt(r.height, 10) || 0 });
+  });
+  for (const id in by) { by[id].sort((a, b) => a.seq - b.seq); if (by[id].length > 2) { warn(`${id}: more than two pictures; the first two are shown`); by[id] = by[id].slice(0, 2); } }
+  return by;
+}
+const sourceName = m => (/nasa/i.test(m.source_page || '') ? 'NASA' : 'Wikimedia Commons');
+// the attribution Commons asks for: author, licence with its link, and the source
+export function creditHTML(m) {
+  const lic = m.licence_url ? `<a href="${esc(m.licence_url)}" rel="license noopener">${esc(m.licence)}</a>` : esc(/^public domain/i.test(m.licence) ? 'public domain' : m.licence);
+  return `${esc(m.author)}, ${lic}, via <a href="${esc(m.source_page)}" rel="noopener">${sourceName(m)}</a>`;
+}
+export function picturesHTML(e, imgs) {
+  if (!imgs || !imgs.length) return '';
+  const one = m => {
+    const dims = m.width && m.height ? ` width="${m.width}" height="${m.height}"` : '';
+    return `<figure class="pic"><a href="${esc(m.source_page)}" rel="noopener"><img src="${esc(m.site_url)}"${dims} alt="${esc(m.alt || m.caption)}" loading="lazy" decoding="async"></a><figcaption><p>${esc(m.caption)}</p><p class="credit">${creditHTML(m)}</p></figcaption></figure>`;
+  };
+  return `<figure class="pictures">
+  <h2 class="ex-h">${imgs.length > 1 ? 'Pictures' : 'Picture'}</h2>
+  <div class="pics${imgs.length > 1 ? ' two' : ''}">${imgs.map(one).join('')}</div>
+</figure>`;
+}

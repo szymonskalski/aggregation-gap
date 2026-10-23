@@ -102,10 +102,11 @@ def commons_file(title):
     lic = [text(x) for x in re.findall(r'class="licensetpl_short"[^>]*>(.*?)</span>', page, flags=re.S)]
     link = re.findall(r'class="licensetpl_link"[^>]*>(.*?)</span>', page, flags=re.S)
     full = re.search(r'class="fullImageLink"[^>]*>\s*<a href="([^"]+)"', page)
-    dims = re.search(r'(\d[\d,]*) × (\d[\d,]*) pixels', page)
+    # the original's size is the one given with the file size; "Size of this preview" comes first on the page
+    dims = re.search(r'(\d[\d,]*) × (\d[\d,]*) pixels, file size', page) or re.search(r'(\d[\d,]*) × (\d[\d,]*) pixels', page)
     return {
         'source': 'Wikimedia Commons', 'title': title, 'page': page_url,
-        'file': html.unescape(full.group(1)) if full else '',
+        'file': html.unescape(full.group(1)).split('?')[0] if full else '',
         'width': int(dims.group(1).replace(',', '')) if dims else None,
         'height': int(dims.group(2).replace(',', '')) if dims else None,
         'author': td_after(page, 'fileinfotpl_aut')[:200],

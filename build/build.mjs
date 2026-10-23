@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { parseCSV, toCSV } from './csv.mjs';
-import { groupChronology, chronoHTML, loadMaps, detailMapHTML, CHRONO_COLS } from './extras.mjs';
+import { groupChronology, chronoHTML, loadMaps, detailMapHTML, CHRONO_COLS, groupMedia, picturesHTML, creditHTML, MEDIA_COLS } from './extras.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const OUT = path.join(ROOT, '_site');
@@ -50,7 +50,11 @@ async function getCSV() {
 // a second tab of the same sheet (Chronology), read the same way as the Events tab; until the tab exists,
 // or if it cannot be read, the copy in data/ is used
 async function getTab(name, cols, seed) {
-  const fallback = why => { console.log(`${name}: ${why}; using data/${seed}`); return parseCSV(fs.readFileSync(path.join(ROOT, 'data', seed), 'utf8')); };
+  const fallback = why => {
+    const f = path.join(ROOT, 'data', seed);
+    console.log(`${name}: ${why}; using ${fs.existsSync(f) ? `data/${seed}` : 'nothing'}`);
+    return fs.existsSync(f) ? parseCSV(fs.readFileSync(f, 'utf8')) : [];
+  };
   const url = cfg[`${name.toLowerCase()}_csv_url`] || (/[?&]sheet=/.test(SHEET_URL) ? SHEET_URL.replace(/([?&]sheet=)[^&]*/, `$1${name}`) + '&headers=1' : '');
   if (!url) return fallback('no sheet link');
   try {
@@ -145,7 +149,7 @@ function imprint(rel) {
   </div>
   <div class="imp-r">
     <p>Edition of ${edition}, ${ENTRY_COUNT} entries</p>
-    <p><a href="${rel}data/events.csv">CSV</a> <a href="${rel}data/events.json">JSON</a> <a href="${rel}feed.xml">RSS</a></p>
+    <p><a href="${rel}data/events.csv">CSV</a> <a href="${rel}data/events.json">JSON</a> <a href="${rel}feed.xml">RSS</a> <a href="${rel}credits.html">Picture credits</a></p>
   </div>
 </footer>`;
 }
@@ -271,10 +275,10 @@ function eventsIndexPage(events) {
   return page({ title: `Register · ${cfg.title}`, rel: '../', body, current: 'register' });
 }
 
-let CHRONO = {}, MAPS = { has: () => false };
+let CHRONO = {}, MAPS = { has: () => false }, MEDIA = {};
 function extrasHTML(e, rel) {
-  const c = chronoHTML(e, CHRONO[e.id], INK[e.case_type]), m = detailMapHTML(e, MAPS, rel);
-  return c || m ? `<section class="rec-extra">${c}${m}</section>` : '';
+  const c = chronoHTML(e, CHRONO[e.id], INK[e.case_type]), m = detailMapHTML(e, MAPS, rel), p = picturesHTML(e, MEDIA[e.id]);
+  return c || m || p ? `<section class="rec-extra">${c}${m}${p}</section>` : '';
 }
 function eventPage(e, prev, next) {
   const row = (dt, dd) => (dd ? `<dt>${dt}</dt><dd>${dd}</dd>` : '');
@@ -336,9 +340,22 @@ function aboutPage(events) {
   <h2 id="subscribe">Notices by email</h2>
   ${subscribeBlock('')}
   <h2>Credits and licences</h2>
-  <p>${esc(cfg.credit)}. Prepared for the edited volume <i>${esc(cfg.volume)}</i>. Coastlines on the plate: Natural Earth, public domain, via world-atlas. Detail maps: Natural Earth 1:10m coastlines, lakes, rivers, railways, roads and populated places, public domain. Boundaries: CShapes 2.0, Schvitz, Guy, Seraina Rüegger, Luc Girardin, Lars-Erik Cederman, Nils Weidmann and Kristian Skrede Gleditsch, “Mapping the International System, 1886–2017: The CShapes 2.0 Dataset,” <i>Journal of Conflict Resolution</i> 66, no. 1 (2022): 144–61, licensed CC BY-NC-SA 4.0. Type: Libre Caslon Text and Libre Franklin, SIL Open Font License. Drawing: d3 and topojson.</p>
+  <p>${esc(cfg.credit)}. Prepared for the edited volume <i>${esc(cfg.volume)}</i>. Coastlines on the plate: Natural Earth, public domain, via world-atlas. Detail maps: Natural Earth 1:10m coastlines, lakes, rivers, railways, roads and populated places, public domain. Boundaries: CShapes 2.0, Schvitz, Guy, Seraina Rüegger, Luc Girardin, Lars-Erik Cederman, Nils Weidmann and Kristian Skrede Gleditsch, “Mapping the International System, 1886–2017: The CShapes 2.0 Dataset,” <i>Journal of Conflict Resolution</i> 66, no. 1 (2022): 144–61, licensed CC BY-NC-SA 4.0. Type: Libre Caslon Text and Libre Franklin, SIL Open Font License. Drawing: d3 and topojson. Pictures: see the <a href="credits.html">picture credits</a>.</p>
 </main>`;
   return page({ title: `About · ${cfg.title}`, rel: '', body, current: 'about' });
+}
+
+function creditsPage(events) {
+  const withPics = events.filter(e => MEDIA[e.id]);
+  const n = withPics.reduce((k, e) => k + MEDIA[e.id].length, 0);
+  const body = `${runhead('')}
+<main id="main" class="text credits">
+  <h1>Picture credits</h1>
+  <p class="lede">The ${n} pictures on the entry pages come from Wikimedia Commons and NASA and are either in the public domain or under a Creative Commons licence that allows reuse with credit (CC0, CC BY or CC BY-SA). Each is shown as its source publishes it, and each links to the page where its author, date and licence are recorded.</p>
+  <p>A picture appears only where it shows the site, the object or the damage an entry names, or a document of its record. Pictures of the dead or injured, and pictures in which a private person can be recognized, are not used. Captions say no more than the source and the entry do.</p>
+  <ol class="credit-list">${withPics.map(e => MEDIA[e.id].map(m => `<li><a href="events/${slug(e.id)}/index.html">${esc(e.id)}</a> ${esc(m.caption)} <span class="credit">${creditHTML(m)}</span></li>`).join('')).join('')}</ol>
+</main>`;
+  return page({ title: `Picture credits · ${cfg.title}`, rel: '', body });
 }
 
 function feed(events) {
@@ -384,7 +401,9 @@ const shown = events.map(e => ({ ...e, ...Object.fromEntries(TEXT_FIELDS.map(f =
 const chronoRows = await getTab('Chronology', ['id', 'date', 'kind', 'note'], 'chronology.seed.csv');
 CHRONO = groupChronology(chronoRows.map(r => ({ ...r, holder: smart(r.holder), note: smart(r.note), date_text: smart(r.date_text) })), new Set(events.map(e => e.id)), warn);
 MAPS = loadMaps(ROOT);
-console.log(`Chronologies for ${Object.keys(CHRONO).length} entries; detail maps for ${events.filter(e => MAPS.has(e.id)).length}`);
+const mediaRows = await getTab('Media', ['id', 'site_url', 'caption', 'status'], 'media.seed.csv');
+MEDIA = groupMedia(mediaRows.map(r => ({ ...r, caption: smart(r.caption), alt: smart(r.alt), author: smart(r.author) })), new Set(events.map(e => e.id)), warn);
+console.log(`Chronologies for ${Object.keys(CHRONO).length} entries; detail maps for ${events.filter(e => MAPS.has(e.id)).length}; pictures for ${Object.keys(MEDIA).length}`);
 
 fs.rmSync(OUT, { recursive: true, force: true });
 const write = (p, s) => { const f = path.join(OUT, p); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, s); };
@@ -396,6 +415,8 @@ write('about.html', aboutPage(shown));
 write('events/index.html', eventsIndexPage(shown));
 shown.forEach((e, i) => write(`events/${slug(e.id)}/index.html`, eventPage(e, shown[i - 1], shown[i + 1])));
 write('feed.xml', feed(shown));
+write('credits.html', creditsPage(shown));
+write('data/media.csv', toCSV(mediaRows.filter(r => String(r.status || '').toLowerCase() === 'published'), MEDIA_COLS));
 // what the plate and its record need
 write('data/events.json', JSON.stringify(shown.map(e => ({
   id: e.id, n: e.n, label: e.label, title: e.title, dates: e.dates, year: e.year, decade: e.decade, place: e.place,
@@ -410,7 +431,7 @@ write('data/events.csv', toCSV(events.map(e => ({
 })), PUBLIC_COLS));
 const root = BASE.replace(/^https?:\/\/[^/]+/, '');
 write('404.html', page({ title: `Not found · ${cfg.title}`, rel: root, body: `${runhead(root)}<main id="main" class="text"><h1>Not found</h1><p>The page may have moved. Start from the <a href="${root}index.html">plate</a> or the <a href="${root}events/index.html">register</a>.</p></main>` }));
-write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${['', 'about.html', 'events/'].concat(events.map(e => `events/${slug(e.id)}/`)).map(u => `<url><loc>${esc(BASE + u)}</loc></url>`).join('\n')}\n</urlset>\n`);
+write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${['', 'about.html', 'credits.html', 'events/'].concat(events.map(e => `events/${slug(e.id)}/`)).map(u => `<url><loc>${esc(BASE + u)}</loc></url>`).join('\n')}\n</urlset>\n`);
 write('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${BASE}sitemap.xml\n`);
 write('.nojekyll', '');
 
