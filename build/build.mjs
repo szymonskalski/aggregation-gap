@@ -331,9 +331,10 @@ function aboutPage(events) {
   <p><i>Nota.</i> ${esc(NOTA)}</p>
   <h2>How the plate is drawn</h2>
   <p>The plate borrows its drawing from atlas sheets now in the public domain. The water lining along the coasts comes from S. Augustus Mitchell’s <i>Europe</i> (1849), and the graduated border with its degree figures from Keith Johnston’s <i>General Atlas</i> (1861) and Stieler’s <i>Hand-Atlas</i> (1891). Red marks the selected entry, as red marks the present boundary on the 1961 Algeria–Libya map prepared for the State Department’s Office of the Geographer. Under the plate, the scale of years stacks one bar for each entry, much as John Snow stacked one bar for each death on his cholera map of 1855. The boundaries are those of the period selected, as they stood on the date given in the reference box.</p>
-  <h2>Chronologies and detail maps</h2>
+  <h2>Chronologies, maps and pictures</h2>
   <p>Under each entry, a chronology sets out the dated moments in its record: when the disruption happened, when each holder recorded or reported its part, when someone made a finding or named an attacker, and when the records were joined, if they ever were. The rows are drawn from the entry’s own text and checked against it by a second reader; a moment the entry does not date is left out. Where a date is known only to the month or year, the strip draws a bar across that period.</p>
   <p>The detail map shows the area of the event. Its boundaries are those of the entry’s year, from CShapes 2.0; coastlines, lakes, rivers, railways, main roads and towns come from Natural Earth and are drawn as they are today, so a railway shown may postdate the event. Each map uses an azimuthal equal-area projection centered on the site, and can be downloaded as SVG.</p>
+  <p>Some entries carry one or two pictures, from Wikimedia Commons and NASA only and only under public-domain or Creative Commons terms that allow reuse with credit. A picture is shown where it shows the site, the object or the damage the entry names, or a document of its record; many entries have none. Each was chosen by one reader and checked by a second against its source page. The <a href="credits.html">picture credits</a> list them all.</p>
   <h2 id="suggest">Suggest an event</h2>
   <p>Suggestions are reviewed by the editors before anything is published.</p>
   ${suggestBlock()}
@@ -351,7 +352,7 @@ function creditsPage(events) {
   const body = `${runhead('')}
 <main id="main" class="text credits">
   <h1>Picture credits</h1>
-  <p class="lede">The ${n} pictures on the entry pages come from Wikimedia Commons and NASA and are either in the public domain or under a Creative Commons licence that allows reuse with credit (CC0, CC BY or CC BY-SA). Each is shown as its source publishes it, and each links to the page where its author, date and licence are recorded.</p>
+  <p class="lede">The ${n} pictures on the entry pages come from Wikimedia Commons and NASA and are either in the public domain or under a Creative Commons license that allows reuse with credit (CC0, CC BY or CC BY-SA). Each is shown as its source publishes it, and each links to the page where its author, date and license are recorded.</p>
   <p>A picture appears only where it shows the site, the object or the damage an entry names, or a document of its record. Pictures of the dead or injured, and pictures in which a private person can be recognized, are not used. Captions say no more than the source and the entry do.</p>
   <ol class="credit-list">${withPics.map(e => MEDIA[e.id].map(m => `<li><a href="events/${slug(e.id)}/index.html">${esc(e.id)}</a> ${esc(m.caption)} <span class="credit">${creditHTML(m)}</span></li>`).join('')).join('')}</ol>
 </main>`;
