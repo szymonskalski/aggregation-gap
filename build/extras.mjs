@@ -233,7 +233,8 @@ export function groupMedia(rows, ids, warn) {
 const sourceName = m => (/nasa/i.test(m.source_page || '') ? 'NASA' : 'Wikimedia Commons');
 // the attribution Commons asks for: author, licence with its link, and the source
 export function creditHTML(m) {
-  const lic = m.licence_url ? `<a href="${esc(m.licence_url)}" rel="license noopener">${esc(m.licence)}</a>` : esc(/^public domain/i.test(m.licence) ? 'public domain' : m.licence);
+  const name = /^public domain/i.test(m.licence) ? 'public domain' : m.licence.replace(/;.*$/, '').trim();
+  const lic = m.licence_url ? `<a href="${esc(m.licence_url)}" rel="license noopener">${esc(name)}</a>` : esc(name);
   return `${esc(m.author)}, ${lic}, via <a href="${esc(m.source_page)}" rel="noopener">${sourceName(m)}</a>`;
 }
 export function picturesHTML(e, imgs) {
