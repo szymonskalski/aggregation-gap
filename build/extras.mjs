@@ -239,7 +239,8 @@ export function creditHTML(m) {
 export function picturesHTML(e, imgs) {
   if (!imgs || !imgs.length) return '';
   const one = m => {
-    const dims = m.width && m.height ? ` width="${m.width}" height="${m.height}"` : '';
+    // the site loads a copy at most 960 px wide; the attributes give the size it is shown at, never larger
+    const w = Math.min(m.width, 960), dims = m.width && m.height ? ` width="${w}" height="${Math.round(m.height * w / m.width)}"` : '';
     return `<figure class="pic"><a href="${esc(m.source_page)}" rel="noopener"><img src="${esc(m.site_url)}"${dims} alt="${esc(m.alt || m.caption)}" loading="lazy" decoding="async"></a><figcaption><p>${esc(m.caption)}</p><p class="credit">${creditHTML(m)}</p></figcaption></figure>`;
   };
   return `<figure class="pictures">
