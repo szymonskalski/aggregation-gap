@@ -1,0 +1,2228 @@
+{
+ "AG-001": {
+  "borders": "1 July 1947",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-002": {
+  "borders": "1 July 1948",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-003": {
+  "borders": "1 July 1948",
+  "rail": false,
+  "roads": false,
+  "sites": 4,
+  "step": 10
+ },
+ "AG-004": {
+  "borders": "1 July 1948",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-005": {
+  "borders": "1 July 1950",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-006": {
+  "borders": "1 July 1950",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-007": {
+  "borders": "1 July 1951",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-008": {
+  "borders": "1 July 1953",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-009": {
+  "borders": "1 July 1959",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-010": {
+  "borders": "1 July 1959",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-011": {
+  "borders": "1 July 1960",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-012": {
+  "borders": "1 July 1961",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-013": {
+  "borders": "1 July 1961",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-014": {
+  "borders": "1 July 1961",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-015": {
+  "borders": "1 July 1961",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-016": {
+  "borders": "1 July 1962",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-017": {
+  "borders": "1 July 1966",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-018": {
+  "borders": "1 July 1967",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-019": {
+  "borders": "1 July 1967",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-020": {
+  "borders": "1 July 1969",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 5
+ },
+ "AG-021": {
+  "borders": "1 July 1970",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-022": {
+  "borders": "1 July 1971",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-023": {
+  "borders": "1 July 1972",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-024": {
+  "borders": "1 July 1972",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-025": {
+  "borders": "1 July 1974",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-026": {
+  "borders": "1 July 1975",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-027": {
+  "borders": "1 July 1976",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-028": {
+  "borders": "1 July 1977",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-029": {
+  "borders": "1 July 1977",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-030": {
+  "borders": "1 July 1978",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-031": {
+  "borders": "1 July 1978",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-032": {
+  "borders": "1 July 1978",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 5
+ },
+ "AG-033": {
+  "borders": "1 July 1979",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 5
+ },
+ "AG-034": {
+  "borders": "1 July 1979",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-035": {
+  "borders": "1 July 1980",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-036": {
+  "borders": "1 July 1980",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-037": {
+  "borders": "1 July 1980",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-038": {
+  "borders": "1 July 1980",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-039": {
+  "borders": "1 July 1981",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-040": {
+  "borders": "1 July 1981",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-041": {
+  "borders": "1 July 1981",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-042": {
+  "borders": "1 July 1982",
+  "rail": true,
+  "roads": true,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-043": {
+  "borders": "1 July 1982",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-044": {
+  "borders": "1 July 1982",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-045": {
+  "borders": "1 July 1982",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-046": {
+  "borders": "1 July 1982",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-047": {
+  "borders": "1 July 1983",
+  "rail": true,
+  "roads": true,
+  "sites": 2,
+  "step": 1
+ },
+ "AG-048": {
+  "borders": "1 July 1983",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-049": {
+  "borders": "1 July 1983",
+  "rail": false,
+  "roads": false,
+  "sites": 3,
+  "step": 10
+ },
+ "AG-050": {
+  "borders": "1 July 1983",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-051": {
+  "borders": "1 July 1984",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-052": {
+  "borders": "1 July 1984",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-053": {
+  "borders": "1 July 1984",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 5
+ },
+ "AG-054": {
+  "borders": "1 July 1984",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 5
+ },
+ "AG-055": {
+  "borders": "1 July 1985",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-056": {
+  "borders": "1 July 1986",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-057": {
+  "borders": "1 July 1986",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 5
+ },
+ "AG-058": {
+  "borders": "1 July 1987",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-059": {
+  "borders": "1 July 1988",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-060": {
+  "borders": "1 July 1989",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 10
+ },
+ "AG-061": {
+  "borders": "1 July 1989",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-062": {
+  "borders": "1 July 1990",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-063": {
+  "borders": "1 July 1990",
+  "rail": false,
+  "roads": false,
+  "sites": 4,
+  "step": 5
+ },
+ "AG-064": {
+  "borders": "1 July 1991",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-065": {
+  "borders": "1 July 1991",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-066": {
+  "borders": "1 July 1991",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-067": {
+  "borders": "1 July 1992",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-068": {
+  "borders": "1 July 1993",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-069": {
+  "borders": "1 July 1994",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-070": {
+  "borders": "1 July 1995",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-071": {
+  "borders": "1 July 1995",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-072": {
+  "borders": "1 July 1995",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-073": {
+  "borders": "1 July 1996",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-074": {
+  "borders": "1 July 1996",
+  "rail": false,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-075": {
+  "borders": "1 July 1997",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-076": {
+  "borders": "1 July 1998",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-077": {
+  "borders": "1 July 1999",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-078": {
+  "borders": "1 July 1999",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-079": {
+  "borders": "1 July 1999",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-080": {
+  "borders": "1 July 2000",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-081": {
+  "borders": "1 July 2000",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-082": {
+  "borders": "1 July 2001",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-083": {
+  "borders": "1 July 2001",
+  "rail": false,
+  "roads": false,
+  "sites": 3,
+  "step": 5
+ },
+ "AG-084": {
+  "borders": "1 July 2001",
+  "rail": false,
+  "roads": true,
+  "sites": 2,
+  "step": 1
+ },
+ "AG-085": {
+  "borders": "1 July 2002",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-086": {
+  "borders": "1 July 2002",
+  "rail": false,
+  "roads": false,
+  "sites": 3,
+  "step": 5
+ },
+ "AG-087": {
+  "borders": "1 July 2003",
+  "rail": false,
+  "roads": false,
+  "sites": 3,
+  "step": 2
+ },
+ "AG-088": {
+  "borders": "1 July 2003",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-089": {
+  "borders": "1 July 2003",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-090": {
+  "borders": "1 July 2003",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-091": {
+  "borders": "1 July 2003",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-092": {
+  "borders": "1 July 2004",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-093": {
+  "borders": "1 July 2006",
+  "rail": false,
+  "roads": false,
+  "sites": 4,
+  "step": 5
+ },
+ "AG-094": {
+  "borders": "1 July 2006",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-095": {
+  "borders": "1 July 2006",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-096": {
+  "borders": "1 July 2006",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-097": {
+  "borders": "1 July 2007",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-098": {
+  "borders": "1 July 2007",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-099": {
+  "borders": "1 July 2007",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-100": {
+  "borders": "1 July 2007",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-101": {
+  "borders": "1 July 2008",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-102": {
+  "borders": "1 July 2008",
+  "rail": false,
+  "roads": false,
+  "sites": 3,
+  "step": 5
+ },
+ "AG-103": {
+  "borders": "1 July 2008",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-104": {
+  "borders": "1 July 2008",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-105": {
+  "borders": "1 July 2008",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-106": {
+  "borders": "1 July 2008",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-107": {
+  "borders": "1 July 2009",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-108": {
+  "borders": "1 July 2009",
+  "rail": false,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-109": {
+  "borders": "1 July 2009",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-110": {
+  "borders": "1 July 2009",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-111": {
+  "borders": "1 July 2010",
+  "rail": false,
+  "roads": true,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-112": {
+  "borders": "1 July 2010",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-113": {
+  "borders": "1 July 2010",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-114": {
+  "borders": "1 July 2011",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-115": {
+  "borders": "1 July 2011",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-116": {
+  "borders": "1 July 2011",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-117": {
+  "borders": "1 July 2011",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-118": {
+  "borders": "1 July 2011",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-119": {
+  "borders": "1 July 2012",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-120": {
+  "borders": "1 July 2012",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-121": {
+  "borders": "1 July 2012",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-122": {
+  "borders": "1 July 2012",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-123": {
+  "borders": "1 July 2013",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-124": {
+  "borders": "1 July 2013",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-125": {
+  "borders": "1 July 2013",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-126": {
+  "borders": "1 July 2013",
+  "rail": true,
+  "roads": true,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-127": {
+  "borders": "1 July 2014",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-128": {
+  "borders": "1 July 2014",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-129": {
+  "borders": "1 July 2014",
+  "rail": true,
+  "roads": true,
+  "sites": 2,
+  "step": 1
+ },
+ "AG-130": {
+  "borders": "1 July 2014",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-131": {
+  "borders": "1 July 2014",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-132": {
+  "borders": "1 July 2014",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-133": {
+  "borders": "1 July 2014",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-134": {
+  "borders": "1 July 2014",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-135": {
+  "borders": "1 July 2015",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-136": {
+  "borders": "1 July 2015",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-137": {
+  "borders": "1 July 2015",
+  "rail": false,
+  "roads": false,
+  "sites": 3,
+  "step": 10
+ },
+ "AG-138": {
+  "borders": "1 July 2015",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-139": {
+  "borders": "1 July 2015",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-140": {
+  "borders": "1 July 2015",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 5
+ },
+ "AG-141": {
+  "borders": "1 July 2016",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-142": {
+  "borders": "1 July 2016",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-143": {
+  "borders": "1 July 2016",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-144": {
+  "borders": "1 July 2016",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-145": {
+  "borders": "1 July 2016",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 5
+ },
+ "AG-146": {
+  "borders": "1 July 2016",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-147": {
+  "borders": "1 July 2016",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-148": {
+  "borders": "1 July 2016",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-149": {
+  "borders": "1 July 2016",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-150": {
+  "borders": "1 July 2016",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-151": {
+  "borders": "1 July 2016",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-152": {
+  "borders": "1 July 2016",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-153": {
+  "borders": "1 July 2016",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-154": {
+  "borders": "1 July 2017",
+  "rail": false,
+  "roads": false,
+  "sites": 3,
+  "step": 5
+ },
+ "AG-156": {
+  "borders": "1 July 2017",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-157": {
+  "borders": "1 July 2017",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-158": {
+  "borders": "1 July 2017",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-159": {
+  "borders": "1 July 2017",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-160": {
+  "borders": "1 July 2017",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-161": {
+  "borders": "1 July 2017",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-162": {
+  "borders": "1 July 2017",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-163": {
+  "borders": "1 July 2017",
+  "rail": false,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-164": {
+  "borders": "1 July 2017",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-165": {
+  "borders": "1 July 2018",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-166": {
+  "borders": "1 July 2018",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-167": {
+  "borders": "1 July 2018",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-168": {
+  "borders": "1 July 2018",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-169": {
+  "borders": "1 July 2018",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-170": {
+  "borders": "1 July 2018",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-171": {
+  "borders": "1 July 2018",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-172": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-173": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-174": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-175": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-176": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-177": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-178": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-179": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-180": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-181": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-182": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-183": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-184": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 4,
+  "step": 10
+ },
+ "AG-185": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-186": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-187": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 5
+ },
+ "AG-188": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-189": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-190": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-191": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-192": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-193": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-194": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-195": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 3,
+  "step": 10
+ },
+ "AG-196": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-197": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 4,
+  "step": 5
+ },
+ "AG-198": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-199": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-200": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-201": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-202": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-203": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-204": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-205": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 5
+ },
+ "AG-206": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-207": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-208": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-209": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-210": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-211": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 10
+ },
+ "AG-212": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-213": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-214": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-215": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-216": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-217": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-218": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 5
+ },
+ "AG-219": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-220": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-221": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-222": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-223": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 5
+ },
+ "AG-224": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-225": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-226": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-227": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-228": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-229": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-230": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-231": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 10
+ },
+ "AG-232": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-233": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-234": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-235": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-236": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-237": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-238": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-239": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-240": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 10
+ },
+ "AG-241": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 5,
+  "step": 10
+ },
+ "AG-242": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-243": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-244": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-245": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 4,
+  "step": 5
+ },
+ "AG-246": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-247": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-248": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-249": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-250": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-251": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-252": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-253": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-254": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-255": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-256": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-257": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-258": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 5
+ },
+ "AG-259": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 5
+ },
+ "AG-260": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-261": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 10
+ },
+ "AG-262": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-263": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 5
+ },
+ "AG-264": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-265": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-266": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-267": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-268": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-269": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-270": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 4,
+  "step": 10
+ },
+ "AG-271": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-272": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-273": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-274": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-275": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-276": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-277": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-278": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 3,
+  "step": 5
+ },
+ "AG-279": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 3,
+  "step": 5
+ },
+ "AG-280": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 5
+ },
+ "AG-281": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 2,
+  "step": 1
+ },
+ "AG-282": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-283": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-284": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-285": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-286": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-287": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-288": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-289": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-290": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-291": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 3,
+  "step": 5
+ },
+ "AG-292": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-293": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-294": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-295": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-296": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-297": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-298": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-299": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-300": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-301": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-302": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-303": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-304": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-305": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-306": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-307": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 2,
+  "step": 2
+ },
+ "AG-308": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-309": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-310": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-311": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-312": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-313": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-314": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-315": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": false,
+  "sites": 1,
+  "step": 2
+ },
+ "AG-316": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 1
+ },
+ "AG-317": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-318": {
+  "borders": "30 December 2019",
+  "rail": true,
+  "roads": true,
+  "sites": 1,
+  "step": 0.5
+ },
+ "AG-319": {
+  "borders": "30 December 2019",
+  "rail": false,
+  "roads": false,
+  "sites": 3,
+  "step": 5
+ }
+}

@@ -52,7 +52,7 @@ const HEDGE = /^(on or about|on or before|about|around|approximately|roughly|by|
 function displayDate(r) {
   const t = String(r.date_text || '').trim();
   let s;
-  if (/\b(1[89]|20)\d\d\b/.test(t) && t.length <= 34) s = t.replace(/^(on|in|from|during|between)\s+/i, '');
+  if (/\b(1[89]|20)\d\d\b/.test(t) && t.length <= 34) s = t.replace(/^(on(?! or)|in|from|during|between)\s+/i, '');
   else {
     s = fmtSpan(r.p, r.q);
     const h = t.replace(/^(on|in)\s+/i, '').match(HEDGE);
@@ -79,7 +79,8 @@ export function groupChronology(rows, ids, warn) {
     const approx = /^(true|yes|y|1|x)$/i.test(String(r.approx || '').trim());
     let [a, b] = refine(period(p), r.date_text, p);
     if (q) b = Math.max(b, period(q)[1]);
-    const holder = String(r.holder || '').trim();
+    let holder = String(r.holder || '').trim();
+    holder = holder.charAt(0).toUpperCase() + holder.slice(1);
     const row = { p, q, a, b, approx, kind, holder: kind === 'event' || /^event$/i.test(holder) ? '' : holder, note: String(r.note || '').trim(), date_text: r.date_text || '', seq: parseFloat(r.seq) || i };
     // the event, and anything given as a span, sorts by its start; a later record known only to the month or
     // year sorts by the end of that period, since a record of an act comes after the act
@@ -201,11 +202,11 @@ export function detailMapHTML(e, maps, rel) {
   const m = maps.meta(e.id) || {};
   const drawn = ['coastlines', 'lakes', 'rivers'].concat(m.rail ? ['railways'] : [], m.roads ? ['main roads'] : [], ['towns']);
   const list = drawn.slice(0, -1).join(', ') + ' and ' + drawn[drawn.length - 1];
-  const where = e.precision === 'approximate' ? 'the approximate position of the event' : e.precision === 'area' ? 'the centre of the area concerned' : 'the position of the event';
+  const where = e.precision === 'approximate' ? 'the approximate position of the event' : e.precision === 'area' ? 'the center of the area concerned' : 'the position of the event';
   const more = m.sites > 1 ? `; dashed lines lead to the other sites the entry names` : '';
   return `<figure class="detail">
   <h2 class="ex-h">Detail map</h2>
   <div class="dm">${maps.svg(e.id)}</div>
-  <figcaption>The red ring marks ${where}${more}. Boundaries as they stood on ${esc(m.borders || '')}, from CShapes 2.0. ${list[0].toUpperCase() + list.slice(1)} as they are today, from Natural Earth. Azimuthal equal-area projection centred on the site. <a href="${rel}assets/maps/${e.id.toLowerCase()}.svg" download>SVG</a></figcaption>
+  <figcaption>The red ring marks ${where}${more}. Boundaries as they stood on ${esc(m.borders || '')}, from CShapes 2.0. ${list[0].toUpperCase() + list.slice(1)} as they are today, from Natural Earth. Azimuthal equal-area projection centered on the site. <a href="${rel}assets/maps/${e.id.toLowerCase()}.svg" download>SVG</a></figcaption>
 </figure>`;
 }

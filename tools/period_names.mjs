@@ -28,6 +28,14 @@ export function periodName(name, year) {
     'British Somaliland (Somaliland Republic)': 'BRITISH SOMALILAND',
     'Federation of Rhodesia and Nyasaland': 'FED. OF RHODESIA AND NYASALAND',
     'Italy/Sardinia': 'ITALY',
+    'Rumania': 'ROMANIA',
+    'Kyrgyz Republic': 'KYRGYZSTAN',
+    'Bosnia-Herzegovina': 'BOSNIA AND HERZEGOVINA',
+    "Cote D'Ivoire": y < 1986 ? 'IVORY COAST' : 'CÔTE D’IVOIRE',
+    'Surinam': y < 1978 ? 'SURINAM' : 'SURINAME',
+    'French Guyana': 'FRENCH GUIANA',
+    'New Caledonia and Dependencies': 'NEW CALEDONIA',
+    'Reunion': 'RÉUNION',
   };
   if (special[name]) return special[name];
   return name.replace(/\s*\(.*?\)/g, '').replace(/,.*$/, '').toUpperCase();

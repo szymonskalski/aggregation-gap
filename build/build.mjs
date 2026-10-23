@@ -141,7 +141,7 @@ function imprint(rel) {
   return `<footer class="imprint">
   <div class="imp-l">
     <p>Compiled from published sources by the ${esc(cfg.credit)}. Each entry checked against its sources by a second reader.</p>
-    <p>Equal Earth projection centred on 10° E. Coastlines from Natural Earth. Boundaries from CShapes 2.0 (Schvitz et al. 2022), licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license noopener">CC BY-NC-SA 4.0</a>. Set in Libre Caslon Text and Libre Franklin.</p>
+    <p>Equal Earth projection centered on 10° E. Coastlines from Natural Earth. Boundaries from CShapes 2.0 (Schvitz et al. 2022), licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license noopener">CC BY-NC-SA 4.0</a>. Set in Libre Caslon Text and Libre Franklin.</p>
   </div>
   <div class="imp-r">
     <p>Edition of ${edition}, ${ENTRY_COUNT} entries</p>
@@ -329,7 +329,7 @@ function aboutPage(events) {
   <p>The plate borrows its drawing from atlas sheets now in the public domain. The water lining along the coasts comes from S. Augustus Mitchell’s <i>Europe</i> (1849), and the graduated border with its degree figures from Keith Johnston’s <i>General Atlas</i> (1861) and Stieler’s <i>Hand-Atlas</i> (1891). Red marks the selected entry, as red marks the present boundary on the 1961 Algeria–Libya map prepared for the State Department’s Office of the Geographer. Under the plate, the scale of years stacks one bar for each entry, much as John Snow stacked one bar for each death on his cholera map of 1855. The boundaries are those of the period selected, as they stood on the date given in the reference box.</p>
   <h2>Chronologies and detail maps</h2>
   <p>Under each entry, a chronology sets out the dated moments in its record: when the disruption happened, when each holder recorded or reported its part, when someone made a finding or named an attacker, and when the records were joined, if they ever were. The rows are drawn from the entry’s own text and checked against it by a second reader; a moment the entry does not date is left out. Where a date is known only to the month or year, the strip draws a bar across that period.</p>
-  <p>The detail map shows the area of the event. Its boundaries are those of the entry’s year, from CShapes 2.0; coastlines, lakes, rivers, railways, main roads and towns come from Natural Earth and are drawn as they are today, so a railway shown may postdate the event. Each map uses an azimuthal equal-area projection centred on the site, and can be downloaded as SVG.</p>
+  <p>The detail map shows the area of the event. Its boundaries are those of the entry’s year, from CShapes 2.0; coastlines, lakes, rivers, railways, main roads and towns come from Natural Earth and are drawn as they are today, so a railway shown may postdate the event. Each map uses an azimuthal equal-area projection centered on the site, and can be downloaded as SVG.</p>
   <h2 id="suggest">Suggest an event</h2>
   <p>Suggestions are reviewed by the editors before anything is published.</p>
   ${suggestBlock()}
