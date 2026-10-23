@@ -32,6 +32,8 @@ Changes to the sheet go live the next morning, or at once from Actions, Build an
 
 A new entry takes the next free AG number. Fill the columns (each header carries a note on its meaning), set `status` to `published` and `added` to the day's date. In `records`, write one holder per line, as `Holder: what it held.` The `use_in_volume` column stays in the sheet and is not shown on the site.
 
+The `Chronology` tab holds the dated moments of each entry's record, one row per moment: `id`, `seq`, `date` (`YYYY`, `YYYY-MM` or `YYYY-MM-DD`, no more precise than the entry), `date_end` for a span, `date_text` (the entry's own words for the date), `approx` (`yes` where the entry hedges), `holder`, `kind` (`event`, `recorded`, `reported`, `finding`, `attributed`, `denied`, `joined` or `other`), `note` (a few words on what happened) and `field` (the entry column the row rests on). Every row must rest on the entry's text. The tab is made by `sheet/add_chronology_and_media_tabs.gs`; until it exists, the site uses `data/chronology.seed.csv`. The `Media` tab is for pictures and is not yet read by the site.
+
 To withdraw an entry, set `status` to `withdrawn`. Rows are never deleted and numbers never reused.
 
 The build skips a row with an invalid id, year or case type and names it in the log. The rest of the site still goes out.
@@ -47,13 +49,16 @@ python3 -m http.server -d _site 8000
 
 ## What is where
 
-- `build/build.mjs`: the site generator, which needs nothing beyond Node 22
+- `build/build.mjs`: the site generator, which needs nothing beyond Node 22; `build/extras.mjs` draws the chronology and places the detail map under each entry
 - `assets/js/plate.js`: the map, the scale of years, the register and the record
 - `assets/css/site.css`, `assets/fonts/`: styles and type (Libre Caslon Text and Libre Franklin, SIL Open Font License)
 - `assets/vendor/`: d3 and topojson
 - `assets/data/land-50m.json`, `land-110m.json`: coastlines from Natural Earth (public domain), via world-atlas
 - `assets/data/borders-cshapes.json`: boundaries and country names for each period, derived from CShapes 2.0 (Schvitz et al. 2022) and licensed, like its source, CC BY-NC-SA 4.0, for non-commercial use only
 - `assets/img/locator.svg`: the small world map on each entry page
+- `assets/maps/`: the detail map of each placed entry, as SVG, with `manifest.json` for the captions; boundaries from CShapes 2.0 (CC BY-NC-SA 4.0), everything else from Natural Earth 1:10m (public domain)
+- `tools/`: the generator of the detail maps (`node tools/detail_maps.mjs data/events.seed.csv <natural-earth-geojson-dir> <CShapes-2.0.geojson> assets/maps [AG-001,AG-002]`, after `npm install` in `tools/`) and a script that lists openly licensed pictures for each entry; neither runs in the daily build
+- `data/chronology.seed.csv`: a copy of the Chronology tab, used when the sheet has none
 - `data/events.seed.csv`: a copy of the register, used when no sheet is set
 - `sheet/`: the master spreadsheet and the script that made it
 - `site.config.json`: title, address, and the subscription and suggestion settings

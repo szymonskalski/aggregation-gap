@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { parseCSV, toCSV } from './csv.mjs';
+import { groupChronology, chronoHTML, loadMaps, detailMapHTML, CHRONO_COLS } from './extras.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const OUT = path.join(ROOT, '_site');
@@ -44,6 +45,24 @@ async function getCSV() {
   if (/^\s*<(!doctype|html)/i.test(text)) throw new Error('The sheet URL returned a web page, not CSV. Publish the Events tab to the web as CSV and use that link.');
   if (!/^\uFEFF?"?id"?,/i.test(text)) throw new Error('The CSV does not start with the "id" column. Check that the published link points to the Events tab.');
   return text;
+}
+
+// a second tab of the same sheet (Chronology), read the same way as the Events tab; until the tab exists,
+// or if it cannot be read, the copy in data/ is used
+async function getTab(name, cols, seed) {
+  const fallback = why => { console.log(`${name}: ${why}; using data/${seed}`); return parseCSV(fs.readFileSync(path.join(ROOT, 'data', seed), 'utf8')); };
+  const url = cfg[`${name.toLowerCase()}_csv_url`] || (/[?&]sheet=/.test(SHEET_URL) ? SHEET_URL.replace(/([?&]sheet=)[^&]*/, `$1${name}`) + '&headers=1' : '');
+  if (!url) return fallback('no sheet link');
+  try {
+    const res = await fetch(url, { redirect: 'follow', signal: AbortSignal.timeout(45000) });
+    const text = await res.text();
+    if (!res.ok) return fallback(`HTTP ${res.status}`);
+    const rows = parseCSV(text);
+    // the Google endpoint returns the first tab when no tab has the name asked for, so check the columns
+    if (!rows.length || !cols.every(c => c in rows[0])) return fallback(`no ${name} tab with the expected columns in the sheet`);
+    console.log(`${name}: ${rows.length} rows from the sheet`);
+    return rows;
+  } catch (err) { return fallback(err.message); }
 }
 
 function normalize(r) {
@@ -252,6 +271,11 @@ function eventsIndexPage(events) {
   return page({ title: `Register · ${cfg.title}`, rel: '../', body, current: 'register' });
 }
 
+let CHRONO = {}, MAPS = { has: () => false };
+function extrasHTML(e, rel) {
+  const c = chronoHTML(e, CHRONO[e.id], INK[e.case_type]), m = detailMapHTML(e, MAPS, rel);
+  return c || m ? `<section class="rec-extra">${c}${m}</section>` : '';
+}
 function eventPage(e, prev, next) {
   const row = (dt, dd) => (dd ? `<dt>${dt}</dt><dd>${dd}</dd>` : '');
   const p = s => (s ? `<p>${esc(s)}</p>` : '');
@@ -280,6 +304,7 @@ function eventPage(e, prev, next) {
     ${loc}
     <p class="rec-links">${e.lat != null ? `<a href="../../index.html#${slug(e.id)}">Show on the plate</a>` : ''}<a href="../index.html">The whole register</a></p>
   </div>
+  ${extrasHTML(e, '../../')}
 </article>
 <nav class="pn" aria-label="Neighbouring entries">${prev ? `<a href="../${slug(prev.id)}/index.html">${prev.id.toLowerCase()}  ${esc(prev.label)}</a>` : '<span></span>'}${next ? `<a href="../${slug(next.id)}/index.html">${esc(next.label)}  ${next.id.toLowerCase()}</a>` : ''}</nav>
 </main>`;
@@ -302,13 +327,16 @@ function aboutPage(events) {
   <p><i>Nota.</i> ${esc(NOTA)}</p>
   <h2>How the plate is drawn</h2>
   <p>The plate borrows its drawing from atlas sheets now in the public domain. The water lining along the coasts comes from S. Augustus Mitchell’s <i>Europe</i> (1849), and the graduated border with its degree figures from Keith Johnston’s <i>General Atlas</i> (1861) and Stieler’s <i>Hand-Atlas</i> (1891). Red marks the selected entry, as red marks the present boundary on the 1961 Algeria–Libya map prepared for the State Department’s Office of the Geographer. Under the plate, the scale of years stacks one bar for each entry, much as John Snow stacked one bar for each death on his cholera map of 1855. The boundaries are those of the period selected, as they stood on the date given in the reference box.</p>
+  <h2>Chronologies and detail maps</h2>
+  <p>Under each entry, a chronology sets out the dated moments in its record: when the disruption happened, when each holder recorded or reported its part, when someone made a finding or named an attacker, and when the records were joined, if they ever were. The rows are drawn from the entry’s own text and checked against it by a second reader; a moment the entry does not date is left out. Where a date is known only to the month or year, the strip draws a bar across that period.</p>
+  <p>The detail map shows the area of the event. Its boundaries are those of the entry’s year, from CShapes 2.0; coastlines, lakes, rivers, railways, main roads and towns come from Natural Earth and are drawn as they are today, so a railway shown may postdate the event. Each map uses an azimuthal equal-area projection centred on the site, and can be downloaded as SVG.</p>
   <h2 id="suggest">Suggest an event</h2>
   <p>Suggestions are reviewed by the editors before anything is published.</p>
   ${suggestBlock()}
   <h2 id="subscribe">Notices by email</h2>
   ${subscribeBlock('')}
   <h2>Credits and licences</h2>
-  <p>${esc(cfg.credit)}. Prepared for the edited volume <i>${esc(cfg.volume)}</i>. Coastlines: Natural Earth, public domain, via world-atlas. Boundaries: CShapes 2.0, Schvitz, Guy, Seraina Rüegger, Luc Girardin, Lars-Erik Cederman, Nils Weidmann and Kristian Skrede Gleditsch, “Mapping the International System, 1886–2017: The CShapes 2.0 Dataset,” <i>Journal of Conflict Resolution</i> 66, no. 1 (2022): 144–61, licensed CC BY-NC-SA 4.0. Type: Libre Caslon Text and Libre Franklin, SIL Open Font License. Drawing: d3 and topojson.</p>
+  <p>${esc(cfg.credit)}. Prepared for the edited volume <i>${esc(cfg.volume)}</i>. Coastlines on the plate: Natural Earth, public domain, via world-atlas. Detail maps: Natural Earth 1:10m coastlines, lakes, rivers, railways, roads and populated places, public domain. Boundaries: CShapes 2.0, Schvitz, Guy, Seraina Rüegger, Luc Girardin, Lars-Erik Cederman, Nils Weidmann and Kristian Skrede Gleditsch, “Mapping the International System, 1886–2017: The CShapes 2.0 Dataset,” <i>Journal of Conflict Resolution</i> 66, no. 1 (2022): 144–61, licensed CC BY-NC-SA 4.0. Type: Libre Caslon Text and Libre Franklin, SIL Open Font License. Drawing: d3 and topojson.</p>
 </main>`;
   return page({ title: `About · ${cfg.title}`, rel: '', body, current: 'about' });
 }
@@ -353,6 +381,10 @@ events.sort((a, b) => a.n - b.n);
 ENTRY_COUNT = events.length;
 const TEXT_FIELDS = ['title', 'label', 'dates', 'place', 'summary', 'records', 'gap', 'joining', 'harm', 'verification'];
 const shown = events.map(e => ({ ...e, ...Object.fromEntries(TEXT_FIELDS.map(f => [f, smart(e[f])])), sources: e.sources.map(x => ({ ...x, cite: smart(x.cite) })) }));
+const chronoRows = await getTab('Chronology', ['id', 'date', 'kind', 'note'], 'chronology.seed.csv');
+CHRONO = groupChronology(chronoRows.map(r => ({ ...r, holder: smart(r.holder), note: smart(r.note), date_text: smart(r.date_text) })), new Set(events.map(e => e.id)), warn);
+MAPS = loadMaps(ROOT);
+console.log(`Chronologies for ${Object.keys(CHRONO).length} entries; detail maps for ${events.filter(e => MAPS.has(e.id)).length}`);
 
 fs.rmSync(OUT, { recursive: true, force: true });
 const write = (p, s) => { const f = path.join(OUT, p); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, s); };
@@ -371,6 +403,7 @@ write('data/events.json', JSON.stringify(shown.map(e => ({
   strength: e.strength, summary: e.summary, records: e.records, gap: e.gap, joining: e.joining, harm: e.harm,
   sources: e.sources, verification: e.verification, verified: /^verified/i.test(e.verification), url: `events/${slug(e.id)}/index.html`,
 }))));
+write('data/chronology.csv', toCSV(chronoRows.filter(r => r.id), CHRONO_COLS));
 write('data/events.csv', toCSV(events.map(e => ({
   ...e, more_sites: e.more.map(p => p.join(', ')).join('; '), services: e.services.join(', '),
   harm_found_later: e.harm, sources: e.sources.map(s => `${s.cite} | ${s.url}`).join('\n'),

@@ -313,6 +313,12 @@
         '<p class="rec-links"><a href="' + esc(e.url) + '">Permanent page for this entry</a></p></div>';
       r.hidden = false;
       $('rec-close').onclick = closeRecord;
+      // the chronology and the detail map are drawn into the entry's own page; take them from there
+      fetch(e.url).then(function (res) { return res.ok ? res.text() : ''; }).then(function (html) {
+        if (!html || state.sel !== e.id) return;
+        var x = new DOMParser().parseFromString(html, 'text/html').querySelector('.rec-extra');
+        if (x) r.appendChild(document.importNode(x, true));
+      }).catch(function () {});
     }
     function closeRecord() {
       state.sel = null; $('record').hidden = true; selG.selectAll('*').remove(); linkG.selectAll('*').remove(); apply(); syncHash();

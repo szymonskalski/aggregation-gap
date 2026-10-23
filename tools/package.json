@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "type": "module",
+  "description": "Generators for the Aggregation Gap Atlas (detail maps). Not needed for the daily build.",
+  "dependencies": {
+    "d3-geo": "^3.1.1",
+    "topojson-client": "^3.1.0",
+    "topojson-server": "^3.0.1"
+  }
+}
