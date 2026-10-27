@@ -12,9 +12,11 @@
     'still-open': 'suspected, never settled'
   };
   // one color per class, and a pale wash of the same color inside the open shapes
-  var INK = { missed: '#1f4f8f', obvious: '#00876f', 'false-alarm': '#b07a00', 'wrongly-blamed': '#9a68c4', 'still-open': '#4a4a4a' };
-  var WASH = { missed: '#c7d3e3', obvious: '#bfe1db', 'false-alarm': '#ebdebf', 'wrongly-blamed': '#e6d9f0', 'still-open': '#e4e4e4' };
-  var RED = '#b3261e';
+  var INK = { missed: '#1f4f8f', obvious: '#00876f', 'false-alarm': '#9c6a00', 'wrongly-blamed': '#9a68c4', 'still-open': '#4d4237' };
+  var WASH = { missed: '#c7d3e3', obvious: '#bfe1db', 'false-alarm': '#ebdebf', 'wrongly-blamed': '#e6d9f0', 'still-open': '#e6dcc6' };
+  var RED = '#a8261c';
+  // the sheet: buff paper for the sea, a paler hand-laid tint for the land, iron-gall ink
+  var PAPER = '#f0e4c8', LAND = '#f8f0dc', INK0 = '#2b2118';
   var DECADES = [1945, 1960, 1970, 1980, 1990, 2000, 2010, 2020];
   var decName = function (d) { return d === 1945 ? '1945 to 1959' : d === 2020 ? '2020 to 2026' : d + ' to ' + (d + 9); };
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
@@ -69,22 +71,22 @@
     // frame: outer rule, graduated band, inner rule
     var F = svg.append('g').attr('class', 'frame');
     var band = 5;
-    F.append('rect').attr('x', ML - band).attr('y', MT - band).attr('width', W + 2 * band).attr('height', H + 2 * band).attr('fill', 'none').attr('stroke', '#121212').attr('stroke-width', 1.5);
+    F.append('rect').attr('x', ML - band).attr('y', MT - band).attr('width', W + 2 * band).attr('height', H + 2 * band).attr('fill', 'none').attr('stroke', INK0).attr('stroke-width', 1.5);
     for (var lat = -60; lat < 82; lat += 10) {
       var y1 = Math.max(0, proj([0, Math.min(lat + 10, 82)])[1]), y2 = Math.min(H, proj([0, Math.max(lat, -58)])[1]);
       if (y2 <= y1) continue;
       var dark = ((lat + 60) / 10) % 2 === 0;
-      [ML - band, ML + W].forEach(function (x) { F.append('rect').attr('x', x).attr('y', MT + y1).attr('width', band).attr('height', y2 - y1).attr('fill', dark ? '#121212' : '#fff').attr('stroke', '#121212').attr('stroke-width', 0.35); });
+      [ML - band, ML + W].forEach(function (x) { F.append('rect').attr('x', x).attr('y', MT + y1).attr('width', band).attr('height', y2 - y1).attr('fill', dark ? INK0 : PAPER).attr('stroke', INK0).attr('stroke-width', 0.35); });
     }
     [[82, MT - band], [-58, MT + H]].forEach(function (cut) {
       for (var lon = -170; lon < 190; lon += 10) {
         var a = proj([lon, cut[0]]), b = proj([lon + 10, cut[0]]);
         if (!a || !b || b[0] < a[0]) continue;
         var dk = ((lon + 170) / 10) % 2 === 0;
-        F.append('rect').attr('x', ML + a[0]).attr('y', cut[1]).attr('width', b[0] - a[0]).attr('height', band).attr('fill', dk ? '#121212' : '#fff').attr('stroke', '#121212').attr('stroke-width', 0.35);
+        F.append('rect').attr('x', ML + a[0]).attr('y', cut[1]).attr('width', b[0] - a[0]).attr('height', band).attr('fill', dk ? INK0 : PAPER).attr('stroke', INK0).attr('stroke-width', 0.35);
       }
     });
-    F.append('rect').attr('x', ML).attr('y', MT).attr('width', W).attr('height', H).attr('fill', 'none').attr('stroke', '#121212').attr('stroke-width', 0.5);
+    F.append('rect').attr('x', ML).attr('y', MT).attr('width', W).attr('height', H).attr('fill', 'none').attr('stroke', INK0).attr('stroke-width', 0.5);
     [60, 30, 0, -30].forEach(function (la) {
       var y = MT + proj([0, la])[1] + 3.5, t = la === 0 ? '0°' : Math.abs(la) + '° ' + (la > 0 ? 'N' : 'S');
       F.append('text').attr('class', 'deg').attr('x', ML - band - 5).attr('y', y).attr('text-anchor', 'end').text(t);
@@ -98,20 +100,22 @@
 
     var mapG = svg.append('g').attr('transform', 'translate(' + ML + ',' + MT + ')');
     var clipped = mapG.append('g').attr('clip-path', 'url(#mapclip)');
-    clipped.append('rect').attr('width', W).attr('height', H).attr('fill', '#fff');
+    clipped.append('rect').attr('width', W).attr('height', H).attr('fill', PAPER);
     var Z = clipped.append('g');
     // water lining: rings drawn outward from the coast, spacing widening with distance (after Mitchell, 1849)
-    var RINGS = [[1.8, '#6e6e6e'], [3.7, '#878787'], [6.0, '#a0a0a0'], [8.8, '#b8b8b8'], [12.2, '#cfcfcf']];
+    var RINGS = [[1.8, '#6b5a44'], [3.7, '#857259'], [6.0, '#a08b6f'], [8.8, '#b9a487'], [12.2, '#cfbc9e']];
     var sea = Z.append('g').attr('class', 'water');
     for (var i = RINGS.length - 1; i >= 0; i--) {
       var dd = RINGS[i][0], tt = 0.55;
       sea.append('use').attr('href', '#land-s').attr('fill', 'none').attr('stroke', RINGS[i][1]).attr('stroke-width', 2 * dd + tt).attr('stroke-linejoin', 'round').attr('vector-effect', 'non-scaling-stroke');
-      sea.append('use').attr('href', '#land-s').attr('fill', 'none').attr('stroke', '#fff').attr('stroke-width', 2 * dd - tt).attr('stroke-linejoin', 'round').attr('vector-effect', 'non-scaling-stroke');
+      sea.append('use').attr('href', '#land-s').attr('fill', 'none').attr('stroke', PAPER).attr('stroke-width', 2 * dd - tt).attr('stroke-linejoin', 'round').attr('vector-effect', 'non-scaling-stroke');
     }
-    Z.append('path').attr('d', path(d3.geoGraticule().step([15, 15])())).attr('fill', 'none').attr('stroke', '#dedede').attr('stroke-width', 0.45).attr('vector-effect', 'non-scaling-stroke');
-    Z.append('path').attr('d', path({ type: 'Sphere' })).attr('fill', 'none').attr('stroke', '#121212').attr('stroke-width', 0.7).attr('vector-effect', 'non-scaling-stroke');
-    Z.append('use').attr('href', '#land-l').attr('fill', '#fff').attr('stroke', '#121212').attr('stroke-width', 0.75).attr('stroke-linejoin', 'round').attr('vector-effect', 'non-scaling-stroke');
-    var bordersG = Z.append('path').attr('fill', 'none').attr('stroke', '#7a7a7a').attr('stroke-width', 0.6).attr('stroke-dasharray', '4 1.6 1 1.6').attr('vector-effect', 'non-scaling-stroke');
+    Z.append('path').attr('d', path(d3.geoGraticule().step([15, 15])())).attr('fill', 'none').attr('stroke', '#dccba5').attr('stroke-width', 0.45).attr('vector-effect', 'non-scaling-stroke');
+    Z.append('path').attr('d', path({ type: 'Sphere' })).attr('fill', 'none').attr('stroke', INK0).attr('stroke-width', 0.7).attr('vector-effect', 'non-scaling-stroke');
+    Z.append('use').attr('href', '#land-l').attr('fill', LAND).attr('stroke', INK0).attr('stroke-width', 0.75).attr('stroke-linejoin', 'round').attr('vector-effect', 'non-scaling-stroke');
+    // boundaries hand-coloured with a ribbon of wash along each line, as on Victorian political maps
+    var ribbonG = Z.append('path').attr('fill', 'none').attr('stroke', 'rgba(176,82,58,.22)').attr('stroke-width', 4.5).attr('stroke-linejoin', 'round').attr('vector-effect', 'non-scaling-stroke');
+    var bordersG = Z.append('path').attr('fill', 'none').attr('stroke', '#6b5a44').attr('stroke-width', 0.6).attr('stroke-dasharray', '4 1.6 1 1.6').attr('vector-effect', 'non-scaling-stroke');
     var namesG = Z.append('g');
     var seaG = Z.append('g');
     [['PACIFIC OCEAN', -140, 8], ['PACIFIC OCEAN', 162, 24], ['ATLANTIC OCEAN', -38, 22], ['INDIAN OCEAN', 78, -22], ['SOUTHERN OCEAN', 30, -52]].forEach(function (s) {
@@ -132,9 +136,11 @@
     var mk = markG.selectAll('g.mk').data(placed, function (e) { return e.id; }).join('g').attr('class', 'mk').attr('transform', function (e) { return 'translate(' + e.x + ',' + e.y + ')'; });
     mk.append('title').text(function (e) { return e.n + '. ' + e.label + ' (' + TNAME[e.case_type] + ')'; });
     mk.append('circle').attr('class', 'hit').attr('r', 7);
-    // a thin white halo lifts each mark off the coastlines and off its neighbours
-    mk.append('path').each(function (e) { var s = shape(e, 3.3); d3.select(this).attr('d', s.d).attr('fill', '#fff').attr('stroke', '#fff').attr('stroke-width', s.sw + 1.8).attr('stroke-linejoin', 'round').attr('vector-effect', 'non-scaling-stroke'); });
+    // each mark is a map pin: a shadow on the paper, a thin halo, the coloured head and a glint of light on it
+    mk.append('path').attr('class', 'pin-shadow').attr('transform', 'translate(1.4,1.8)').each(function (e) { var s = shape(e, 3.3); d3.select(this).attr('d', s.d).attr('fill', 'rgba(43,33,24,.32)').attr('stroke', 'rgba(43,33,24,.32)').attr('stroke-width', s.sw + 0.6).attr('stroke-linejoin', 'round'); });
+    mk.append('path').each(function (e) { var s = shape(e, 3.3); d3.select(this).attr('d', s.d).attr('fill', LAND).attr('stroke', LAND).attr('stroke-width', s.sw + 1.8).attr('stroke-linejoin', 'round').attr('vector-effect', 'non-scaling-stroke'); });
     mk.append('path').each(function (e) { var s = shape(e, 3.3); d3.select(this).attr('d', s.d).attr('fill', s.fill).attr('stroke', s.st).attr('stroke-width', s.sw).attr('stroke-linejoin', 'round').attr('vector-effect', 'non-scaling-stroke'); });
+    mk.filter(function (e) { return e.case_type !== 'wrongly-blamed' || e.scope === 'adjacent'; }).append('circle').attr('class', 'glint').attr('cx', -1.1).attr('cy', -1.2).attr('r', 0.95).attr('fill', '#fffaf0').attr('opacity', 0.75);
     mk.append('text').attr('class', 'num').attr('x', 5.5).attr('y', 3.2).text(function (e) { return e.n; });
 
     var k = 1;
@@ -157,18 +163,27 @@
       var right = e.x < W * 0.78;
       var c = g.append('g').attr('class', 'cs').datum({ x: e.x, y: e.y });
       var dx = right ? 1 : -1;
+      if (cls === 'sel-lab') {
+        // the selected entry carries a small red paper flag on its pin
+        c.append('line').attr('x1', 0).attr('y1', -3).attr('x2', 0).attr('y2', -30).attr('stroke', INK0).attr('stroke-width', 1);
+        c.append('path').attr('d', 'M0,-30h' + dx * 17 + 'l' + (-dx * 4.5) + ',4.6l' + dx * 4.5 + ',4.6h' + (-dx * 17) + 'Z').attr('fill', color).attr('stroke', INK0).attr('stroke-width', 0.45);
+        c.append('text').attr('class', cls).attr('x', dx * 21).attr('y', -21.5).attr('text-anchor', right ? 'start' : 'end').text(e.n + '  ' + e.label);
+        counter(c);
+        return c;
+      }
       c.append('line').attr('x1', dx * 5).attr('y1', -5).attr('x2', dx * 15).attr('y2', -15).attr('stroke', color).attr('stroke-width', 0.8);
       c.append('text').attr('class', cls).attr('x', dx * 17).attr('y', -15.5).attr('text-anchor', right ? 'start' : 'end').text(e.n + '  ' + e.label);
       counter(c);
       return c;
     }
-    function hover(e) { hoverG.selectAll('*').remove(); tag(hoverG, e, 'lab', '#121212'); }
+    function hover(e) { hoverG.selectAll('*').remove(); tag(hoverG, e, 'lab', INK0); }
 
     // ---------- boundaries and names for the period shown ----------
     function setBorders() {
       var dec = state.decade == null ? 2020 : state.decade, b = BOR[dec];
       if (!b) return;
       bordersG.attr('d', path({ type: 'MultiLineString', coordinates: b.lines }));
+      ribbonG.attr('d', bordersG.attr('d'));
       namesG.selectAll('*').remove();
       b.labels.forEach(function (l) {
         var p = proj([l.lon, l.lat]); if (!p) return;
@@ -206,7 +221,7 @@
       .on('keydown', function (ev, s) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggleDecade(s.d); } });
     seg.append('rect').attr('x', function (s) { return xs(s.a); }).attr('y', 4).attr('width', function (s) { return xs(s.b) - xs(s.a); }).attr('height', barY + 26).attr('fill', 'transparent');
     seg.append('rect').attr('class', 'band').attr('x', function (s) { return xs(s.a); }).attr('y', barY).attr('width', function (s) { return xs(s.b) - xs(s.a); }).attr('height', 6)
-      .attr('fill', function (s, i) { return i % 2 === 0 ? '#121212' : '#fff'; }).attr('stroke', '#121212').attr('stroke-width', 0.7);
+      .attr('fill', function (s, i) { return i % 2 === 0 ? INK0 : PAPER; }).attr('stroke', INK0).attr('stroke-width', 0.7);
     SC.append('g').selectAll('text').data(DECADES.concat([2026])).join('text').attr('x', function (y) { return xs(y === 2026 ? 2026.5 : y); }).attr('y', barY + 19).attr('text-anchor', 'middle').text(function (y) { return y; });
     SC.append('text').attr('x', ML - 8).attr('y', barY + 6).attr('text-anchor', 'end').text('Years');
 
@@ -226,8 +241,8 @@
       bracketG.selectAll('*').remove();
       if (state.decade != null) {
         var s = spans.filter(function (x) { return x.d === state.decade; })[0];
-        bracketG.append('path').attr('d', 'M' + (xs(s.a) + 1) + ',' + (barY + 30) + 'v4H' + (xs(s.b) - 1) + 'v-4').attr('fill', 'none').attr('stroke', '#121212').attr('stroke-width', 0.8);
-        bracketG.append('text').attr('x', (xs(s.a) + xs(s.b)) / 2).attr('y', barY + 34.5).attr('dy', '0.9em').attr('text-anchor', 'middle').text(decName(s.d)).style('font-size', '11px').style('fill', '#121212');
+        bracketG.append('path').attr('d', 'M' + (xs(s.a) + 1) + ',' + (barY + 30) + 'v4H' + (xs(s.b) - 1) + 'v-4').attr('fill', 'none').attr('stroke', INK0).attr('stroke-width', 0.8);
+        bracketG.append('text').attr('x', (xs(s.a) + xs(s.b)) / 2).attr('y', barY + 34.5).attr('dy', '0.9em').attr('text-anchor', 'middle').text(decName(s.d)).style('font-size', '11px').style('fill', INK0);
       }
     }
 
@@ -284,10 +299,10 @@
       p2.translate([p2.translate()[0], p2.translate()[1] - t]);
       var pa = d3.geoPath(p2), pt = p2([e.lon, e.lat]);
       return '<svg viewBox="0 0 ' + w + ' ' + h + '" role="img" aria-label="Position of the event on a world map">' +
-        '<rect width="' + w + '" height="' + h + '" fill="#fff" stroke="#121212" stroke-width="0.8"/>' +
-        '<path d="' + pa(d3.geoGraticule().step([30, 30])()) + '" fill="none" stroke="#e2e2e2" stroke-width="0.4"/>' +
-        '<path d="' + pa(land110) + '" fill="#fff" stroke="#121212" stroke-width="0.45"/>' +
-        '<path d="' + pa({ type: 'Sphere' }) + '" fill="none" stroke="#121212" stroke-width="0.5"/>' +
+        '<rect width="' + w + '" height="' + h + '" fill="' + PAPER + '" stroke="' + INK0 + '" stroke-width="0.8"/>' +
+        '<path d="' + pa(d3.geoGraticule().step([30, 30])()) + '" fill="none" stroke="#dccba5" stroke-width="0.4"/>' +
+        '<path d="' + pa(land110) + '" fill="' + LAND + '" stroke="' + INK0 + '" stroke-width="0.45"/>' +
+        '<path d="' + pa({ type: 'Sphere' }) + '" fill="none" stroke="' + INK0 + '" stroke-width="0.5"/>' +
         '<g stroke="' + RED + '" stroke-width="0.9" fill="none"><circle cx="' + pt[0] + '" cy="' + pt[1] + '" r="5"/><path d="M' + (pt[0] - 11) + ',' + pt[1] + 'h7M' + (pt[0] + 4) + ',' + pt[1] + 'h7M' + pt[0] + ',' + (pt[1] - 11) + 'v7M' + pt[0] + ',' + (pt[1] + 4) + 'v7"/></g></svg>';
     }
     // the sheet gives one holder per line ("Holder: what it held."); older rows are a single paragraph
@@ -338,10 +353,8 @@
         (e.more || []).forEach(function (m) {
           var q = proj([m[1], m[0]]); if (!q) return;
           linkG.append('line').attr('x1', e.x).attr('y1', e.y).attr('x2', q[0]).attr('y2', q[1]).attr('stroke', RED).attr('stroke-width', 0.8).attr('stroke-dasharray', '3 2').attr('vector-effect', 'non-scaling-stroke');
-          var c = linkG.append('g').attr('class', 'cs').datum({ x: q[0], y: q[1] }); c.append('circle').attr('r', 2.6).attr('fill', '#fff').attr('stroke', RED).attr('stroke-width', 1);
+          var c = linkG.append('g').attr('class', 'cs').datum({ x: q[0], y: q[1] }); c.append('circle').attr('r', 2.6).attr('fill', LAND).attr('stroke', RED).attr('stroke-width', 1);
         });
-        var c = selG.append('g').attr('class', 'cs').datum({ x: e.x, y: e.y });
-        c.append('circle').attr('r', 7.5).attr('fill', 'none').attr('stroke', RED).attr('stroke-width', 1.3);
         tag(selG, e, 'sel-lab', RED);
         counter(selG.selectAll('g.cs')); counter(linkG.selectAll('g.cs'));
         if (fly) { var kk = Math.max(k, 3); mapG.transition().duration(650).call(zoom.transform, d3.zoomIdentity.translate(W / 2 - kk * e.x, H / 2 - kk * e.y).scale(kk)); }

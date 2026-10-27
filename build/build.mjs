@@ -111,8 +111,8 @@ function normalize(r) {
 }
 
 // ---------- page shell ----------
-const INK = { missed: '#1f4f8f', obvious: '#00876f', 'false-alarm': '#b07a00', 'wrongly-blamed': '#9a68c4', 'still-open': '#4a4a4a' };
-const WASH = { missed: '#c7d3e3', obvious: '#bfe1db', 'false-alarm': '#ebdebf', 'wrongly-blamed': '#e6d9f0', 'still-open': '#e4e4e4' };
+const INK = { missed: '#1f4f8f', obvious: '#00876f', 'false-alarm': '#9c6a00', 'wrongly-blamed': '#9a68c4', 'still-open': '#4d4237' };
+const WASH = { missed: '#c7d3e3', obvious: '#bfe1db', 'false-alarm': '#ebdebf', 'wrongly-blamed': '#e6d9f0', 'still-open': '#e6dcc6' };
 const TDEF = {
   missed: 'the pieces existed, but no one put them together until late, or ever',
   obvious: 'the attacker claimed it, or the target made it plain',
@@ -288,6 +288,8 @@ function extrasHTML(e, rel) {
   const c = chronoHTML(e, CHRONO[e.id], INK[e.case_type]), m = detailMapHTML(e, MAPS, rel), p = picturesHTML(e, MEDIA[e.id]);
   return c || m || p ? `<section class="rec-extra">${c}${m}${p}</section>` : '';
 }
+// the register's own entry date, as a clerk's stamp: 22 OCT 2026
+const stampDate = d => { const [y, m, dd] = d.split('-').map(Number); return `${dd} ${MONTHS[m - 1].slice(0, 3).toUpperCase()} ${y}`; };
 function eventPage(e, prev, next) {
   const row = (dt, dd) => (dd ? `<dt>${dt}</dt><dd>${dd}</dd>` : '');
   const p = s => (s ? `<p>${esc(s)}</p>` : '');
@@ -303,7 +305,12 @@ function eventPage(e, prev, next) {
   const body = `${runhead('../../')}
 <main id="main">
 <article class="record">
-  <div class="rec-head"><p class="rec-code">${slug(e.id)}</p><h1>${esc(e.title)}</h1></div>
+  <div class="rec-head docket">
+    <p class="dk-no">No. <span>${esc(e.id)}</span></p>
+    <h1>${esc(e.title)}</h1>
+    <p class="dk-meta">${TYPE_LABEL[e.case_type]}<span>·</span>${esc(e.dates)}</p>
+    ${e.added ? `<p class="dk-stamp">Register<b>${stampDate(e.added)}</b></p>` : ''}
+  </div>
   <dl class="fields">
     ${row('Date', p(e.dates))}${row('Place', p(e.place))}${row('Service', p(e.services.join(', ')))}${row('Context', p(e.context))}
     ${row('Classification', `<p>${shapeSVG(e)} ${TYPE_LABEL[e.case_type]}${e.scope === 'adjacent' ? ', adjacent case' : ''}. ${TDEF[e.case_type][0].toUpperCase() + TDEF[e.case_type].slice(1)}.</p>`)}

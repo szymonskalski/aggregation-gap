@@ -95,16 +95,16 @@ export function groupChronology(rows, ids, warn) {
 
 // ---------- the strip ----------
 function mark(kind, ink) {
-  const R = '#b3261e', K = '#121212';
+  const R = '#a8261c', K = '#2b2118';
   const body = {
     event: `<circle r="4.6" fill="${R}"/>`,
-    recorded: `<circle r="3.9" fill="#fff" stroke="${K}" stroke-width="1.3"/>`,
+    recorded: `<circle r="3.9" fill="#f7efdb" stroke="${K}" stroke-width="1.3"/>`,
     reported: `<circle r="4" fill="${K}"/>`,
     finding: `<rect x="-3.7" y="-3.7" width="7.4" height="7.4" fill="${K}"/>`,
     attributed: `<path d="M0,-4.9L4.4,3.4H-4.4Z" fill="${K}"/>`,
     denied: `<path d="M-3.6,-3.6L3.6,3.6M-3.6,3.6L3.6,-3.6" stroke="${K}" stroke-width="1.7" fill="none"/>`,
-    joined: `<circle r="5.4" fill="#fff" stroke="${ink}" stroke-width="1.4"/><circle r="2.3" fill="${ink}"/>`,
-    other: `<path d="M0,-4.4L4.4,0L0,4.4L-4.4,0Z" fill="#fff" stroke="${K}" stroke-width="1.2"/>`,
+    joined: `<circle r="5.4" fill="#f7efdb" stroke="${ink}" stroke-width="1.4"/><circle r="2.3" fill="${ink}"/>`,
+    other: `<path d="M0,-4.4L4.4,0L0,4.4L-4.4,0Z" fill="#f7efdb" stroke="${K}" stroke-width="1.2"/>`,
   }[kind];
   return `<svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden="true">${body}</svg>`;
 }
