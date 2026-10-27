@@ -229,10 +229,11 @@ const fmtCoord = (lat, lon) => `${Math.abs(lat).toFixed(2)}° ${lat >= 0 ? 'N' :
 function indexPage(events) {
   const last = Math.max(...events.map(e => e.year));
   const opt = list => list.map(s => `<option value="${esc(s)}">${esc(s)}</option>`).join('');
-  const body = `<header class="titleblock">
-  <p class="plate-no">PLATE I</p>
+  const body = `<header class="plate-title">
+  <span class="pt-no">Plate I.</span>
   <h1>The Aggregation Gap</h1>
-  <p class="sub">Disruptions of civilian services in which the record was held in parts, 1945 to ${last}</p>
+  <span class="pt-yrs">1945–${last}</span>
+  <p class="pt-sub">Disruptions of civilian services in which the record was held in parts</p>
 </header>
 <main id="main">
 <section id="plate" aria-label="Map plate">
@@ -248,7 +249,7 @@ function indexPage(events) {
   <p class="nota"><b>NOTA</b>${esc(NOTA)}</p>
 </section>
 
-<article class="record" id="record" hidden aria-live="polite"></article>
+<section class="record-panel" id="record" hidden aria-live="polite"></section>
 
 <section class="register" id="register">
   <h2>Register</h2>

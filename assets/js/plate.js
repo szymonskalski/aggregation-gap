@@ -291,51 +291,32 @@
       if (b) { select(b.dataset.id, true); $('plate').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     });
 
-    // ---------- the record ----------
-    function fmtCoord(lat, lon) { return Math.abs(lat).toFixed(2) + '° ' + (lat >= 0 ? 'N' : 'S') + ', ' + Math.abs(lon).toFixed(2) + '° ' + (lon >= 0 ? 'E' : 'W'); }
-    function locator(e) {
-      var w = 300, p2 = d3.geoEqualEarth().rotate([-10, 0]).fitWidth(w, { type: 'Sphere' });
-      var t = p2([0, 84])[1], bt = p2([0, -60])[1], h = Math.round(bt - t);
-      p2.translate([p2.translate()[0], p2.translate()[1] - t]);
-      var pa = d3.geoPath(p2), pt = p2([e.lon, e.lat]);
-      return '<svg viewBox="0 0 ' + w + ' ' + h + '" role="img" aria-label="Position of the event on a world map">' +
-        '<rect width="' + w + '" height="' + h + '" fill="' + PAPER + '" stroke="' + INK0 + '" stroke-width="0.8"/>' +
-        '<path d="' + pa(d3.geoGraticule().step([30, 30])()) + '" fill="none" stroke="#dccba5" stroke-width="0.4"/>' +
-        '<path d="' + pa(land110) + '" fill="' + LAND + '" stroke="' + INK0 + '" stroke-width="0.45"/>' +
-        '<path d="' + pa({ type: 'Sphere' }) + '" fill="none" stroke="' + INK0 + '" stroke-width="0.5"/>' +
-        '<g stroke="' + RED + '" stroke-width="0.9" fill="none"><circle cx="' + pt[0] + '" cy="' + pt[1] + '" r="5"/><path d="M' + (pt[0] - 11) + ',' + pt[1] + 'h7M' + (pt[0] + 4) + ',' + pt[1] + 'h7M' + pt[0] + ',' + (pt[1] - 11) + 'v7M' + pt[0] + ',' + (pt[1] + 4) + 'v7"/></g></svg>';
-    }
-    // the sheet gives one holder per line ("Holder: what it held."); older rows are a single paragraph
-    function holders(s) {
-      var lines = String(s || '').split(/\n+/).map(function (l) { return l.trim(); }).filter(Boolean);
-      var isList = lines.length > 1 || (lines.length === 1 && /^[^:;,]{2,60}:\s/.test(lines[0]) && lines[0].indexOf(';') < 0);
-      if (!isList) return s ? '<p>' + esc(s) + '</p>' : '';
-      return '<ul class="holders">' + lines.map(function (l) { var k = l.indexOf(':'); return k > 0 && k < 90 ? '<li><i>' + esc(l.slice(0, k)) + ':</i> ' + esc(l.slice(k + 1).trim()) + '</li>' : '<li>' + esc(l) + '</li>'; }).join('') + '</ul>';
-    }
+    // ---------- the record: the entry's own printed leaf, taken from its page ----------
     function record(e) {
       var r = $('record');
-      var row = function (dt, dd) { return dd ? '<dt>' + dt + '</dt><dd>' + dd + '</dd>' : ''; };
-      var p = function (s) { return s ? '<p>' + esc(s) + '</p>' : ''; };
-      var src = '<ol>' + (e.sources || []).map(function (s) { return '<li>' + esc(s.cite) + (s.url ? ' <a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.url.replace(/^https?:\/\/(www\.)?/, '').split('/')[0]) + '</a>' : '') + '</li>'; }).join('') + '</ol>';
-      r.innerHTML = '<div class="rec-head"><p class="rec-code">' + e.id.toLowerCase() + '</p><h2>' + esc(e.title) + '</h2><button class="rec-close" type="button" id="rec-close">CLOSE RECORD</button></div>' +
-        '<dl class="fields">' +
-          row('Date', p(e.dates)) + row('Place', p(e.place)) + row('Service', p(e.services.join(', '))) + row('Context', p(e.context)) +
-          row('Classification', '<p>' + icon(e, 13) + ' ' + TNAME[e.case_type] + (e.scope === 'adjacent' ? ', adjacent case' : '') + '. ' + TDEF[e.case_type].charAt(0).toUpperCase() + TDEF[e.case_type].slice(1) + '.</p>') +
-          row('Summary', p(e.summary)) + row('Holders of the record', holders(e.records)) + row('Why the records stayed apart', p(e.gap)) + row('Joined by', p(e.joining)) +
-          row('Harm found later', p(e.harm)) + row('Sources', (e.sources || []).length ? src : '') +
-          row('Verification', e.verification ? '<p class="muted">' + esc(e.verification) + '</p>' : '') +
-        '</dl>' +
-        '<div class="rec-side">' +
-        (e.lat != null ? '<figure class="locator">' + locator(e) + '<figcaption>' + fmtCoord(e.lat, e.lon) + (e.precision === 'approximate' ? ', approximate' : e.precision === 'area' ? ', center of the area concerned' : '') + '</figcaption></figure>' : '<p class="muted">Not placed on the plate: the entry concerns several countries.</p>') +
-        '<p class="rec-links"><a href="' + esc(e.url) + '">Permanent page for this entry</a></p></div>';
+      r.innerHTML = '<div class="rec-bar"><button class="rec-close" type="button" id="rec-close">Close the record</button></div><p class="waiting">' + esc(e.id) + ', ' + esc(e.title) + '</p>';
       r.hidden = false;
       $('rec-close').onclick = closeRecord;
-      // the chronology and the detail map are drawn into the entry's own page; take them from there
       fetch(e.url).then(function (res) { return res.ok ? res.text() : ''; }).then(function (html) {
         if (!html || state.sel !== e.id) return;
-        var x = new DOMParser().parseFromString(html, 'text/html').querySelector('.rec-extra');
-        if (x) r.appendChild(document.importNode(x, true));
-      }).catch(function () {});
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        var parts = [doc.querySelector('article.record'), doc.querySelector('.rec-extra')].filter(Boolean);
+        if (!parts.length) return;
+        // the leaf's links are written from events/ag-xxx/; rewrite them for the plate at the root
+        parts.forEach(function (n) {
+          n.querySelectorAll('[href], [src]').forEach(function (a) {
+            ['href', 'src'].forEach(function (k) {
+              var v = a.getAttribute(k);
+              if (!v || /^(https?:|mailto:|#)/.test(v)) return;
+              a.setAttribute(k, v.indexOf('../../') === 0 ? v.slice(6) : v.indexOf('../') === 0 ? 'events/' + v.slice(3) : 'events/' + e.id.toLowerCase() + '/' + v);
+            });
+          });
+        });
+        var w = r.querySelector('.waiting'); if (w) w.remove();
+        parts.forEach(function (n) { r.appendChild(document.importNode(n, true)); });
+      }).catch(function () {
+        var w = r.querySelector('.waiting'); if (w) w.innerHTML = 'The record could not load. <a href="' + esc(e.url) + '">Open the entry\u2019s page</a>.';
+      });
     }
     function closeRecord() {
       state.sel = null; $('record').hidden = true; selG.selectAll('*').remove(); linkG.selectAll('*').remove(); apply(); syncHash();
