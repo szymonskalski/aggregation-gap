@@ -40,6 +40,10 @@ The build skips a row with an invalid id, year or case type and names it in the 
 
 GitHub pauses scheduled runs in a public repository after 60 days without a commit. If the daily update stops, re-enable the workflow in the Actions tab.
 
+## Exercises
+
+The Exercises section turns entries into decision-forcing cases. Each exercise is a file in `data/exercises/`, named after its entry (`AG-060.json`), with a number, a neutral title (one that does not give the outcome away), a period, and a list of points of decision. Each point names the institution the player sits in (`as`), what it has before it (`before`), the question, two to five `options` (each with a `kind`: `recorded`, `reported`, `finding`, `attributed`, `denied`, `joined` or `waited`, and one marked `"actual": true`), what was done (`did`), and optionally the further words on it (`did_q`), what others held that the player could not know (`unknown`) and what followed (`then`). Wherever the player is shown a fact, it is either a row of the entry's chronology, given by its `seq` number, or words copied from the entry, given as `{"q": "..."}` (with `"who"` to name the holder). The build checks every such passage against the entry, and that the option marked as done has the same kind as the record of what was done; an exercise that fails is left out and named in the log. The options are possibilities; only the one marked as done is a claim about the record.
+
 ## Building it locally
 
 ```
@@ -50,7 +54,7 @@ python3 -m http.server -d _site 8000
 ## What is where
 
 - `build/build.mjs`: the site generator, which needs nothing beyond Node 22; `build/extras.mjs` draws the chronology and places the detail map under each entry
-- `assets/js/plate.js`: the map, the scale of years, the register and the record
+- `assets/js/plate.js`: the map, the scale of years, the register and the record; `assets/js/exercise.js`: the player of the exercises, built by `build/exercises.mjs` from `data/exercises/`
 - `assets/css/site.css`, `assets/fonts/`: styles and type (Libre Caslon Text and Libre Franklin, SIL Open Font License)
 - `assets/vendor/`: d3 and topojson
 - `assets/data/land-50m.json`, `land-110m.json`: coastlines from Natural Earth (public domain), via world-atlas

@@ -1,0 +1,161 @@
+{
+  "id": "AG-079",
+  "no": 2,
+  "title": "Encephalitis in New York",
+  "period": "summer and autumn 1999",
+  "points": [
+    {
+      "as": "the New York City Department of Health",
+      "before": [
+        5
+      ],
+      "question": "What do you do?",
+      "options": [
+        {
+          "text": "Announce an outbreak to the public at once.",
+          "kind": "reported"
+        },
+        {
+          "text": "Look for further cases and start active surveillance.",
+          "kind": "recorded",
+          "actual": true
+        },
+        {
+          "text": "Ask the state's wildlife and veterinary services whether they have seen anything similar.",
+          "kind": "joined"
+        },
+        {
+          "text": "Wait for laboratory results on the two patients.",
+          "kind": "waited"
+        }
+      ],
+      "did": 6,
+      "unknown": [
+        2,
+        4,
+        3
+      ]
+    },
+    {
+      "as": "CDC",
+      "before": [
+        {
+          "q": "identified an initial cluster of six patients.",
+          "who": "New York City Department of Health"
+        },
+        {
+          "q": "Westchester and Nassau county health departments: began active surveillance on 3 September."
+        }
+      ],
+      "question": "What do you announce?",
+      "options": [
+        {
+          "text": "An outbreak of encephalitis whose cause is not yet confirmed.",
+          "kind": "reported"
+        },
+        {
+          "text": "Nothing yet: first ask the animal-health laboratories whether birds are dying too.",
+          "kind": "joined"
+        },
+        {
+          "text": "An outbreak of St. Louis encephalitis.",
+          "kind": "reported",
+          "actual": true
+        },
+        {
+          "text": "A possible deliberate release, pending further tests.",
+          "kind": "attributed"
+        }
+      ],
+      "did": 8,
+      "did_q": [
+        {
+          "q": "CDC announced it on 3 September as St. Louis encephalitis, a virus never before documented in the city."
+        }
+      ],
+      "then": [
+        7,
+        {
+          "q": "The Bronx Zoo's head pathologist: obtained the agreement of the US Army Medical Research Institute of Infectious Diseases to try to identify the virus in birds."
+        }
+      ]
+    },
+    {
+      "as": "CDC",
+      "before": [
+        {
+          "q": "bird tissues went to the USDA National Veterinary Services Laboratories on 10 September and virus isolates to CDC on 20 September."
+        }
+      ],
+      "question": "What do you do with the virus isolated from the birds?",
+      "options": [
+        {
+          "text": "Hold to the St. Louis encephalitis finding; the bird deaths are a separate matter.",
+          "kind": "denied"
+        },
+        {
+          "text": "Sequence the isolates and set them beside the agent in the human cases.",
+          "kind": "joined",
+          "actual": true
+        },
+        {
+          "text": "Leave the bird isolates to the veterinary laboratories.",
+          "kind": "waited"
+        }
+      ],
+      "did": 9,
+      "did_q": [
+        {
+          "q": "At CDC on 23 September polymerase chain reaction and DNA sequencing showed that the isolates were closely related to West Nile virus."
+        },
+        {
+          "q": "From 23 September an academic researcher at the University of California at Irvine and CDC came to the same conclusion that the agent was something else."
+        }
+      ],
+      "then": [
+        {
+          "q": "By the week of 27 September CDC had confirmed a West Nile-like virus."
+        },
+        {
+          "q": "As of 28 September the agencies recorded 17 confirmed and 20 probable human cases and four deaths."
+        }
+      ]
+    },
+    {
+      "as": "the Central Intelligence Agency",
+      "before": [
+        {
+          "q": "an October 1999 media report suggested an unnatural origin"
+        }
+      ],
+      "question": "What do you do with the allegation?",
+      "options": [
+        {
+          "text": "Treat the outbreak as a possible attack and say so.",
+          "kind": "attributed"
+        },
+        {
+          "text": "Leave it to the health agencies; a virus is not an intelligence matter.",
+          "kind": "waited"
+        },
+        {
+          "text": "Examine the allegation and report what you find.",
+          "kind": "finding",
+          "actual": true
+        }
+      ],
+      "did": {
+        "kind": "finding",
+        "when": "After October 1999",
+        "holder": "Central Intelligence Agency",
+        "q": "the Central Intelligence Agency examined the allegations and concluded that there was no indication of intentional causation"
+      },
+      "then": [
+        {
+          "q": "Health officials confirmed 62 human cases, of whom 7 died."
+        },
+        11
+      ]
+    }
+  ]
+}

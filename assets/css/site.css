@@ -374,3 +374,119 @@ main > .rec-extra { max-width: 1060px; margin: 34px auto 0; }
 .record-panel .record.printed { margin-top: 6px; }
 .record-panel .rec-extra { max-width: 1060px; margin: 34px auto 0; }
 .record-panel .waiting { text-align: center; font-style: italic; color: var(--ink-2); margin: 20px 0; }
+/* ---------- the exercises ---------- */
+/* the list of exercises, as a docket register */
+.x-pilot { font-style: italic; color: var(--ink-2); }
+.x-list { list-style: none; margin: 18px 0 0; padding: 0; border-bottom: .5px solid var(--ink); }
+.x-list a { display: grid; grid-template-columns: 5.2rem minmax(0, 1fr) auto; gap: 1px 14px; padding: 12px 0 11px; border-top: .5px solid var(--ink); text-decoration: none; color: var(--ink); }
+.x-list a:hover .x-ti { text-decoration: underline; text-decoration-thickness: .5px; text-underline-offset: 4px; }
+.x-list .x-no { grid-row: 1 / span 2; font-family: var(--letter); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--redink); padding-top: 4px; }
+.x-list .x-ti { font-size: 19.5px; line-height: 1.25; }
+.x-list .x-pe { font-style: italic; color: var(--ink-2); font-size: 15px; justify-self: end; padding-top: 3px; }
+.x-list .x-se, .x-list .x-pt { font-family: var(--letter); font-size: 12px; color: var(--ink-2); }
+.x-list .x-pt { justify-self: end; }
+/* one exercise */
+.exercise { max-width: 46em; margin: 0 auto; }
+.exercise .x-docket { margin: 26px 0 18px; padding-inline: 40px; }
+.x-brief { max-width: 40em; margin: 0 auto; }
+.x-brief p { margin: 0 0 10px; }
+.x-start { text-align: center; margin-top: 20px !important; }
+.x-point { margin-top: 30px; padding: 16px 22px 20px; background: var(--card); border: .5px solid var(--ink); box-shadow: 1px 2px 0 rgba(43,33,24,.12), 0 6px 18px rgba(43,33,24,.08); scroll-margin-top: 16px; }
+.x-ph { display: flex; justify-content: space-between; align-items: baseline; gap: 4px 16px; flex-wrap: wrap; padding-bottom: 8px; border-bottom: .5px solid var(--ink); }
+.x-ph h2 { margin: 0; font-family: var(--letter); font-weight: 500; font-size: 12.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--redink); }
+.x-ph h2 span { color: var(--ink-2); }
+.x-ph h2:focus { outline: none; }
+.x-when { margin: 0; font-style: italic; color: var(--ink-2); }
+.x-seat { font-size: 20px; margin: 12px 0 4px; }
+.x-seat b { font-weight: 400; font-variant: small-caps; letter-spacing: .04em; }
+.x-h { font-family: var(--letter); font-weight: 500; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); margin: 16px 0 4px; }
+/* the file: dated rows, ruled as minute paper, with a red margin rule after the date */
+.x-file { list-style: none; margin: 0; padding: 0; font-size: 15px; line-height: 1.42; }
+.x-it { display: grid; grid-template-columns: 9.6rem 11.4rem minmax(0, 1fr); border-bottom: .5px solid rgba(64, 96, 140, .30); }
+.x-it > span { padding: 6px 12px 6px 0; }
+.x-d { font-family: var(--letter); font-size: 12.5px; padding-top: 7px !important; border-right: 1px solid rgba(168, 38, 28, .55); display: flex; align-items: flex-start; gap: 6px; }
+.x-who { padding-left: 12px !important; font-variant: small-caps; letter-spacing: .03em; }
+.x-ev .x-who { color: var(--redink); }
+.x-mk { flex: none; display: inline-block; width: 14px; height: 14px; line-height: 0; }
+.x-mk svg { display: block; }
+/* the moves */
+.x-opts { border: 0; margin: 18px 0 0; padding: 0; min-width: 0; }
+.x-opts legend { padding: 0; margin-bottom: 8px; font-size: 18px; font-style: italic; }
+.x-opt { display: grid; grid-template-columns: 20px 18px minmax(0, 1fr); align-items: baseline; gap: 0 8px; padding: 8px 10px; border-top: .5px solid var(--hair); cursor: pointer; }
+.x-opt:last-child { border-bottom: .5px solid var(--hair); }
+.x-opt:hover { background: rgba(255, 255, 255, .45); }
+.x-opt input { margin: 0; accent-color: var(--ink); align-self: center; }
+.x-l { font-family: var(--letter); font-size: 12px; font-weight: 600; color: var(--ink-2); }
+.x-tag { grid-column: 3; font-family: var(--letter); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); margin-top: 2px; }
+.done .x-opt { cursor: default; }
+.done .x-opt:hover { background: none; }
+.done .x-opt:not(.yours):not(.theirs) { color: var(--ink-3); }
+.x-opt.yours { background: rgba(43, 33, 24, .06); }
+.done .x-opt.yours:hover { background: rgba(43, 33, 24, .06); }
+.x-opt.theirs { box-shadow: inset 3px 0 0 var(--redink); }
+.x-opt.theirs .x-tag { color: var(--redink); }
+.x-minute { display: grid; gap: 2px; margin-top: 16px; }
+.x-minute > span { font-family: var(--letter); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
+.x-minute i { text-transform: none; letter-spacing: 0; font-family: var(--text); }
+.x-minute textarea { font: inherit; font-size: 16px; line-height: 28px; color: var(--ink); border: 0; border-radius: 0; padding: 0 4px; resize: vertical; min-height: 58px;
+  background: repeating-linear-gradient(transparent 0 27px, rgba(64, 96, 140, .35) 27px 28px); }
+.x-minute textarea:focus { outline: none; background-color: rgba(255, 255, 255, .4); }
+.x-yours { margin: 14px 0 0; font-style: italic; }
+.x-yours span { display: block; font-family: var(--letter); font-style: normal; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
+.x-act { display: flex; align-items: center; gap: 14px; margin: 18px 0 0; }
+.x-act .button { cursor: pointer; }
+.x-act .button:disabled { opacity: .45; cursor: default; }
+.x-hint { font-family: var(--letter); font-size: 12px; color: var(--ink-3); }
+/* what was done: a slip laid on the sheet, endorsed in red */
+.x-did { position: relative; margin-top: 22px; padding: 30px 16px 6px; background: var(--paper); border: .5px solid var(--ink); }
+.x-did:focus { outline: none; }
+.x-stamp { position: absolute; left: 12px; top: -11px; margin: 0; padding: 3px 8px 4px; background: var(--paper); border: 1.5px solid var(--redink); border-radius: 3px; color: var(--redink); transform: rotate(-2.5deg);
+  font-family: var(--letter); font-weight: 600; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; }
+.x-did .x-it:last-child { border-bottom: 0; }
+.x-unk { margin-top: 6px; }
+.x-unk .x-file { color: var(--ink-2); font-style: italic; background: repeating-linear-gradient(-45deg, transparent 0 6px, rgba(43, 33, 24, .045) 6px 7px); }
+.x-unk .x-who { font-style: normal; }
+/* the debrief */
+.x-debrief { margin-top: 34px; }
+.x-debrief .sh:focus { outline: none; }
+.x-class { text-align: center; font-size: 18px; margin: 0 auto 22px; max-width: 34em; }
+.x-class svg { vertical-align: -1px; }
+.x-class b { font-weight: 400; font-variant: small-caps; letter-spacing: .05em; }
+.x-minutes { width: 100%; border-collapse: collapse; font-size: 15px; }
+.x-minutes caption { font-family: var(--text); font-size: 12.5px; letter-spacing: .26em; text-transform: uppercase; padding-bottom: 10px; }
+.x-minutes th { font-family: var(--letter); font-weight: 500; font-size: 11px; letter-spacing: .09em; text-transform: uppercase; text-align: left; padding: 0 12px 5px 0; border-bottom: .5px solid var(--ink); }
+.x-minutes td { padding: 8px 12px 8px 0; border-bottom: .5px solid rgba(64, 96, 140, .30); vertical-align: top; line-height: 1.42; }
+.x-minutes td:first-child { width: 22%; font-family: var(--letter); font-size: 12.5px; border-right: 1px solid rgba(168, 38, 28, .55); }
+.x-minutes td:nth-child(2) { padding-left: 12px; }
+.x-minutes td:nth-child(2), .x-minutes td:nth-child(3) { width: 39%; }
+.x-minutes .x-mk { vertical-align: -2px; margin-right: 6px; }
+.x-as { display: block; font-family: var(--text); font-style: italic; font-size: 14px; color: var(--ink-2); margin-top: 2px; }
+.x-m { display: block; font-style: italic; font-size: 14px; color: var(--ink-2); margin-top: 3px; }
+.x-key { justify-content: center; padding-left: 0; margin-bottom: 26px; }
+.x-text { max-width: 42em; margin: 0 auto; }
+.x-debrief .rec-extra { margin-top: 30px; }
+.x-links button { background: none; border: 0; padding: 0; font: inherit; letter-spacing: inherit; text-transform: inherit; color: var(--ink); cursor: pointer; }
+.x-links button:hover { text-decoration: underline; text-decoration-thickness: .5px; }
+@media (max-width: 780px) {
+  .x-list a { grid-template-columns: minmax(0, 1fr) auto; }
+  .x-list .x-no { grid-row: auto; grid-column: 1 / -1; padding: 0; }
+  .x-list .x-pe { grid-column: 1 / -1; justify-self: start; padding: 0; }
+  .x-list .x-se { grid-column: 1 / -1; }
+  .x-list .x-pt { justify-self: start; grid-column: 1 / -1; }
+  .exercise .x-docket { padding-inline: 14px; padding-top: 18px; }
+  .x-point { padding: 14px 14px 18px; margin-inline: -6px; }
+  .x-it { grid-template-columns: auto minmax(0, 1fr); column-gap: 10px; padding: 6px 0; }
+  .x-it > span { padding: 0 !important; border: 0 !important; }
+  .x-d:empty { display: none; }
+  .x-who { font-style: italic; font-variant: normal; }
+  .x-tx { grid-column: 1 / -1; margin-top: 2px; }
+  .x-minutes thead { display: none; }
+  .x-minutes tr { display: grid; grid-template-columns: 1fr; padding: 8px 0; border-bottom: .5px solid rgba(64, 96, 140, .30); }
+  .x-minutes td { border: 0 !important; padding: 0 0 6px !important; width: auto !important; }
+  .x-minutes td:nth-child(2)::before { content: 'Your move. '; font-family: var(--letter); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); display: block; }
+  .x-minutes td:nth-child(3)::before { content: 'What was done. '; font-family: var(--letter); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--redink); display: block; }
+}
+@media print {
+  .x-act, .x-start, .x-links button { display: none !important; }
+  .x-point { box-shadow: none; break-inside: avoid; }
+}

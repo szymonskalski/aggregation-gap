@@ -94,7 +94,7 @@ export function groupChronology(rows, ids, warn) {
 }
 
 // ---------- the strip ----------
-function mark(kind, ink) {
+export function mark(kind, ink) {
   const R = '#a8261c', K = '#2b2118';
   const body = {
     event: `<circle r="4.6" fill="${R}"/>`,
@@ -105,6 +105,8 @@ function mark(kind, ink) {
     denied: `<path d="M-3.6,-3.6L3.6,3.6M-3.6,3.6L3.6,-3.6" stroke="${K}" stroke-width="1.7" fill="none"/>`,
     joined: `<circle r="5.4" fill="#f7efdb" stroke="${ink}" stroke-width="1.4"/><circle r="2.3" fill="${ink}"/>`,
     other: `<path d="M0,-4.4L4.4,0L0,4.4L-4.4,0Z" fill="#f7efdb" stroke="${K}" stroke-width="1.2"/>`,
+    // a move offered in the exercises that no holder's record shows: waiting for more
+    waited: `<circle r="3.9" fill="none" stroke="${K}" stroke-width="1.1" stroke-dasharray="1.6 1.4"/>`,
   }[kind];
   return `<svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden="true">${body}</svg>`;
 }

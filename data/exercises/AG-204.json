@@ -1,0 +1,135 @@
+{
+  "id": "AG-204",
+  "no": 4,
+  "title": "Damage at Eskom's power stations",
+  "period": "2022 and 2023",
+  "points": [
+    {
+      "as": "Eskom",
+      "before": [
+        1
+      ],
+      "question": "What do you say, and to whom?",
+      "options": [
+        {
+          "text": "Investigate inside Eskom before saying anything.",
+          "kind": "recorded"
+        },
+        {
+          "text": "Leave it to the local police station, as for any damage to property.",
+          "kind": "reported"
+        },
+        {
+          "text": "Say publicly that it was sabotage, and count it with the earlier incidents.",
+          "kind": "reported",
+          "actual": true
+        },
+        {
+          "text": "Ask the State Security Agency to take the case.",
+          "kind": "reported"
+        }
+      ],
+      "did": 2,
+      "did_q": [
+        {
+          "q": "Standerton held the Tutuka docket, later transferred to the Hawks."
+        }
+      ]
+    },
+    {
+      "as": "Eskom's chief executive",
+      "before": [
+        3,
+        {
+          "q": "the Tutuka report recommended involving the State Security Agency because sabotage at a national key point threatens national security"
+        },
+        {
+          "q": "could not identify the perpetrator because there was no CCTV in the area and poor access control made gate records unreliable.",
+          "who": "The report"
+        },
+        4
+      ],
+      "question": "Your own investigators have found sabotage, and you have met the police twice. What else do you do?",
+      "options": [
+        {
+          "text": "Send the forensic report to the State Security Agency, as it recommends.",
+          "kind": "reported"
+        },
+        {
+          "text": "Commission a private intelligence investigation to join the incidents yourself.",
+          "kind": "joined",
+          "actual": true
+        },
+        {
+          "text": "Leave each incident to its local docket.",
+          "kind": "waited"
+        },
+        {
+          "text": "Ask the police to join the dockets into one investigation.",
+          "kind": "reported"
+        }
+      ],
+      "did": {
+        "kind": "joined",
+        "when": "Undated in the record",
+        "holder": "André de Ruyter",
+        "q": "Chief executive André de Ruyter facilitated a private intelligence investigation by George Fivaz Forensic & Risk, funded with R18 million by Business Leadership South Africa."
+      },
+      "did_q": [
+        {
+          "q": "Chief executive André de Ruyter, who had no investigative authority, joined the incidents through a privately funded probe."
+        }
+      ],
+      "then": [
+        6,
+        7,
+        8,
+        9,
+        11,
+        12
+      ]
+    },
+    {
+      "as": "the Special Investigating Unit",
+      "before": [
+        {
+          "q": "The Hawks said they learned of the private probe from media reports and from a report that de Ruyter's attorneys submitted on 25 April 2023."
+        }
+      ],
+      "question": "You report to Parliament's public accounts committee on the private probe. What do you find?",
+      "options": [
+        {
+          "text": "That the chief executive filled a gap the police had left.",
+          "kind": "finding"
+        },
+        {
+          "text": "That the reports are hearsay, and should be set aside.",
+          "kind": "denied"
+        },
+        {
+          "text": "That he acted without authority, and that the reports must still be pursued.",
+          "kind": "finding",
+          "actual": true
+        },
+        {
+          "text": "Nothing, until the Hawks have tested the reports.",
+          "kind": "waited"
+        }
+      ],
+      "did": 13,
+      "did_q": [
+        {
+          "q": "He also said the reports described 'a clear, organised nature of crime and corruption being committed at Eskom' and 'cannot be ignored'."
+        }
+      ],
+      "then": [
+        {
+          "q": "Hawks head Godfrey Lebeya said the reports provided no evidence on their own and that the Hawks were working to corroborate allegations, including against 10 'groupings' in Mpumalanga."
+        },
+        {
+          "q": "No court finding naming a sabotage network was found."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "id": "AG-060",
+  "no": 1,
+  "title": "Threat calls about Chilean fruit",
+  "period": "March 1989 to September 1990",
+  "points": [
+    {
+      "as": "the FDA",
+      "before": [
+        1,
+        {
+          "q": "Customs: the detained fruit."
+        }
+      ],
+      "question": "Chilean fruit is on hold with Customs. What do you do?",
+      "options": [
+        {
+          "text": "Keep the hold on all Chilean fruit until inspectors have sampled it.",
+          "kind": "recorded"
+        },
+        {
+          "text": "Judge the threat a hoax and ask Customs to release the fruit.",
+          "kind": "denied",
+          "actual": true
+        },
+        {
+          "text": "Keep the hold and wait to see whether the caller rings again.",
+          "kind": "waited"
+        },
+        {
+          "text": "Warn the public and the other importing countries that the fruit may be poisoned.",
+          "kind": "reported"
+        }
+      ],
+      "did": 2
+    },
+    {
+      "as": "the FDA",
+      "before": [
+        3,
+        4,
+        {
+          "q": "FDA inspectors: by 12 March they had examined about 1,200 of some 365,000 crates on the Almeria Star and analyzed about 75 suspicious samples."
+        }
+      ],
+      "question": "Your Philadelphia laboratory has found cyanide in two grapes. What do you do?",
+      "options": [
+        {
+          "text": "Retest what is left of the sample at a second laboratory before acting.",
+          "kind": "waited"
+        },
+        {
+          "text": "Hold the Almeria Star's cargo only, and go on inspecting.",
+          "kind": "recorded"
+        },
+        {
+          "text": "Suspend imports of Chilean fruit and notify the other importing countries.",
+          "kind": "joined",
+          "actual": true
+        },
+        {
+          "text": "Treat the two grapes as an isolated tampering and say so publicly.",
+          "kind": "reported"
+        }
+      ],
+      "did": 5,
+      "did_q": [
+        {
+          "q": "Imports of Chilean fruit were suspended from 13 to 17 March."
+        },
+        {
+          "q": "The FDA: notified other importing countries, including Canada and Japan."
+        }
+      ],
+      "then": [
+        6,
+        {
+          "q": "The FDA's Cincinnati laboratory: a later analysis, which fell below its detection limit."
+        }
+      ],
+      "when": "13 March 1989"
+    },
+    {
+      "as": "the General Accounting Office",
+      "before": [
+        {
+          "q": "The General Accounting Office: reviewed the file at Senator Jesse Helms's request."
+        },
+        7
+      ],
+      "question": "What does your review conclude?",
+      "options": [
+        {
+          "text": "That a result on two grapes was too slight to justify suspending a country's exports.",
+          "kind": "finding"
+        },
+        {
+          "text": "That no conclusion is possible without the Chilean exporters' own supply-chain records.",
+          "kind": "waited"
+        },
+        {
+          "text": "That the tests and the chain of custody hold up, and the FDA acted properly.",
+          "kind": "finding",
+          "actual": true
+        }
+      ],
+      "did": 8,
+      "did_q": [
+        {
+          "q": "reported on 6 September 1990 that both tests were widely used and accepted, that it found no serious deficiencies in the chain of custody, and that its consultants considered a false positive extremely unlikely.",
+          "who": "The General Accounting Office"
+        }
+      ],
+      "then": [
+        {
+          "q": "No perpetrator was identified; the caller had said his purpose was to draw attention to the poor living conditions of Chilean workers."
+        },
+        9
+      ]
+    }
+  ]
+}

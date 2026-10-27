@@ -1,0 +1,137 @@
+{
+  "id": "AG-032",
+  "no": 3,
+  "title": "Yellow rain",
+  "period": "1978 to 1989",
+  "points": [
+    {
+      "as": "the Secretary of State",
+      "before": [
+        2,
+        {
+          "q": "later telegrams to the Defense Intelligence Agency and the State Department carried interview summaries, sample reports",
+          "who": "US Embassy in Bangkok"
+        }
+      ],
+      "question": "Your embassy's telegrams carry refugee accounts of attacks and reports on samples. What do you do?",
+      "options": [
+        {
+          "text": "Put the interviews and the samples to an independent scientific review before saying anything.",
+          "kind": "joined"
+        },
+        {
+          "text": "Charge publicly that Soviet-backed forces are waging toxin warfare.",
+          "kind": "attributed",
+          "actual": true
+        },
+        {
+          "text": "Pass the material to the United Nations and wait for its experts to report.",
+          "kind": "reported"
+        },
+        {
+          "text": "Keep collecting interviews and samples inside the government.",
+          "kind": "recorded"
+        }
+      ],
+      "did": 4,
+      "did_q": [
+        {
+          "q": "Haig set out the charge in a detailed report to Congress the following March."
+        }
+      ]
+    },
+    {
+      "as": "the UN group of experts",
+      "before": [
+        3,
+        5
+      ],
+      "question": "You report again in December 1982. What do you say?",
+      "options": [
+        {
+          "text": "That toxin weapons were used, as the United States charges.",
+          "kind": "attributed"
+        },
+        {
+          "text": "That the accusations are unfounded.",
+          "kind": "denied"
+        },
+        {
+          "text": "That you need access to the sites before you can say anything.",
+          "kind": "waited"
+        },
+        {
+          "text": "That the accusations cannot be proven.",
+          "kind": "finding",
+          "actual": true
+        }
+      ],
+      "did": 6
+    },
+    {
+      "as": "Matthew Meselson",
+      "before": [],
+      "question": "In 1983 American officials give you samples of yellow rain. What do you look for?",
+      "options": [
+        {
+          "text": "Toxins only: the question is whether they are there.",
+          "kind": "recorded"
+        },
+        {
+          "text": "What the material itself is made of, as well as any toxins.",
+          "kind": "recorded",
+          "actual": true
+        },
+        {
+          "text": "Nothing: samples chosen by the accusing government cannot settle the question.",
+          "kind": "waited"
+        }
+      ],
+      "did": 7,
+      "did_q": [
+        {
+          "q": "found large amounts of hollowed-out pollen native to Southeast Asia and no significant excess of mycotoxins on yellow-rain-covered leaves. He proposed that the material was bee feces",
+          "who": "Meselson"
+        }
+      ]
+    },
+    {
+      "as": "the academic scientists",
+      "before": [],
+      "question": "Your analysis points to bee feces, but the charge stands. What do you do next?",
+      "options": [
+        {
+          "text": "Publish the pollen result and leave it there.",
+          "kind": "reported"
+        },
+        {
+          "text": "Ask the United Nations to reopen its inquiry.",
+          "kind": "reported"
+        },
+        {
+          "text": "Obtain the government's own field records and review how its evidence was gathered.",
+          "kind": "joined",
+          "actual": true
+        }
+      ],
+      "did": 8,
+      "did_q": [
+        {
+          "q": "Meselson and Julian Perry Robinson: reviewed the record. They found that the investigation had not used reliable methods of witness interrogation or of forensic laboratory investigation, that contrary findings had been dismissed or withheld, and that there had been no independent review."
+        },
+        {
+          "q": "Meselson's team found that the original interviewers had asked leading questions."
+        }
+      ],
+      "then": [
+        9,
+        {
+          "q": "The United States never withdrew the charge."
+        },
+        {
+          "q": "No authority adjudicated; the allegation was left standing on the official record."
+        }
+      ]
+    }
+  ]
+}

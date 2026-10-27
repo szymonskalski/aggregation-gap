@@ -1,0 +1,144 @@
+{
+  "id": "AG-269",
+  "no": 5,
+  "title": "Ransomware at Change Healthcare",
+  "period": "2024 and 2025",
+  "points": [
+    {
+      "as": "Change Healthcare",
+      "before": [
+        1
+      ],
+      "question": "Your systems have been hit by ransomware. What do you do?",
+      "options": [
+        {
+          "text": "Call it a network outage until your own investigation is complete.",
+          "kind": "denied"
+        },
+        {
+          "text": "Treat it as a ransomware attack from the first day.",
+          "kind": "recorded",
+          "actual": true
+        },
+        {
+          "text": "Say nothing until you know who the attacker is.",
+          "kind": "waited"
+        }
+      ],
+      "did": 2
+    },
+    {
+      "as": "the American Medical Association",
+      "before": [
+        {
+          "q": "Pharmacies: failed refills, and patients paying out of pocket when co-pay assistance cards failed."
+        },
+        {
+          "q": "Physician practices: unpaid claims."
+        },
+        {
+          "q": "CMS: guidance relaxing prior authorization and allowing advance payments."
+        }
+      ],
+      "question": "Your members' practices are going unpaid. What do you do?",
+      "options": [
+        {
+          "text": "Ask CMS and HHS to count the harm.",
+          "kind": "reported"
+        },
+        {
+          "text": "Leave each practice to claim from Change Healthcare.",
+          "kind": "waited"
+        },
+        {
+          "text": "Survey the practices and publish what they report.",
+          "kind": "joined",
+          "actual": true
+        }
+      ],
+      "did": 3,
+      "did_q": [
+        {
+          "q": "In an informal AMA survey of more than 1,400 respondents reported on 10 April 2024, 80 percent reported lost revenue and 55 percent used personal funds to cover practice expenses."
+        }
+      ],
+      "when": "10 April 2024"
+    },
+    {
+      "as": "UnitedHealth Group's chief executive",
+      "before": [
+        {
+          "q": "OCR: investigations of Change and UnitedHealth focused on HIPAA compliance."
+        }
+      ],
+      "question": "The Senate Finance Committee asks how it happened. What do you tell it?",
+      "options": [
+        {
+          "text": "Explain how the attacker got in, and that the company paid a ransom.",
+          "kind": "reported",
+          "actual": true
+        },
+        {
+          "text": "Name the criminal group, and leave the details to the investigators.",
+          "kind": "attributed"
+        },
+        {
+          "text": "Decline to discuss the attack while investigations continue.",
+          "kind": "waited"
+        }
+      ],
+      "did": 4,
+      "did_q": [
+        {
+          "q": "told the Senate Finance Committee that the intrusion began on a server without multifactor authentication and that the company paid a $22 million ransom",
+          "who": "Andrew Witty"
+        }
+      ],
+      "then": [
+        5,
+        {
+          "q": "Change Healthcare said the attacker 'represented itself to us as ALPHV/Blackcat,' and analysts at Recorded Future and Tenable pointed to a bitcoin wallet they linked to the group that received more than $22 million."
+        },
+        {
+          "q": "No government attribution appears in the sources checked."
+        }
+      ]
+    },
+    {
+      "as": "HHS",
+      "before": [
+        {
+          "q": "Change Healthcare: the intrusion records, and the breach report to HHS's Office for Civil Rights."
+        },
+        {
+          "q": "The covered entities (providers, health plans): remained 'ultimately responsible' for notifications but could delegate them to Change."
+        }
+      ],
+      "question": "What does your breach portal record for the number of people affected?",
+      "options": [
+        {
+          "text": "Nothing, until the count is complete.",
+          "kind": "waited"
+        },
+        {
+          "text": "The minimum for posting, 500, until the full count comes in.",
+          "kind": "recorded",
+          "actual": true
+        },
+        {
+          "text": "An estimate of everyone whose data passed through Change.",
+          "kind": "recorded"
+        }
+      ],
+      "did": 6,
+      "did_q": [
+        {
+          "q": "The number of people affected, as reported to HHS, rose from an initial 500, the minimum for posting on the HHS breach portal (19 July 2024), to about 192.7 million (31 July 2025)."
+        }
+      ],
+      "then": [
+        7
+      ]
+    }
+  ]
+}

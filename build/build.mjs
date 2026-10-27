@@ -3,7 +3,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { parseCSV, toCSV } from './csv.mjs';
-import { groupChronology, chronoHTML, loadMaps, detailMapHTML, CHRONO_COLS, groupMedia, picturesHTML, creditHTML, MEDIA_COLS } from './extras.mjs';
+import { groupChronology, chronoHTML, loadMaps, detailMapHTML, CHRONO_COLS, groupMedia, picturesHTML, creditHTML, MEDIA_COLS, mark } from './extras.mjs';
+import { loadExercises, MOVES, MOVE_WORD } from './exercises.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const OUT = path.join(ROOT, '_site');
@@ -161,7 +162,7 @@ function imprint(rel) {
 </footer>`;
 }
 function page({ title, rel, body, desc, current = '', wide = false }) {
-  const nav = [['index.html', 'Plate', 'plate'], ['events/index.html', 'Register', 'register'], ['about.html', 'About', 'about'], ['about.html#subscribe', 'Notices by email', '']]
+  const nav = [['index.html', 'Plate', 'plate'], ['events/index.html', 'Register', 'register'], ['exercises/index.html', 'Exercises', 'exercises'], ['about.html', 'About', 'about'], ['about.html#subscribe', 'Notices by email', '']]
     .map(([h, t, k]) => `<a href="${rel}${h}"${current && current === k ? ' aria-current="page"' : ''}>${t}</a>`).join('<span class="sep" aria-hidden="true">·</span>');
   return `<!doctype html>
 <html lang="en">
@@ -320,12 +321,67 @@ function eventPage(e, prev, next) {
   ${auth}
   ${e.verification ? `<p class="small"><span class="ri">Verification.</span>—${esc(e.verification)}</p>` : ''}
   <p class="small cite"><span class="ri">To cite.</span>—${esc(cfg.title)}, entry ${e.id}, “${esc(e.title)}.” ${esc(cfg.credit)}. ${esc(url)}</p>
-  <p class="rec-links">${e.lat != null ? `<a href="../../index.html#${slug(e.id)}">Shown on the plate</a><span class="sep" aria-hidden="true">·</span>` : ''}<a href="../index.html">The whole register</a></p>
+  <p class="rec-links">${e.lat != null ? `<a href="../../index.html#${slug(e.id)}">Shown on the plate</a><span class="sep" aria-hidden="true">·</span>` : ''}${EX_OF[e.id] ? `<a href="../../exercises/${slug(e.id)}/index.html">Played as Exercise No. ${EX_OF[e.id].no}</a><span class="sep" aria-hidden="true">·</span>` : ''}<a href="../index.html">The whole register</a></p>
 </article>
 ${extrasHTML(e, '../../')}
 <nav class="pn" aria-label="Neighbouring entries">${prev ? `<a href="../${slug(prev.id)}/index.html">← No. ${prev.n}, ${esc(prev.label)}</a>` : '<span></span>'}${next ? `<a href="../${slug(next.id)}/index.html">No. ${next.n}, ${esc(next.label)} →</a>` : ''}</nav>
 </main>`;
   return page({ title: `${e.id} ${e.title} · ${cfg.title}`, rel: '../../', body, desc: e.summary.slice(0, 200), current: 'register' });
+}
+
+// ---------- exercises ----------
+let EXERCISES = [], EX_OF = {};
+const seatsOf = x => [...new Set(x.points.map(p => p.as))];
+const inTurn = list => list.length === 1 ? list[0] : `${list.slice(0, -1).join(', then as ')}, then as ${list[list.length - 1]}`;
+function exercisesIndexPage(list) {
+  const body = `${runhead('../')}
+<main id="main" class="text exercises">
+  <h1>Exercises</h1>
+  <p class="lede">Each exercise puts you in the chair of an institution that held part of a record, at the moments when it had to act.</p>
+  <p>You see what that institution had before it: its own records, and what others had reported or made public. You choose a move, and may minute your reason. Then you see what the institution did, and what others knew at the time that it did not. The class the register gives the entry is withheld until the debrief, where your minutes are set beside theirs. Nothing is scored.</p>
+  <p>The facts shown at each point are the entry’s own: rows of its chronology, or its words. The moves offered are possibilities, and one of them is what was done.</p>
+  <p class="x-pilot">A trial set of ${list.length}, one from each class of the register.</p>
+  <ol class="x-list">${list.map(x => `<li><a href="${slug(x.id)}/index.html"><span class="x-no">No. ${x.no}</span><span class="x-ti">${esc(x.title)}</span><span class="x-pe">${esc(x.period)}</span><span class="x-se">As ${esc(seatsOf(x).join('; '))}</span><span class="x-pt">${x.points.length} points of decision</span></a></li>`).join('')}</ol>
+</main>`;
+  return page({ title: `Exercises · ${cfg.title}`, rel: '../', body, current: 'exercises' });
+}
+function exercisePage(x, e) {
+  const ri = (head, text) => (text ? `<p class="para"><span class="ri">${head}.</span>—${esc(text)}</p>` : '');
+  const used = MOVES.concat(['event', 'other']);
+  // the marks are drawn in plain ink, since the colour of the class would give the class away before the debrief
+  const data = { id: x.id, points: x.points, marks: Object.fromEntries(used.map(k => [k, mark(k, '#2b2118')])), words: MOVE_WORD };
+  const c = chronoHTML(e, CHRONO[e.id], INK[e.case_type]);
+  const body = `${runhead('../../')}
+<main id="main" class="exercise">
+<div class="rec-head docket x-docket">
+  <p class="dk-no">Exercise <span>No. ${x.no}</span></p>
+  <h1>${esc(x.title)}</h1>
+  <p class="dk-meta">${esc(x.period)}<span>·</span>${x.points.length} points of decision</p>
+</div>
+<div class="x-brief">
+  <p>You will decide as ${esc(inTurn(seatsOf(x)))}. At each point you see what that institution had before it: its own records, and what others had reported or made public. Choose a move, minute your reason if you wish, and then see what it did, and what others knew that it did not.</p>
+  <p>The class the register gives this entry is withheld until the debrief. Nothing is scored.</p>
+  <p class="x-start js-only" hidden><button type="button" class="button" id="x-begin">Open the file</button></p>
+  <noscript><p>The exercise needs JavaScript. The full record is entry <a href="../../events/${slug(x.id)}/index.html">${esc(x.id)}</a> of the register.</p></noscript>
+</div>
+<div id="x-points"></div>
+<section class="x-debrief" id="x-debrief" hidden>
+  <h2 class="sh" tabindex="-1">Debrief</h2>
+  <p class="x-class">The register classes this entry as ${shapeSVG(e)} <b>${TYPE_LABEL[e.case_type]}</b>: ${TDEF[e.case_type]}.</p>
+  <table class="x-minutes"><caption>Your minutes and theirs</caption><thead><tr><th scope="col">Point</th><th scope="col">Your move</th><th scope="col">What was done</th></tr></thead><tbody id="x-mins"></tbody></table>
+  <ul class="ch-key x-key" id="x-key"></ul>
+  <div class="printed x-text">
+  ${ri('Why the records stayed apart', e.gap)}
+  ${ri('Joining', e.joining)}
+  ${ri('Harm found later', e.harm)}
+  </div>
+  ${c ? `<section class="rec-extra">${c}</section>` : ''}
+  <p class="rec-links x-links"><a href="../../events/${slug(x.id)}/index.html">The full entry, ${esc(x.id)}</a><span class="sep" aria-hidden="true">·</span><button type="button" id="x-again">Play it again</button><span class="sep" aria-hidden="true">·</span><a href="../index.html">The other exercises</a></p>
+</section>
+<script type="application/json" id="x-data">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>
+</main>
+<script src="../../assets/js/exercise.js"></script>`;
+  return page({ title: `Exercise ${x.no}: ${x.title} · ${cfg.title}`, rel: '../../', body, desc: `A decision-forcing exercise on entry ${x.id} of the register.`, current: 'exercises' });
 }
 
 function aboutPage(events) {
@@ -417,6 +473,9 @@ CHRONO = groupChronology(chronoRows.map(r => ({ ...r, holder: smart(r.holder), n
 MAPS = loadMaps(ROOT);
 const mediaRows = await getTab('Media', ['id', 'site_url', 'caption', 'status'], 'media.seed.csv');
 MEDIA = groupMedia(mediaRows.map(r => ({ ...r, caption: smart(r.caption), alt: smart(r.alt), author: smart(r.author) })), new Set(events.map(e => e.id)), warn);
+EXERCISES = loadExercises(ROOT, events, CHRONO, warn, smart);
+EX_OF = Object.fromEntries(EXERCISES.map(x => [x.id, x]));
+console.log(`Exercises: ${EXERCISES.length}`);
 console.log(`Chronologies for ${Object.keys(CHRONO).length} entries; detail maps for ${events.filter(e => MAPS.has(e.id)).length}; pictures for ${Object.keys(MEDIA).length}`);
 
 fs.rmSync(OUT, { recursive: true, force: true });
@@ -430,6 +489,10 @@ write('events/index.html', eventsIndexPage(shown));
 shown.forEach((e, i) => write(`events/${slug(e.id)}/index.html`, eventPage(e, shown[i - 1], shown[i + 1])));
 write('feed.xml', feed(shown));
 write('credits.html', creditsPage(shown));
+if (EXERCISES.length) {
+  write('exercises/index.html', exercisesIndexPage(EXERCISES));
+  EXERCISES.forEach(x => write(`exercises/${slug(x.id)}/index.html`, exercisePage(x, shown.find(e => e.id === x.id))));
+}
 write('data/media.csv', toCSV(mediaRows.filter(r => String(r.status || '').toLowerCase() === 'published'), MEDIA_COLS));
 // what the plate and its record need
 write('data/events.json', JSON.stringify(shown.map(e => ({
@@ -445,7 +508,7 @@ write('data/events.csv', toCSV(events.map(e => ({
 })), PUBLIC_COLS));
 const root = BASE.replace(/^https?:\/\/[^/]+/, '');
 write('404.html', page({ title: `Not found · ${cfg.title}`, rel: root, body: `${runhead(root)}<main id="main" class="text"><h1>Not found</h1><p>The page may have moved. Start from the <a href="${root}index.html">plate</a> or the <a href="${root}events/index.html">register</a>.</p></main>` }));
-write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${['', 'about.html', 'credits.html', 'events/'].concat(events.map(e => `events/${slug(e.id)}/`)).map(u => `<url><loc>${esc(BASE + u)}</loc></url>`).join('\n')}\n</urlset>\n`);
+write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${['', 'about.html', 'credits.html', 'events/'].concat(events.map(e => `events/${slug(e.id)}/`), EXERCISES.length ? ['exercises/'].concat(EXERCISES.map(x => `exercises/${slug(x.id)}/`)) : []).map(u => `<url><loc>${esc(BASE + u)}</loc></url>`).join('\n')}\n</urlset>\n`);
 write('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${BASE}sitemap.xml\n`);
 write('.nojekyll', '');
 
