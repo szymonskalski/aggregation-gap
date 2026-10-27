@@ -42,10 +42,12 @@
 [hidden] { display: none !important; }
 html { -webkit-text-size-adjust: 100%; }
 body { margin: 0; color: var(--ink); background-color: var(--table);
-  background-image: radial-gradient(ellipse at 50% 30%, rgba(255,255,255,.05), rgba(0,0,0,.28) 85%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-attachment: fixed; font-family: var(--text); font-size: 16.5px; line-height: 1.6; font-feature-settings: 'lnum', 'kern';
+  font-family: var(--text); font-size: 16.5px; line-height: 1.6; font-feature-settings: 'lnum', 'kern';
   padding-left: max(10px, env(safe-area-inset-left, 0px)); padding-right: max(10px, env(safe-area-inset-right, 0px)); padding-block: 22px 40px; }
+/* the baize of the table, laid as a fixed layer of its own so that scrolling never has to paint it again */
+body::before { content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none; will-change: transform;
+  background-image: radial-gradient(ellipse at 50% 30%, rgba(255,255,255,.05), rgba(0,0,0,.28) 85%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 /* each page is a sheet laid on the table */
 .sheet { max-width: 1280px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 34px) 22px;
   background: radial-gradient(ellipse at 50% 40%, rgba(255,250,235,.35) 0, rgba(255,250,235,0) 55%), radial-gradient(ellipse at 50% 50%, transparent 62%, rgba(120,88,40,.10) 100%), var(--paper);
@@ -72,6 +74,11 @@ button { font: inherit; color: inherit; }
 
 /* the plate */
 .platewrap { position: relative; }
+/* the drawing of the world lies under the plate in its own layer (see plate.js); the plate above it is clear */
+.plate-stage { position: relative; }
+.plate-base { position: absolute; overflow: hidden; z-index: 0; pointer-events: none; }
+.plate-layer { position: absolute; left: 0; top: 0; width: 100%; height: 100%; transform-origin: 0 0; will-change: transform; }
+.platewrap .plate { position: relative; z-index: 1; }
 .plate { display: block; width: 100%; height: auto; touch-action: none; user-select: none; -webkit-user-select: none; }
 .plate text { font-family: var(--letter); }
 .plate-loading { aspect-ratio: 1200 / 576; display: grid; place-items: center; border: 0.5px solid var(--ink); font-family: var(--letter); font-size: 13px; color: var(--ink-2); margin: 0; }
@@ -92,7 +99,7 @@ button { font: inherit; color: inherit; }
 .zoom button:hover { background: var(--paper); }
 
 /* the reference box sits inside the frame, bottom left */
-.reference { position: absolute; left: 4.9%; bottom: 8.6%; background: var(--card); box-shadow: 1px 2px 0 rgba(43,33,24,.12); border: 0.5px solid var(--ink); padding: 7px 10px 8px; font-family: var(--letter); font-size: 10.6px; line-height: 1.28; max-width: 252px; }
+.reference { position: absolute; z-index: 2; left: 4.9%; bottom: 8.6%; background: var(--card); box-shadow: 1px 2px 0 rgba(43,33,24,.12); border: 0.5px solid var(--ink); padding: 7px 10px 8px; font-family: var(--letter); font-size: 10.6px; line-height: 1.28; max-width: 252px; }
 .reference h2 { font-family: var(--text); font-weight: 400; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; margin: 0 0 6px; text-align: center; }
 .reference button { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 7px; align-items: start; width: 100%; text-align: left; background: none; border: 0; padding: 2px 0; cursor: pointer; }
 .reference button[aria-pressed="false"] { color: var(--ink-3); }

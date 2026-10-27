@@ -65,8 +65,6 @@
     var defs = svg.append('defs');
     defs.append('clipPath').attr('id', 'mapclip').append('rect').attr('width', W).attr('height', H);
     var land50 = topojson.feature(L50, L50.objects.land), land110 = topojson.feature(L110, L110.objects.land);
-    defs.append('path').attr('id', 'land-s').attr('d', path(land110));
-    defs.append('path').attr('id', 'land-l').attr('d', path(land50));
 
     // frame: outer rule, graduated band, inner rule
     var F = svg.append('g').attr('class', 'frame');
@@ -100,22 +98,59 @@
 
     var mapG = svg.append('g').attr('transform', 'translate(' + ML + ',' + MT + ')');
     var clipped = mapG.append('g').attr('clip-path', 'url(#mapclip)');
-    clipped.append('rect').attr('width', W).attr('height', H).attr('fill', PAPER);
+    // the map area of the plate is left clear (it still takes the pointer), and the drawing of the world lies
+    // under it in a layer of its own, so that a zoom or a drag moves that drawing as a picture and redraws it
+    // only when the gesture ends
+    clipped.append('rect').attr('width', W).attr('height', H).attr('fill', 'transparent');
     var Z = clipped.append('g');
-    // water lining: rings drawn outward from the coast, spacing widening with distance (after Mitchell, 1849)
-    var RINGS = [[1.8, '#6b5a44'], [3.7, '#857259'], [6.0, '#a08b6f'], [8.8, '#b9a487'], [12.2, '#cfbc9e']];
-    var sea = Z.append('g').attr('class', 'water');
-    for (var i = RINGS.length - 1; i >= 0; i--) {
-      var dd = RINGS[i][0], tt = 0.55;
-      sea.append('use').attr('href', '#land-s').attr('fill', 'none').attr('stroke', RINGS[i][1]).attr('stroke-width', 2 * dd + tt).attr('stroke-linejoin', 'round').attr('vector-effect', 'non-scaling-stroke');
-      sea.append('use').attr('href', '#land-s').attr('fill', 'none').attr('stroke', PAPER).attr('stroke-width', 2 * dd - tt).attr('stroke-linejoin', 'round').attr('vector-effect', 'non-scaling-stroke');
+    var stage = document.createElement('div');
+    stage.className = 'plate-stage';
+    var svgEl = $('plate-svg');
+    svgEl.parentNode.insertBefore(stage, svgEl);
+    var baseBox = document.createElement('div');
+    baseBox.className = 'plate-base';
+    baseBox.setAttribute('aria-hidden', 'true');
+    baseBox.style.cssText = 'left:' + (ML / VBW * 100) + '%;top:' + (MT / VBH * 100) + '%;width:' + (W / VBW * 100) + '%;height:' + (H / VBH * 100) + '%;background:' + PAPER;
+    stage.appendChild(baseBox);
+    stage.appendChild(svgEl);
+    // two copies: the whole world, drawn once and only ever moved (it shows at the edges during a drag), and the
+    // view, drawn sharp at the end of each gesture
+    var NS = 'http://www.w3.org/2000/svg';
+    function baseLayer(cls) {
+      var el = document.createElementNS(NS, 'svg');
+      el.setAttribute('class', 'plate-layer ' + cls);
+      el.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      el.setAttribute('preserveAspectRatio', 'none');
+      baseBox.appendChild(el);
+      return el;
     }
-    Z.append('path').attr('d', path(d3.geoGraticule().step([15, 15])())).attr('fill', 'none').attr('stroke', '#dccba5').attr('stroke-width', 0.45).attr('vector-effect', 'non-scaling-stroke');
-    Z.append('path').attr('d', path({ type: 'Sphere' })).attr('fill', 'none').attr('stroke', INK0).attr('stroke-width', 0.7).attr('vector-effect', 'non-scaling-stroke');
-    Z.append('use').attr('href', '#land-l').attr('fill', LAND).attr('stroke', INK0).attr('stroke-width', 0.75).attr('stroke-linejoin', 'round').attr('vector-effect', 'non-scaling-stroke');
-    // boundaries hand-coloured with a ribbon of wash along each line, as on Victorian political maps
-    var ribbonG = Z.append('path').attr('fill', 'none').attr('stroke', 'rgba(176,82,58,.22)').attr('stroke-width', 4.5).attr('stroke-linejoin', 'round').attr('vector-effect', 'non-scaling-stroke');
-    var bordersG = Z.append('path').attr('fill', 'none').attr('stroke', '#6b5a44').attr('stroke-width', 0.6).attr('stroke-dasharray', '4 1.6 1 1.6').attr('vector-effect', 'non-scaling-stroke');
+    var worldEl = baseLayer('plate-world'), viewEl = baseLayer('plate-view');
+    var d110 = path(land110), d50 = path(land50);
+    var RINGS = [[1.8, '#6b5a44'], [3.7, '#857259'], [6.0, '#a08b6f'], [8.8, '#b9a487'], [12.2, '#cfbc9e']];
+    var borderPaths = [];
+    function drawBase(el, fine) {
+      // each layer keeps its own copy of the coastline, so that no reference crosses from one drawing to the other
+      var id = fine ? 'view' : 'world', bd = d3.select(el).append('defs');
+      bd.append('path').attr('id', 'coast-' + id).attr('d', d110);
+      if (fine) bd.append('path').attr('id', 'land-' + id).attr('d', d50);
+      var g = d3.select(el).append('g');
+      // water lining: rings drawn outward from the coast, spacing widening with distance (after Mitchell, 1849)
+      var sea = g.append('g').attr('class', 'water');
+      for (var i = RINGS.length - 1; i >= 0; i--) {
+        var dd = RINGS[i][0], tt = 0.55;
+        sea.append('use').attr('href', '#coast-' + id).attr('fill', 'none').attr('stroke', RINGS[i][1]).attr('stroke-width', 2 * dd + tt).attr('stroke-linejoin', 'round').attr('vector-effect', 'non-scaling-stroke');
+        sea.append('use').attr('href', '#coast-' + id).attr('fill', 'none').attr('stroke', PAPER).attr('stroke-width', 2 * dd - tt).attr('stroke-linejoin', 'round').attr('vector-effect', 'non-scaling-stroke');
+      }
+      g.append('path').attr('d', path(d3.geoGraticule().step([15, 15])())).attr('fill', 'none').attr('stroke', '#dccba5').attr('stroke-width', 0.45).attr('vector-effect', 'non-scaling-stroke');
+      g.append('path').attr('d', path({ type: 'Sphere' })).attr('fill', 'none').attr('stroke', INK0).attr('stroke-width', 0.7).attr('vector-effect', 'non-scaling-stroke');
+      g.append('use').attr('href', fine ? '#land-view' : '#coast-world').attr('fill', LAND).attr('stroke', INK0).attr('stroke-width', 0.75).attr('stroke-linejoin', 'round').attr('vector-effect', 'non-scaling-stroke');
+      // boundaries hand-coloured with a ribbon of wash along each line, as on Victorian political maps
+      borderPaths.push(g.append('path').attr('fill', 'none').attr('stroke', 'rgba(176,82,58,.22)').attr('stroke-width', 4.5).attr('stroke-linejoin', 'round').attr('vector-effect', 'non-scaling-stroke'));
+      borderPaths.push(g.append('path').attr('fill', 'none').attr('stroke', '#6b5a44').attr('stroke-width', 0.6).attr('stroke-dasharray', '4 1.6 1 1.6').attr('vector-effect', 'non-scaling-stroke'));
+      return g;
+    }
+    drawBase(worldEl, false);
+    var viewG = drawBase(viewEl, true);
     var namesG = Z.append('g');
     var seaG = Z.append('g');
     [['PACIFIC OCEAN', -140, 8], ['PACIFIC OCEAN', 162, 24], ['ATLANTIC OCEAN', -38, 22], ['INDIAN OCEAN', 78, -22], ['SOUTHERN OCEAN', 30, -52]].forEach(function (s) {
@@ -145,11 +180,27 @@
 
     var k = 1;
     function counter(sel) { sel.attr('transform', function (d) { return 'translate(' + d.x + ',' + d.y + ') scale(' + (1 / k) + ')'; }); }
+    // during a gesture the drawing of the world is moved as a picture, by a CSS transform from the view last drawn;
+    // when the gesture ends the view is drawn again at the new scale
+    var drawn = d3.zoomIdentity, now = d3.zoomIdentity;
+    function css(t) { return 'translate(' + (t.x / W * 100) + '%,' + (t.y / H * 100) + '%) scale(' + t.k + ')'; }
+    function slide(t) {
+      var r = t.k / drawn.k;
+      worldEl.style.transform = css(t);
+      viewEl.style.transform = css({ k: r, x: t.x - r * drawn.x, y: t.y - r * drawn.y });
+    }
+    function settle() {
+      if (now.k === drawn.k && now.x === drawn.x && now.y === drawn.y) return;
+      drawn = now;
+      viewG.attr('transform', drawn);
+      viewEl.style.transform = '';
+    }
     var zoom = d3.zoom().extent([[0, 0], [W, H]]).scaleExtent([1, 22]).translateExtent([[0, 0], [W, H]]).on('zoom', function (ev) {
+      now = ev.transform; slide(now);
       k = ev.transform.k; Z.attr('transform', ev.transform);
       counter(mk); counter(namesG.selectAll('g.cs')); counter(seaG.selectAll('g.cs')); counter(selG.selectAll('g.cs')); counter(hoverG.selectAll('g.cs')); counter(linkG.selectAll('g.cs'));
       svg.classed('near', k >= 2.4);
-    });
+    }).on('end', settle);
     mapG.call(zoom).on('dblclick.zoom', null);
     $('zin').onclick = function () { mapG.transition().duration(300).call(zoom.scaleBy, 1.8); };
     $('zout').onclick = function () { mapG.transition().duration(300).call(zoom.scaleBy, 1 / 1.8); };
@@ -182,8 +233,8 @@
     function setBorders() {
       var dec = state.decade == null ? 2020 : state.decade, b = BOR[dec];
       if (!b) return;
-      bordersG.attr('d', path({ type: 'MultiLineString', coordinates: b.lines }));
-      ribbonG.attr('d', bordersG.attr('d'));
+      var d = path({ type: 'MultiLineString', coordinates: b.lines });
+      borderPaths.forEach(function (p) { p.attr('d', d); });
       namesG.selectAll('*').remove();
       b.labels.forEach(function (l) {
         var p = proj([l.lon, l.lat]); if (!p) return;
