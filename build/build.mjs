@@ -1,5 +1,5 @@
 // Builds the static site in _site/ from the published Google Sheet (or the seed CSV before setup).
-// Usage: node build/build.mjs        Env: SHEET_CSV_URL, BASE_URL (override site.config.json)
+// Usage: node build/build.mjs        Env: SHEET_CSV_URL, BASE_URL (override site.config.json); OFFLINE=1 (use data/ only)
 import fs from 'node:fs';
 import path from 'node:path';
 import { parseCSV, toCSV } from './csv.mjs';
@@ -9,7 +9,8 @@ import { loadExercises, MOVES, MOVE_WORD } from './exercises.mjs';
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const OUT = path.join(ROOT, '_site');
 const cfg = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.config.json'), 'utf8'));
-const SHEET_URL = process.env.SHEET_CSV_URL || cfg.sheet_csv_url || '';
+// OFFLINE=1 builds from the copies in data/ alone, for a preview of changes not yet in the sheet
+const SHEET_URL = process.env.OFFLINE ? '' : (process.env.SHEET_CSV_URL || cfg.sheet_csv_url || '');
 const BASE = (process.env.BASE_URL || cfg.base_url || '').replace(/\/?$/, '/');
 
 const CASE_TYPES = ['missed', 'obvious', 'false-alarm', 'wrongly-blamed', 'still-open'];
