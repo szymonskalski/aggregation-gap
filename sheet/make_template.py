@@ -29,7 +29,7 @@ COLS = [
     ("lon", 9, "Longitude of the main marker, decimal degrees."),
     ("more_sites", 20, "Further sites of the same event: 'lat, lon; lat, lon'. Leave empty if none."),
     ("precision", 11, "site, area or approximate."),
-    ("case_type", 15, "core, contrast, control or misattribution."),
+    ("case_type", 15, "missed, obvious, false-alarm, wrongly-blamed or still-open."),
     ("scope", 16, "civilian service, or adjacent for commercial or defense targets."),
     ("context", 22, "armed conflict, short of armed conflict, terrorism / non-state, criminal, no hostile act."),
     ("services", 26, "One or more from the Lists tab, separated by commas."),
@@ -93,7 +93,7 @@ ws.auto_filter.ref = f"A1:{ws.cell(row=1, column=len(COLS)).column_letter}{last}
 L = wb.create_sheet("Lists")
 lists = {
     "status": ["published", "draft", "review", "withdrawn"],
-    "case_type": ["core", "contrast", "control", "misattribution"],
+    "case_type": ["missed", "obvious", "false-alarm", "wrongly-blamed", "still-open"],
     "scope": ["civilian service", "adjacent"],
     "context": ["armed conflict", "short of armed conflict", "terrorism / non-state", "criminal", "no hostile act"],
     "precision": ["site", "area", "approximate"],

@@ -11,15 +11,18 @@ const cfg = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.config.json'), 'utf
 const SHEET_URL = process.env.SHEET_CSV_URL || cfg.sheet_csv_url || '';
 const BASE = (process.env.BASE_URL || cfg.base_url || '').replace(/\/?$/, '/');
 
-const CASE_TYPES = ['core', 'contrast', 'control', 'misattribution'];
+const CASE_TYPES = ['missed', 'obvious', 'false-alarm', 'wrongly-blamed', 'still-open'];
+// the codes used until October 2026, still accepted from the sheet
+const LEGACY = { core: 'missed', contrast: 'obvious', control: 'false-alarm', misattribution: 'wrongly-blamed' };
 const CONTEXTS = ['armed conflict', 'short of armed conflict', 'terrorism / non-state', 'criminal', 'no hostile act'];
 const SERVICES = ['water', 'energy', 'food and agriculture', 'health', 'telecommunications and internet', 'transport', 'navigation and space', 'other'];
-const TYPE_LABEL = { core: 'Core', contrast: 'Contrast', control: 'Control', misattribution: 'Misattribution' };
+const TYPE_LABEL = { missed: 'Missed', obvious: 'Obvious', 'false-alarm': 'False alarm', 'wrongly-blamed': 'Wrongly blamed', 'still-open': 'Still open' };
 const TYPE_TEXT = {
-  core: 'Records stayed dispersed; recognition came late or never.',
-  contrast: 'The gap narrowed: the attacker claimed the act, or one target or a simultaneous strike made it plain.',
-  control: 'A suspected attack that institutions joined and settled as non-hostile, or left open.',
-  misattribution: 'Records joined into an attack claim that later failed or remains disputed.',
+  missed: 'Each institution held part of the record, and no one put the parts together until late, or ever.',
+  obvious: 'The attacker claimed the act, or a single target or simultaneous strikes made it plain, so the records did not need joining.',
+  'false-alarm': 'Treated as a possible attack; the joined records settled it as an accident, a technical failure or a natural cause.',
+  'wrongly-blamed': 'The records were joined into an attack claim that a later inquiry, a court or the evidence itself rejected.',
+  'still-open': 'Treated as a possible attack, or claimed as one, and never settled either way.',
 };
 const PUBLIC_COLS = ['id', 'title', 'label', 'dates', 'year', 'place', 'lat', 'lon', 'more_sites', 'precision', 'case_type', 'scope', 'context', 'services', 'strength', 'summary', 'records', 'gap', 'joining', 'harm_found_later', 'sources', 'verification', 'added'];
 
@@ -76,7 +79,8 @@ function normalize(r) {
   if (status !== 'published') return null;
   const year = parseInt(r.year, 10);
   if (!(year >= 1945 && year <= 2100)) { warn(`${id}: year "${r.year}" is not a number between 1945 and 2100; skipped`); return null; }
-  const case_type = (r.case_type || '').toLowerCase();
+  const raw = (r.case_type || '').trim().toLowerCase().replace(/\s+/g, '-');
+  const case_type = LEGACY[raw] || raw;
   if (!CASE_TYPES.includes(case_type)) { warn(`${id}: case_type "${r.case_type}" is not one of ${CASE_TYPES.join(', ')}; skipped`); return null; }
   if (!r.title) { warn(`${id}: no title; skipped`); return null; }
   const context = CONTEXTS.includes((r.context || '').toLowerCase()) ? r.context.toLowerCase() : (r.context ? (warn(`${id}: unknown context "${r.context}"`), r.context) : '');
@@ -105,13 +109,14 @@ function normalize(r) {
 }
 
 // ---------- page shell ----------
-const INK = { core: '#1f4f8f', contrast: '#00876f', control: '#b07a00', misattribution: '#9a68c4' };
-const WASH = { core: '#c7d3e3', contrast: '#bfe1db', control: '#ebdebf', misattribution: '#e6d9f0' };
+const INK = { missed: '#1f4f8f', obvious: '#00876f', 'false-alarm': '#b07a00', 'wrongly-blamed': '#9a68c4', 'still-open': '#4a4a4a' };
+const WASH = { missed: '#c7d3e3', obvious: '#bfe1db', 'false-alarm': '#ebdebf', 'wrongly-blamed': '#e6d9f0', 'still-open': '#e4e4e4' };
 const TDEF = {
-  core: 'records stayed apart; recognized late or never',
-  contrast: 'act claimed, or a single target made it plain',
-  control: 'suspected attack, settled as non-hostile or left open',
-  misattribution: 'attack claim that failed or is disputed',
+  missed: 'the pieces existed, but no one put them together until late, or ever',
+  obvious: 'the attacker claimed it, or the target made it plain',
+  'false-alarm': 'treated as a possible attack; turned out to be an accident or failure',
+  'wrongly-blamed': 'joined into an attack claim that later fell apart',
+  'still-open': 'suspected, never settled',
 };
 const NOTA = 'The register holds only events whose published record could be checked against its sources, most of them in English. Regions left blank and the thin early decades mark where documentation can be reached as well as where services were disrupted. Each mark stands for one entry, whatever the scale of the disruption.';
 const DECADES = [1945, 1960, 1970, 1980, 1990, 2000, 2010, 2020];
@@ -193,9 +198,10 @@ const runhead = rel => `<p class="runhead"><a href="${rel}index.html">The Aggreg
 function shapeSVG(e, size = 13) {
   const s = 3.6, c = INK[e.case_type] || '#121212', w = WASH[e.case_type] || '#fff';
   let d, fill = w, sw = 1.35;
-  if (e.scope === 'adjacent') { d = `M${-s},${-s}h${2 * s}v${2 * s}h${-2 * s}Z`; fill = e.case_type === 'core' ? c : w; sw = 1.2; }
-  else if (e.case_type === 'core' || e.case_type === 'contrast') { d = `M${-s},0a${s},${s} 0 1,0 ${2 * s},0a${s},${s} 0 1,0 ${-2 * s},0Z`; if (e.case_type === 'core') { fill = c; sw = 0.8; } }
-  else if (e.case_type === 'control') d = `M0,${-s * 1.3}L${s * 1.18},${s * 0.82}L${-s * 1.18},${s * 0.82}Z`;
+  if (e.scope === 'adjacent') { d = `M${-s},${-s}h${2 * s}v${2 * s}h${-2 * s}Z`; fill = e.case_type === 'missed' ? c : w; sw = 1.2; }
+  else if (e.case_type === 'missed' || e.case_type === 'obvious') { d = `M${-s},0a${s},${s} 0 1,0 ${2 * s},0a${s},${s} 0 1,0 ${-2 * s},0Z`; if (e.case_type === 'missed') { fill = c; sw = 0.8; } }
+  else if (e.case_type === 'false-alarm') d = `M0,${-s * 1.3}L${s * 1.18},${s * 0.82}L${-s * 1.18},${s * 0.82}Z`;
+  else if (e.case_type === 'still-open') d = `M0,${-s * 1.3}L${s * 1.3},0L0,${s * 1.3}L${-s * 1.3},0Z`;
   else { d = `M${-s},${-s}L${s},${s}M${-s},${s}L${s},${-s}`; fill = 'none'; sw = 1.9; }
   return `<svg width="${size}" height="${size}" viewBox="-6.5 -6.5 13 13" aria-hidden="true"><path d="${d}" fill="${fill}" stroke="${c}" stroke-width="${sw}" stroke-linejoin="round"/></svg>`;
 }
@@ -316,7 +322,7 @@ function eventPage(e, prev, next) {
 }
 
 function aboutPage(events) {
-  const counts = CASE_TYPES.map(t => `${events.filter(e => e.case_type === t).length} ${t}`).join(', ');
+  const counts = CASE_TYPES.map(t => [t, events.filter(e => e.case_type === t).length]).filter(([, n]) => n).map(([t, n]) => `${n} ${TYPE_LABEL[t].toLowerCase()}`).join(', ');
   const body = `${runhead('')}
 <main id="main" class="text">
   <h1>About the atlas</h1>
@@ -324,7 +330,7 @@ function aboutPage(events) {
   <h2>The aggregation gap</h2>
   <p>All of these records may be accurate and still leave unclear what happened, because joining them, and deciding that an event was an attack, lies outside the purpose for which each was kept. An aggregation gap opens where institutions hold observations that could support a more extensive interpretation but lack the means or the authority to take them together. It widens as recorders become more numerous and smaller, as each applies its own threshold, and as no institution with authority to join the records receives them. It narrows when the attacker makes the act public or strikes a single target.</p>
   <h2>Classification of entries</h2>
-  <dl class="types">${CASE_TYPES.map(t => `<dt>${shapeSVG({ case_type: t })}${TYPE_LABEL[t]}</dt><dd>${TYPE_TEXT[t]}</dd>`).join('')}<dt>${shapeSVG({ scope: 'adjacent' })}Adjacent</dt><dd>The target was a commercial or defense site whose records stayed apart in the same way as those of a civilian service. The square takes the ink of its class.</dd></dl>
+  <dl class="types">${CASE_TYPES.map(t => `<dt>${shapeSVG({ case_type: t })}${TYPE_LABEL[t]}</dt><dd>${TYPE_TEXT[t]}</dd>`).join('')}<dt>${shapeSVG({ scope: 'adjacent' })}Adjacent</dt><dd>The target was a commercial or defense site whose records stayed apart in the same way as those of a civilian service. The square takes the color of its class.</dd></dl>
   <p>The register now holds ${events.length} entries (${counts}).</p>
   <h2>How the entries are made</h2>
   <p>Each entry was drafted from published sources. A second, independent pass then checked it against those sources and corrected or removed any claim they did not support. The verification line on each entry gives the result. Where an entry is only partly verified, the line names what remains open.</p>

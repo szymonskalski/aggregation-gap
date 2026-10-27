@@ -25,10 +25,11 @@
   --hair: #c9c9c9;
   --overprint: #b3261e;
   /* Prussian blue, verdigris, gamboge, violet: checked for colour-blind separation across all pairs, with the overprint */
-  --core: #1f4f8f;
-  --contrast: #00876f;
-  --control: #b07a00;
-  --misattribution: #9a68c4;
+  --missed: #1f4f8f;
+  --obvious: #00876f;
+  --false-alarm: #b07a00;
+  --wrongly-blamed: #9a68c4;
+  --still-open: #4a4a4a;
   --text: 'Libre Caslon Text', 'Caslon', Georgia, 'Times New Roman', serif;
   --letter: 'Libre Franklin', 'Franklin Gothic Book', 'Helvetica Neue', Arial, sans-serif;
   color-scheme: light;

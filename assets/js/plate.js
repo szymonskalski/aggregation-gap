@@ -2,17 +2,18 @@
    Data: data/events.json (built from the master sheet), Natural Earth land, CShapes 2.0 boundaries by period. */
 (function () {
   'use strict';
-  var TYPES = ['core', 'contrast', 'control', 'misattribution'];
-  var TNAME = { core: 'Core', contrast: 'Contrast', control: 'Control', misattribution: 'Misattribution' };
+  var TYPES = ['missed', 'obvious', 'false-alarm', 'wrongly-blamed', 'still-open'];
+  var TNAME = { missed: 'Missed', obvious: 'Obvious', 'false-alarm': 'False alarm', 'wrongly-blamed': 'Wrongly blamed', 'still-open': 'Still open' };
   var TDEF = {
-    core: 'records stayed apart; recognized late or never',
-    contrast: 'act claimed, or a single target made it plain',
-    control: 'suspected attack, settled as non-hostile or left open',
-    misattribution: 'attack claim that failed or is disputed'
+    missed: 'the pieces existed, but no one put them together until late, or ever',
+    obvious: 'the attacker claimed it, or the target made it plain',
+    'false-alarm': 'treated as a possible attack; turned out to be an accident or failure',
+    'wrongly-blamed': 'joined into an attack claim that later fell apart',
+    'still-open': 'suspected, never settled'
   };
-  // one ink per classification, and a pale wash of the same ink inside the open shapes
-  var INK = { core: '#1f4f8f', contrast: '#00876f', control: '#b07a00', misattribution: '#9a68c4' };
-  var WASH = { core: '#c7d3e3', contrast: '#bfe1db', control: '#ebdebf', misattribution: '#e6d9f0' };
+  // one color per class, and a pale wash of the same color inside the open shapes
+  var INK = { missed: '#1f4f8f', obvious: '#00876f', 'false-alarm': '#b07a00', 'wrongly-blamed': '#9a68c4', 'still-open': '#4a4a4a' };
+  var WASH = { missed: '#c7d3e3', obvious: '#bfe1db', 'false-alarm': '#ebdebf', 'wrongly-blamed': '#e6d9f0', 'still-open': '#e4e4e4' };
   var RED = '#b3261e';
   var DECADES = [1945, 1960, 1970, 1980, 1990, 2000, 2010, 2020];
   var decName = function (d) { return d === 1945 ? '1945 to 1959' : d === 2020 ? '2020 to 2026' : d + ' to ' + (d + 9); };
@@ -22,10 +23,11 @@
 
   function shape(e, s) {
     var c = INK[e.case_type] || '#121212', w = WASH[e.case_type] || '#fff';
-    if (e.scope === 'adjacent') return { d: 'M' + (-s) + ',' + (-s) + 'h' + 2 * s + 'v' + 2 * s + 'h' + (-2 * s) + 'Z', fill: e.case_type === 'core' ? c : w, st: c, sw: 1.2 };
-    if (e.case_type === 'core') return { d: circ(s), fill: c, st: c, sw: 0.8 };
-    if (e.case_type === 'contrast') return { d: circ(s), fill: w, st: c, sw: 1.35 };
-    if (e.case_type === 'control') return { d: 'M0,' + (-s * 1.3) + 'L' + s * 1.18 + ',' + s * 0.82 + 'L' + (-s * 1.18) + ',' + s * 0.82 + 'Z', fill: w, st: c, sw: 1.35 };
+    if (e.scope === 'adjacent') return { d: 'M' + (-s) + ',' + (-s) + 'h' + 2 * s + 'v' + 2 * s + 'h' + (-2 * s) + 'Z', fill: e.case_type === 'missed' ? c : w, st: c, sw: 1.2 };
+    if (e.case_type === 'missed') return { d: circ(s), fill: c, st: c, sw: 0.8 };
+    if (e.case_type === 'obvious') return { d: circ(s), fill: w, st: c, sw: 1.35 };
+    if (e.case_type === 'still-open') return { d: 'M0,' + (-s * 1.3) + 'L' + s * 1.3 + ',0L0,' + s * 1.3 + 'L' + (-s * 1.3) + ',0Z', fill: w, st: c, sw: 1.35 };
+    if (e.case_type === 'false-alarm') return { d: 'M0,' + (-s * 1.3) + 'L' + s * 1.18 + ',' + s * 0.82 + 'L' + (-s * 1.18) + ',' + s * 0.82 + 'Z', fill: w, st: c, sw: 1.35 };
     return { d: 'M' + (-s) + ',' + (-s) + 'L' + s + ',' + s + 'M' + (-s) + ',' + s + 'L' + s + ',' + (-s), fill: 'none', st: c, sw: 1.9 };
   }
   function circ(s) { return 'M' + (-s) + ',0a' + s + ',' + s + ' 0 1,0 ' + 2 * s + ',0a' + s + ',' + s + ' 0 1,0 ' + (-2 * s) + ',0Z'; }
@@ -178,14 +180,14 @@
 
     // ---------- reference box: each line switches its class on and off ----------
     var ref = $('reference');
-    TYPES.forEach(function (t) {
+    TYPES.filter(function (t) { return EV.some(function (e) { return e.case_type === t; }); }).forEach(function (t) {
       var b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-pressed', 'true'); b.dataset.type = t;
       b.innerHTML = icon({ case_type: t }) + '<span><b>' + TNAME[t] + '</b>: ' + TDEF[t] + '</span>';
       b.onclick = function () { if (state.types.has(t)) state.types.delete(t); else state.types.add(t); b.setAttribute('aria-pressed', state.types.has(t) ? 'true' : 'false'); apply(); };
       ref.appendChild(b);
     });
     var adjB = document.createElement('button'); adjB.type = 'button'; adjB.setAttribute('aria-pressed', 'true');
-    adjB.innerHTML = icon({ scope: 'adjacent' }) + '<span>Square: commercial or defense target, in the ink of its class</span>';
+    adjB.innerHTML = icon({ scope: 'adjacent' }) + '<span>Square: company or military target, in the color of its class</span>';
     adjB.onclick = function () { state.adj = !state.adj; adjB.setAttribute('aria-pressed', state.adj ? 'true' : 'false'); apply(); };
     ref.appendChild(adjB);
     var bn = document.createElement('p'); bn.className = 'bnote'; bn.id = 'bnote'; ref.appendChild(bn);
