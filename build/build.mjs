@@ -14,6 +14,8 @@ const BASE = (process.env.BASE_URL || cfg.base_url || '').replace(/\/?$/, '/');
 const CASE_TYPES = ['missed', 'obvious', 'false-alarm', 'wrongly-blamed', 'still-open'];
 // the codes used until October 2026, still accepted from the sheet
 const LEGACY = { core: 'missed', contrast: 'obvious', control: 'false-alarm', misattribution: 'wrongly-blamed' };
+// the October 2026 recoding, applied to rows that still carry an old code until sheet/rename_classes.gs has run
+const RECODE = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'sheet', 'case_types_2026-10.json'), 'utf8')); } catch { return {}; } })();
 const CONTEXTS = ['armed conflict', 'short of armed conflict', 'terrorism / non-state', 'criminal', 'no hostile act'];
 const SERVICES = ['water', 'energy', 'food and agriculture', 'health', 'telecommunications and internet', 'transport', 'navigation and space', 'other'];
 const TYPE_LABEL = { missed: 'Missed', obvious: 'Obvious', 'false-alarm': 'False alarm', 'wrongly-blamed': 'Wrongly blamed', 'still-open': 'Still open' };
@@ -80,7 +82,7 @@ function normalize(r) {
   const year = parseInt(r.year, 10);
   if (!(year >= 1945 && year <= 2100)) { warn(`${id}: year "${r.year}" is not a number between 1945 and 2100; skipped`); return null; }
   const raw = (r.case_type || '').trim().toLowerCase().replace(/\s+/g, '-');
-  const case_type = LEGACY[raw] || raw;
+  const case_type = LEGACY[raw] ? (RECODE[id] || LEGACY[raw]) : raw;
   if (!CASE_TYPES.includes(case_type)) { warn(`${id}: case_type "${r.case_type}" is not one of ${CASE_TYPES.join(', ')}; skipped`); return null; }
   if (!r.title) { warn(`${id}: no title; skipped`); return null; }
   const context = CONTEXTS.includes((r.context || '').toLowerCase()) ? r.context.toLowerCase() : (r.context ? (warn(`${id}: unknown context "${r.context}"`), r.context) : '');

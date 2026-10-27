@@ -1,0 +1,583 @@
+[
+ {
+  "id": "AG-001",
+  "old": "misattribution",
+  "new": "still-open",
+  "words": "Historians later reexamined the record and concluded that the causes of the derailment were never clearly established",
+  "field": "joining"
+ },
+ {
+  "id": "AG-004",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "Only later reassessment undid the claim | a 2009 Hungarian industry history that describes the indictment as built largely on assumptions presented as facts",
+  "field": "joining"
+ },
+ {
+  "id": "AG-006",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "A state commission joined the beetle finds into an attack claim and named the United States | The Deutsches Historisches Museum's account of the brochure states that the accusations were invented",
+  "field": "joining"
+ },
+ {
+  "id": "AG-007",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "The accusers joined their own records into a public attack claim | Their work showed the claim to be fabricated",
+  "field": "joining"
+ },
+ {
+  "id": "AG-010",
+  "old": "control",
+  "new": "still-open",
+  "words": "The sources checked record no formal US finding of deliberate Soviet cutting | The incident soon slipped from public attention",
+  "field": "joining"
+ },
+ {
+  "id": "AG-011",
+  "old": "misattribution",
+  "new": "still-open",
+  "words": "The United States rejected it within days | No neutral body joined the records in the sources checked",
+  "field": "joining"
+ },
+ {
+  "id": "AG-016",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "The meeting received both accounts and declined to find a causal link | found that all twelve allegations were probably false",
+  "field": "joining; summary"
+ },
+ {
+  "id": "AG-029",
+  "old": "misattribution",
+  "new": "still-open",
+  "words": "received no official answer | Andrei Sakharov warned of 'a deliberate frame-up or a judicial mistake'",
+  "field": "joining; summary"
+ },
+ {
+  "id": "AG-030",
+  "old": "misattribution",
+  "new": "still-open",
+  "words": "left both a natural and a deliberate hypothesis open | No authority has named an attacker for the epidemic",
+  "field": "summary; joining"
+ },
+ {
+  "id": "AG-032",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "The claim was undone by academic scientists working from samples and from documents released under the Freedom of Information Act",
+  "field": "joining"
+ },
+ {
+  "id": "AG-035",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "The aim was to point investigators toward an international plot by two foreign right-wing extremists | the Court of Cassation confirmed the core convictions and the misdirection convictions",
+  "field": "summary; joining"
+ },
+ {
+  "id": "AG-047",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "displacing the rebel explanation | the Court attributed the mining to the United States",
+  "field": "joining"
+ },
+ {
+  "id": "AG-049",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "The attack claim was manufactured by intelligence services | the Soviet Academy of Sciences disavowed the claim in Izvestia",
+  "field": "joining; summary"
+ },
+ {
+  "id": "AG-050",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "CDC joined the clinical, epidemiological and toxicological records and classified the event as psychogenic | No attacker was named",
+  "field": "joining"
+ },
+ {
+  "id": "AG-054",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "the US State Department blamed Iran | Attribution for Halabja was settled only by a national criminal court",
+  "field": "summary; joining"
+ },
+ {
+  "id": "AG-055",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "The CASB majority settled the event as non-hostile (icing) | an FBI team in Gander accepted a declaration that 'terrorism was not involved",
+  "field": "joining; summary"
+ },
+ {
+  "id": "AG-058",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "Security Branch members staged explosions to build the credibility of informers and agents inside Umkhonto we Sizwe (MK) | Perpetrators disclosed the operations to the TRC in amnesty applications",
+  "field": "summary; joining"
+ },
+ {
+  "id": "AG-060",
+  "old": "misattribution",
+  "new": "still-open",
+  "words": "the GAO reviewed the record and upheld the FDA's handling | No perpetrator was identified | Chile could contest the FDA's decision only through diplomacy and litigation",
+  "field": "joining; gap"
+ },
+ {
+  "id": "AG-061",
+  "old": "misattribution",
+  "new": "still-open",
+  "words": "The attack claim remains contested",
+  "field": "joining"
+ },
+ {
+  "id": "AG-062",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "AT&T joined its own records and attributed the crash to its software | No attacker was named",
+  "field": "joining"
+ },
+ {
+  "id": "AG-065",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "They concluded that the ICMMS data 'were evidently rigged | Dyson called the rigging of the 1999 survey 'an especially masterful fraud'",
+  "field": "summary; joining"
+ },
+ {
+  "id": "AG-074",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "The NTSB concluded that an explosion of the center wing fuel tank, most likely ignited by an electrical short circuit, was the probable cause | concluding that the witness reports were consistent with crippled flight and did not match a missile",
+  "field": "summary; joining"
+ },
+ {
+  "id": "AG-077",
+  "old": "control",
+  "new": "still-open",
+  "words": "Their findings differ from the scientific assessment | The institutions involved applied different causal thresholds to the same exposure",
+  "field": "joining; harm_found_later"
+ },
+ {
+  "id": "AG-079",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "The CIA's review of the bioterrorism allegation closed the hostile-act question",
+  "field": "joining"
+ },
+ {
+  "id": "AG-082",
+  "old": "control",
+  "new": "still-open",
+  "words": "the Cour de cassation annulled that ruling | In those courts an attack hypothesis remained in play for more than a decade alongside the negligence case | The case then went to retrial in Paris",
+  "field": "summary; gap; joining"
+ },
+ {
+  "id": "AG-087",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "None of these causes was hostile",
+  "field": "joining"
+ },
+ {
+  "id": "AG-089",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "The joining that settled the matter was negotiated rather than technical | No contamination was established in the sources checked",
+  "field": "joining"
+ },
+ {
+  "id": "AG-093",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "each attributed the event to operational causes in the E.ON Netz control area | No checked report discussed hostile action",
+  "field": "summary; joining"
+ },
+ {
+  "id": "AG-096",
+  "old": "misattribution",
+  "new": "still-open",
+  "words": "The attribution dispute remained open in the sources checked",
+  "field": "joining"
+ },
+ {
+  "id": "AG-097",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "found nothing supporting the hacking claim | found 'no evidence of hacker attacks'",
+  "field": "joining; records"
+ },
+ {
+  "id": "AG-099",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "The outage was traced to the Navy's jamming and settled as unintentional",
+  "field": "joining"
+ },
+ {
+  "id": "AG-101",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "concluded that 'no real evidence was ever presented | no security cameras or wireless network for the valve stations had existed through which such an intrusion could have run",
+  "field": "joining; summary"
+ },
+ {
+  "id": "AG-102",
+  "old": "control",
+  "new": "still-open",
+  "words": "no operator or authority published a cause for the Alexandria cuts | The sources checked show no public joining of the Alexandria records",
+  "field": "gap; joining"
+ },
+ {
+  "id": "AG-107",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "The disruption was settled as a private, non-hostile act",
+  "field": "joining"
+ },
+ {
+  "id": "AG-112",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "'not the fault of, or deliberate action of, a group or individual | The UN panel joined field and laboratory findings and named no responsible party",
+  "field": "summary; joining"
+ },
+ {
+  "id": "AG-116",
+  "old": "misattribution",
+  "new": "still-open",
+  "words": "'reasonable doubts surrounding the cause | The companies rejected the findings",
+  "field": "summary; joining"
+ },
+ {
+  "id": "AG-118",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "there is no evidence to support claims made in the initial Fusion Center report | DHS found that the pump had failed for an electrical-mechanical reason",
+  "field": "joining; summary"
+ },
+ {
+  "id": "AG-127",
+  "old": "control",
+  "new": "still-open",
+  "words": "'the possibility of external interference through a rocket or bomb or other act | The domestic investigation stalled | The sources checked name no hostile actor",
+  "field": "summary; joining"
+ },
+ {
+  "id": "AG-141",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "rejected the government's claim that armed groups had contaminated or demolished the supply",
+  "field": "joining"
+ },
+ {
+  "id": "AG-143",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "the claim that the grid had been entered was withdrawn",
+  "field": "joining"
+ },
+ {
+  "id": "AG-146",
+  "old": "control",
+  "new": "still-open",
+  "words": "the Director of National Intelligence rescinded both assessments without issuing a new finding | The cause remained unassigned",
+  "field": "summary; harm_found_later"
+ },
+ {
+  "id": "AG-149",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "a team of IIT experts reported that no explosive device caused the derailment | the Commissioner of Railway Safety closed Kuneru as an equipment failure",
+  "field": "summary; joining"
+ },
+ {
+  "id": "AG-160",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "Planted indicators made the joining of technical records produce a wrong attacker | Kaspersky identified the false flag",
+  "field": "gap; joining"
+ },
+ {
+  "id": "AG-161",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "The Fiscalía's own review dismantled the attribution through the PDI's forensic examination",
+  "field": "joining"
+ },
+ {
+  "id": "AG-167",
+  "old": "misattribution",
+  "new": "still-open",
+  "words": "It then closed the case without charging anyone | disputed whether a drone had flown at all",
+  "field": "joining"
+ },
+ {
+  "id": "AG-172",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "'despite their claims to the contrary, the Houthi forces did not launch the attacks | did not hold up before the Panel",
+  "field": "summary; joining"
+ },
+ {
+  "id": "AG-173",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "'fue una falla en el sistema mayorista | produced the technical and liability account under their regulatory roles | No attacker was named",
+  "field": "records; joining"
+ },
+ {
+  "id": "AG-174",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "The national prosecutor, the press and the Comptroller examined the narrative and rejected or narrowed it",
+  "field": "joining"
+ },
+ {
+  "id": "AG-180",
+  "old": "control",
+  "new": "still-open",
+  "words": "no body with access determined the cause of each stoppage | without settling the question of intent",
+  "field": "gap; joining"
+ },
+ {
+  "id": "AG-184",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "classified the event as theft and concealment by a criminal group, a classification that set sabotage aside",
+  "field": "joining"
+ },
+ {
+  "id": "AG-186",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "Engineers, a university faculty and journalists reconstructed the cascade and attributed it to vegetation fires under the lines | No attacker was substantiated",
+  "field": "joining"
+ },
+ {
+  "id": "AG-190",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "The clinical review then broke the link | settled causation in the negative",
+  "field": "gap; joining"
+ },
+ {
+  "id": "AG-192",
+  "old": "misattribution",
+  "new": "still-open",
+  "words": "No judicial or independent finding was located",
+  "field": "joining"
+ },
+ {
+  "id": "AG-194",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "The Union Power Ministry rejected the hypothesis | The CyOTE study treats the intrusion as real and the outage as non-hostile",
+  "field": "joining"
+ },
+ {
+  "id": "AG-202",
+  "old": "control",
+  "new": "still-open",
+  "words": "No vessel or state was named in the sources checked, and no finding was published",
+  "field": "joining"
+ },
+ {
+  "id": "AG-213",
+  "old": "misattribution",
+  "new": "still-open",
+  "words": "US Defense Secretary Lloyd Austin said the US was still analyzing the cause | Nobody joined the records with authority",
+  "field": "joining"
+ },
+ {
+  "id": "AG-216",
+  "old": "misattribution",
+  "new": "still-open",
+  "words": "The coercion hypothesis remains press speculation",
+  "field": "joining"
+ },
+ {
+  "id": "AG-217",
+  "old": "control",
+  "new": "still-open",
+  "words": "No institution has determined whether the values were artifacts, manipulation or cyber interference",
+  "field": "joining"
+ },
+ {
+  "id": "AG-221",
+  "old": "control",
+  "new": "still-open",
+  "words": "The opened sources report no conclusion and name no attacker",
+  "field": "joining"
+ },
+ {
+  "id": "AG-226",
+  "old": "control",
+  "new": "still-open",
+  "words": "concluded that the girls' symptoms were real and likely physical in cause and that officials had failed to investigate properly | In the sources checked, no perpetrator was named",
+  "field": "summary; joining"
+ },
+ {
+  "id": "AG-235",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "Neither the states parties nor the Security Council accepted it",
+  "field": "joining"
+ },
+ {
+  "id": "AG-236",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "The disruption was settled as an accident with no attacker named",
+  "field": "joining"
+ },
+ {
+  "id": "AG-243",
+  "old": "misattribution",
+  "new": "still-open",
+  "words": "Four sets of joiners reached partly divergent conclusions | no body with access to all records had published a finding",
+  "field": "joining"
+ },
+ {
+  "id": "AG-246",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "The CBI's charges fell on the railway's own signaling staff | No outside saboteur was named",
+  "field": "joining"
+ },
+ {
+  "id": "AG-248",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "the ONS joined operator and generator data and named a technical cause within six weeks",
+  "field": "joining"
+ },
+ {
+  "id": "AG-250",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "No attack was suspected | The prosecutors treated the failure as mismanagement and negligence",
+  "field": "summary"
+ },
+ {
+  "id": "AG-258",
+  "old": "control",
+  "new": "still-open",
+  "words": "leaves the question of foreign direction open",
+  "field": "joining"
+ },
+ {
+  "id": "AG-267",
+  "old": "misattribution",
+  "new": "wrongly-blamed",
+  "words": "reported on 13 August that there had been no fire | The committee found that Palak had 'misled the nation and engaged in deception'",
+  "field": "summary; joining"
+ },
+ {
+  "id": "AG-270",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "said that the outage was not a cyberattack",
+  "field": "summary"
+ },
+ {
+  "id": "AG-272",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "described the activity as a combination of lawful commercial, hobbyist and law-enforcement drones that presented no national security or public safety risk",
+  "field": "joining"
+ },
+ {
+  "id": "AG-274",
+  "old": "misattribution",
+  "new": "still-open",
+  "words": "a question that no technical record could settle | No outcome of the criminal complaint was found",
+  "field": "gap; joining"
+ },
+ {
+  "id": "AG-285",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "The prevailing account classed the cable damage as an unintended effect of the attack on the ship",
+  "field": "joining"
+ },
+ {
+  "id": "AG-290",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "produced a sabotage hypothesis that the separate tests did not support | Within a week the Bundeswehr, police and local authorities resolved the water questions",
+  "field": "gap; joining"
+ },
+ {
+  "id": "AG-296",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "Interior minister Carolina Tohá ruled out sabotage | No attacker was suspected in the official statements found",
+  "field": "summary; joining"
+ },
+ {
+  "id": "AG-297",
+  "old": "misattribution",
+  "new": "still-open",
+  "words": "Philippine security officials joined seizure and laboratory records into a sabotage claim, which China rejected | No independent scientific assessment was cited",
+  "field": "joining"
+ },
+ {
+  "id": "AG-298",
+  "old": "misattribution",
+  "new": "still-open",
+  "words": "Attacker publicity in this case enlarged the claim beyond the record and left the gap unresolved",
+  "field": "joining"
+ },
+ {
+  "id": "AG-299",
+  "old": "misattribution",
+  "new": "still-open",
+  "words": "the object that hit the house remained unidentified pending an expert opinion | The sources checked report no official confirmation of the missile's origin",
+  "field": "records; joining"
+ },
+ {
+  "id": "AG-301",
+  "old": "misattribution",
+  "new": "still-open",
+  "words": "The records were never joined into a single finding",
+  "field": "joining"
+ },
+ {
+  "id": "AG-302",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "Within days the state joined the records under its own interior, judicial and investigative apparatus and settled on negligence",
+  "field": "joining"
+ },
+ {
+  "id": "AG-306",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "It found no indications of cyber-sabotage by foreign actors and attributed the collapse to technical and planning errors | the government commission set aside the attack hypothesis",
+  "field": "summary; joining"
+ },
+ {
+  "id": "AG-308",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "the investigation 'clearly shows that it is not a case of sabotage",
+  "field": "joining"
+ },
+ {
+  "id": "AG-309",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "sabotage had been ruled out and that a local copper-theft gang was suspected | The case closed as property crime two months later, with no hostile actor named",
+  "field": "summary; joining"
+ },
+ {
+  "id": "AG-310",
+  "old": "control",
+  "new": "false-alarm",
+  "words": "The Counter Terrorism Command closed the criminal question within five days | settled the event as an equipment failure that maintenance had not prevented",
+  "field": "joining"
+ }
+]
