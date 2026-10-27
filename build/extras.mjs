@@ -246,8 +246,12 @@ export function picturesHTML(e, imgs) {
     const w = Math.min(m.width, 960), dims = m.width && m.height ? ` width="${w}" height="${Math.round(m.height * w / m.width)}"` : '';
     return `<figure class="pic"><a href="${esc(m.source_page)}" rel="noopener"><img src="${esc(m.site_url)}"${dims} alt="${esc(m.alt || m.caption)}" loading="lazy" decoding="async"></a><figcaption><p>${esc(m.caption)}</p><p class="credit">${creditHTML(m)}</p></figcaption></figure>`;
   };
-  return `<figure class="pictures">
-  <h2 class="ex-h">${imgs.length > 1 ? 'Pictures' : 'Picture'}</h2>
+  // where nothing shows the event, the entry shows the place, or the building of an institution that held part of
+  // its record, and the heading says which
+  const kind = imgs.every(m => m.kind === 'place') ? 'place' : imgs.every(m => m.kind === 'institution') ? 'institution' : '';
+  const head = kind === 'place' ? 'The place' : kind === 'institution' ? 'A holder of the record' : imgs.length > 1 ? 'Pictures' : 'Picture';
+  return `<figure class="pictures${kind ? ` ${kind}` : ''}">
+  <h2 class="ex-h">${head}</h2>
   <div class="pics${imgs.length > 1 ? ' two' : ''}">${imgs.map(one).join('')}</div>
 </figure>`;
 }
