@@ -306,3 +306,49 @@ button { font: inherit; color: inherit; }
   .dk-stamp { top: 10px; right: 10px; }
   .ch-table td:first-child { border-right: 0; }
 }
+
+/* ---------- the printed page ---------- */
+/* a running head in spaced capitals over a thick-and-thin rule, in place of a navigation bar */
+.running { text-align: center; padding: 16px 0 12px; margin-bottom: 2px;
+  background: linear-gradient(var(--ink), var(--ink)) left bottom / 100% 2px no-repeat, linear-gradient(var(--ink), var(--ink)) left calc(100% - 5px) / 100% .5px no-repeat; }
+.running nav { display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 4px 0; font-family: var(--text); font-size: 12.5px; letter-spacing: .2em; text-transform: uppercase; }
+.running a { color: var(--ink); text-decoration: none; padding: 0 2px; }
+.running a[aria-current="page"], .running a:hover { text-decoration: underline; text-decoration-thickness: .5px; text-underline-offset: 4px; }
+.sep { margin: 0 .9em; color: var(--ink-3); }
+.runhead { font-family: var(--text); letter-spacing: .32em; font-size: 12.5px; }
+.runhead a { color: var(--ink-2); }
+/* one justified column, run-in heads, the locator set into the text */
+.record.printed { display: block; max-width: 42em; margin: 26px auto 0; padding-top: 0; border-top: 0; }
+.printed .rec-head.docket { margin: 0 0 18px; }
+.printed .abstract { text-align: center; font-style: italic; color: var(--ink-2); margin: 0 auto 22px; max-width: 36em; line-height: 1.55; text-wrap: balance; }
+.printed .abstract svg { vertical-align: -1px; margin-right: 2px; }
+.printed .para, .printed .holders li { text-align: justify; hyphens: auto; -webkit-hyphens: auto; line-height: 1.62; }
+.printed .para { margin: 0 0 .8em; }
+.ri { font-size: .78em; letter-spacing: .1em; text-transform: uppercase; }
+.sh { text-align: center; font-family: var(--text); font-weight: 400; font-size: 12.5px; letter-spacing: .26em; text-transform: uppercase; margin: 1.7em 0 .8em; display: flex; align-items: center; justify-content: center; gap: .9em; }
+.sh::before, .sh::after { content: ''; width: 2.4em; border-top: .5px solid var(--ink); }
+.printed .holders { margin: 0 0 1.2em; }
+.printed .holders li { padding-left: 0; text-indent: 1.4em; margin-bottom: .45em; }
+.printed .holders li:first-child { text-indent: 0; }
+.printed .inset { float: right; width: 250px; margin: 6px 0 12px 26px; }
+.printed .inset figcaption { font-family: var(--text); font-style: italic; font-size: 12.5px; text-align: center; letter-spacing: 0; }
+.authorities { font-size: 14px; line-height: 1.5; margin: 0 0 1em; padding-left: 1.6em; }
+.authorities li { margin-bottom: .35em; overflow-wrap: anywhere; }
+.printed .small { font-size: 14px; color: var(--ink-2); margin: 0 0 .5em; text-align: justify; hyphens: auto; }
+.printed .cite { user-select: all; }
+.printed .rec-links { display: block; text-align: center; font-family: var(--text); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; margin: 1.6em 0 0; }
+.printed .rec-links a { color: var(--ink); text-decoration: none; }
+.printed .rec-links a:hover { text-decoration: underline; }
+main > .rec-extra { max-width: 1060px; margin: 34px auto 0; }
+.rec-extra figure { border-top: 0; padding-top: 0; }
+.ex-h { text-align: center; font-family: var(--text); font-weight: 400; font-size: 12.5px; letter-spacing: .26em; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: .9em; margin: 0 0 16px; }
+.ex-h::before, .ex-h::after { content: ''; width: 2.4em; border-top: .5px solid var(--ink); }
+.pn { font-family: var(--text); font-size: 13.5px; font-style: italic; border-top: 0; background: linear-gradient(var(--ink), var(--ink)) left top / 100% .5px no-repeat; max-width: 1060px; margin-left: auto; margin-right: auto; }
+@media (max-width: 780px) {
+  .printed .inset { float: none; width: auto; max-width: 300px; margin: 0 auto 16px; }
+  .running nav { font-size: 11px; letter-spacing: .14em; }
+  .sep { margin: 0 .5em; }
+}
+
+/* the plate is a wide sheet; every other page is a leaf of a book */
+.sheet.leaf { max-width: 1000px; }

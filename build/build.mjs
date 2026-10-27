@@ -160,9 +160,9 @@ function imprint(rel) {
   </div>
 </footer>`;
 }
-function page({ title, rel, body, desc, current = '' }) {
+function page({ title, rel, body, desc, current = '', wide = false }) {
   const nav = [['index.html', 'Plate', 'plate'], ['events/index.html', 'Register', 'register'], ['about.html', 'About', 'about'], ['about.html#subscribe', 'Notices by email', '']]
-    .map(([h, t, k]) => `<a href="${rel}${h}"${current && current === k ? ' aria-current="page"' : ''}>${t}</a>`).join('');
+    .map(([h, t, k]) => `<a href="${rel}${h}"${current && current === k ? ' aria-current="page"' : ''}>${t}</a>`).join('<span class="sep" aria-hidden="true">·</span>');
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -177,11 +177,8 @@ function page({ title, rel, body, desc, current = '' }) {
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<div class="sheet">
-<div class="collar-top">
-  <span>${esc(cfg.credit)}</span>
-  <nav aria-label="Sections">${nav}</nav>
-</div>
+<div class="sheet${wide ? '' : ' leaf'}">
+<header class="running"><nav aria-label="Sections">${nav}</nav></header>
 ${body}
 ${imprint(rel)}
 </div>
@@ -270,7 +267,7 @@ function indexPage(events) {
 <script src="assets/vendor/d3.min.js"></script>
 <script src="assets/vendor/topojson-client.min.js"></script>
 <script src="assets/js/plate.js"></script>`;
-  return page({ title: cfg.title, rel: '', body, current: 'plate' });
+  return page({ title: cfg.title, rel: '', body, current: 'plate', wide: true });
 }
 
 function eventsIndexPage(events) {
@@ -288,44 +285,44 @@ function extrasHTML(e, rel) {
   const c = chronoHTML(e, CHRONO[e.id], INK[e.case_type]), m = detailMapHTML(e, MAPS, rel), p = picturesHTML(e, MEDIA[e.id]);
   return c || m || p ? `<section class="rec-extra">${c}${m}${p}</section>` : '';
 }
+const cap = t => (t ? t[0].toUpperCase() + t.slice(1) : t);
 // the register's own entry date, as a clerk's stamp: 22 OCT 2026
 const stampDate = d => { const [y, m, dd] = d.split('-').map(Number); return `${dd} ${MONTHS[m - 1].slice(0, 3).toUpperCase()} ${y}`; };
 function eventPage(e, prev, next) {
-  const row = (dt, dd) => (dd ? `<dt>${dt}</dt><dd>${dd}</dd>` : '');
-  const p = s => (s ? `<p>${esc(s)}</p>` : '');
-  const src = e.sources.length ? `<ol>${e.sources.map(s => `<li>${esc(s.cite)}${s.url ? ` <a href="${esc(s.url)}" rel="noopener">${esc(s.url.replace(/^https?:\/\/(www\.)?/, '').split('/')[0])}</a>` : ''}</li>`).join('')}</ol>` : '';
   const url = `${BASE}events/${slug(e.id)}/`;
-  let loc = '<p class="muted">Not placed on the plate: the entry concerns several countries.</p>';
+  let loc = '';
   if (e.lat != null) {
     const [x, y] = locate(e.lon, e.lat);
     loc = `<figure class="locator"><div class="lmap"><img src="../../assets/img/locator.svg" width="${LOC.w}" height="${LOC.h}" alt="World map marking the position of the event">` +
       `<svg viewBox="0 0 ${LOC.w} ${LOC.h}" aria-hidden="true"><g stroke="#b3261e" stroke-width="0.9" fill="none"><circle cx="${x}" cy="${y}" r="5"/><path d="M${x - 11},${y}h7M${x + 4},${y}h7M${x},${y - 11}v7M${x},${y + 4}v7"/></g></svg></div>` +
       `<figcaption>${fmtCoord(e.lat, e.lon)}${e.precision === 'approximate' ? ', approximate' : e.precision === 'area' ? ', center of the area concerned' : ''}</figcaption></figure>`;
   }
+  const cls = `${shapeSVG(e)} ${TYPE_LABEL[e.case_type]}${e.scope === 'adjacent' ? ', adjacent case' : ''}: ${TDEF[e.case_type]}.`;
+  const ri = (head, text) => (text ? `<p class="para"><span class="ri">${head}.</span>—${esc(text)}</p>` : '');
+  const auth = e.sources.length ? `<h2 class="sh">Authorities</h2><ol class="authorities">${e.sources.map(s => `<li>${esc(s.cite)}${s.url ? ` <a href="${esc(s.url)}" rel="noopener">${esc(s.url.replace(/^https?:\/\/(www\.)?/, '').split('/')[0])}</a>` : ''}</li>`).join('')}</ol>` : '';
   const body = `${runhead('../../')}
 <main id="main">
-<article class="record">
+<article class="record printed">
   <div class="rec-head docket">
     <p class="dk-no">No. <span>${esc(e.id)}</span></p>
     <h1>${esc(e.title)}</h1>
     <p class="dk-meta">${TYPE_LABEL[e.case_type]}<span>·</span>${esc(e.dates)}</p>
     ${e.added ? `<p class="dk-stamp">Register<b>${stampDate(e.added)}</b></p>` : ''}
   </div>
-  <dl class="fields">
-    ${row('Date', p(e.dates))}${row('Place', p(e.place))}${row('Service', p(e.services.join(', ')))}${row('Context', p(e.context))}
-    ${row('Classification', `<p>${shapeSVG(e)} ${TYPE_LABEL[e.case_type]}${e.scope === 'adjacent' ? ', adjacent case' : ''}. ${TDEF[e.case_type][0].toUpperCase() + TDEF[e.case_type].slice(1)}.</p>`)}
-    ${row('Summary', p(e.summary))}${row('Holders of the record', holdersHTML(e.records))}${row('Why the records stayed apart', p(e.gap))}${row('Joined by', p(e.joining))}
-    ${row('Harm found later', p(e.harm))}${row('Sources', src)}
-    ${row('Verification', e.verification ? `<p class="muted">${esc(e.verification)}</p>` : '')}
-    ${row('To cite', `<div class="cite"><p>${esc(cfg.title)}, entry ${e.id}, “${esc(e.title)}.” ${esc(cfg.credit)}. ${esc(url)}</p></div>`)}
-  </dl>
-  <div class="rec-side">
-    ${loc}
-    <p class="rec-links">${e.lat != null ? `<a href="../../index.html#${slug(e.id)}">Show on the plate</a>` : ''}<a href="../index.html">The whole register</a></p>
-  </div>
-  ${extrasHTML(e, '../../')}
+  <p class="abstract">${esc(e.dates)}. ${esc(e.place)}. ${esc(cap(e.services.join(', ')))}${e.context ? `; ${esc(e.context)}` : ''}.<br>${cls}</p>
+  ${e.lat != null ? loc.replace('<figure class="locator">', '<figure class="locator inset">') : ''}
+  ${ri('Summary', e.summary)}
+  ${e.records ? `<h2 class="sh">Holders of the record</h2>${holdersHTML(e.records)}` : ''}
+  ${ri('Why the records stayed apart', e.gap)}
+  ${ri('Joining', e.joining)}
+  ${ri('Harm found later', e.harm)}
+  ${auth}
+  ${e.verification ? `<p class="small"><span class="ri">Verification.</span>—${esc(e.verification)}</p>` : ''}
+  <p class="small cite"><span class="ri">To cite.</span>—${esc(cfg.title)}, entry ${e.id}, “${esc(e.title)}.” ${esc(cfg.credit)}. ${esc(url)}</p>
+  <p class="rec-links">${e.lat != null ? `<a href="../../index.html#${slug(e.id)}">Shown on the plate</a><span class="sep" aria-hidden="true">·</span>` : ''}<a href="../index.html">The whole register</a></p>
 </article>
-<nav class="pn" aria-label="Neighbouring entries">${prev ? `<a href="../${slug(prev.id)}/index.html">${prev.id.toLowerCase()}  ${esc(prev.label)}</a>` : '<span></span>'}${next ? `<a href="../${slug(next.id)}/index.html">${esc(next.label)}  ${next.id.toLowerCase()}</a>` : ''}</nav>
+${extrasHTML(e, '../../')}
+<nav class="pn" aria-label="Neighbouring entries">${prev ? `<a href="../${slug(prev.id)}/index.html">← No. ${prev.n}, ${esc(prev.label)}</a>` : '<span></span>'}${next ? `<a href="../${slug(next.id)}/index.html">No. ${next.n}, ${esc(next.label)} →</a>` : ''}</nav>
 </main>`;
   return page({ title: `${e.id} ${e.title} · ${cfg.title}`, rel: '../../', body, desc: e.summary.slice(0, 200), current: 'register' });
 }
